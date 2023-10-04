@@ -184,7 +184,8 @@ public final class FlatcraftGame {
      * Fait se déplacer le joueur vers la gauche.
      */
     public void moveLeft() {
-        // TODO Implémentez cette méthode.
+        player.setHorizontalSpeed(-1);
+        move(player);
     }
 
     /**
