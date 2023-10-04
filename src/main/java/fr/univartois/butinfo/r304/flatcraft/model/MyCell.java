@@ -30,8 +30,11 @@ public class MyCell extends AbstractCell {
     }
 
     @Override
-    public boolean dig(IMovable player) {
-
+    public boolean dig(Player player) {
+        if(getResource().getHardness()==0){
+            player.ajouterInventaire(getResource());
+            return true;
+        }
         return false;
     }
 }
