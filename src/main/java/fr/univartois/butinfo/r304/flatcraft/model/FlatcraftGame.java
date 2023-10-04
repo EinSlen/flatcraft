@@ -260,7 +260,10 @@ public final class FlatcraftGame {
      * @param toDig La cellule sur laquelle creuser.
      */
     private void dig(Cell toDig) {
-        // TODO Implémentez cette méthode.
+        if (toDig.dig(player)==true){
+            //toDig.replaceBy();
+            return;
+        }
     }
 
     /**
