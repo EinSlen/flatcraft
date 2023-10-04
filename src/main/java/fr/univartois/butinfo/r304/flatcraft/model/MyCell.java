@@ -18,8 +18,15 @@ public class MyCell extends AbstractCell {
 
     @Override
     public boolean move(IMovable movable) {
-
-        return false;
+        if(getResource() == null){
+            int nouvelleLigne = getRow() * getSprite().getHeight();
+            int nouvelleColonne = getColumn() * getSprite().getWidth();
+            movable.setX(nouvelleLigne);
+            movable.setY(nouvelleColonne);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
