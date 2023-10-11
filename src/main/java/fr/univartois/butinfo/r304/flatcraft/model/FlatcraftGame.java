@@ -200,14 +200,16 @@ public final class FlatcraftGame {
      * Fait se déplacer le joueur vers la gauche.
      */
     public void moveLeft() {
-        // TODO Implémentez cette méthode.
+        player.setHorizontalSpeed(-1);
+        move(player);
     }
 
     /**
      * Fait se déplacer le joueur vers la droite.
      */
     public void moveRight() {
-        // TODO Implémentez cette méthode.
+        player.setHorizontalSpeed(1);
+        move(player);
     }
 
     /**
@@ -229,7 +231,8 @@ public final class FlatcraftGame {
      * Interrompt le déplacement du joueur.
      */
     public void stopMoving() {
-        // TODO Implémentez cette méthode.
+        player.setHorizontalSpeed(0);
+        player.setVerticalSpeed(0);
     }
 
     /**
@@ -250,21 +253,36 @@ public final class FlatcraftGame {
      * Fait creuser le joueur vers le bas.
      */
     public void digDown() {
-        // TODO Implémentez cette méthode.
+        Cell cell = getCellOf(player);
+        Cell cellToDig = map.getAt(cell.getRow(), cell.getColumn()-1);
+        if (cellToDig != null){
+            dig(cellToDig);
+            move(player);
+        }
     }
 
     /**
      * Fait creuser le joueur vers la gauche.
      */
     public void digLeft() {
-        // TODO Implémentez cette méthode.
+        Cell cell = getCellOf(player);
+        Cell cellToDig = map.getAt(cell.getRow()-1, cell.getColumn());
+        if (cellToDig != null){
+            dig(cellToDig);
+            move(player);
+        }
     }
 
     /**
      * Fait creuser le joueur vers la droite.
      */
     public void digRight() {
-        // TODO Implémentez cette méthode.
+        Cell cell = getCellOf(player);
+        Cell cellToDig = map.getAt(cell.getRow()+1, cell.getColumn());
+        if (cellToDig != null){
+            dig(cellToDig);
+            move(player);
+        }
     }
 
     /**
@@ -273,7 +291,10 @@ public final class FlatcraftGame {
      * @param toDig La cellule sur laquelle creuser.
      */
     private void dig(Cell toDig) {
-        // TODO Implémentez cette méthode.
+        Factory cellFactory = new Factory();
+        if(toDig.dig(player)){
+            toDig = cellFactory.createSky();
+        }
     }
 
     /**
