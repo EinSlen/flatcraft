@@ -29,6 +29,7 @@ public class MyCell extends AbstractCell {
         }
     }
 
+
     @Override
     public boolean dig(Player player) {
         if(getResource().getHardness()==0){
