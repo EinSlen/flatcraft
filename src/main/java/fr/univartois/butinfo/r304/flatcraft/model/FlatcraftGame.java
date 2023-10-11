@@ -260,9 +260,11 @@ public final class FlatcraftGame {
      * @param toDig La cellule sur laquelle creuser.
      */
     private void dig(Cell toDig) {
-        if (toDig.dig(player)==true){
-            //toDig.replaceBy();
-            return;
+        Cell cell = getCellOf(player);
+        Cell cellToDig = map.getAt(cell.getRow(), cell.getColumn()-1);
+        if (cellToDig != null){
+            dig(cellToDig);
+            move(player);
         }
     }
 
