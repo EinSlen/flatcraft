@@ -18,6 +18,7 @@ package fr.univartois.butinfo.r304.flatcraft.model.map;
 
 import fr.univartois.butinfo.r304.flatcraft.model.Cell;
 import fr.univartois.butinfo.r304.flatcraft.model.GameMap;
+import fr.univartois.butinfo.r304.flatcraft.model.MyCell;
 
 /**
  * La classe {@link SimpleGameMap} propose une implémentation de base de {@link GameMap},
@@ -75,7 +76,7 @@ public final class SimpleGameMap implements GameMap {
     private void init() {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
-                cells[i][j] = null;
+                cells[i][j] = new MyCell(i,j);
             }
         }
     }

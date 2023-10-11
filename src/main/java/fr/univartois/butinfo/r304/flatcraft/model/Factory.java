@@ -1,52 +1,57 @@
 package fr.univartois.butinfo.r304.flatcraft.model;
 
+import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.ToolType;
 import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
-import javafx.scene.image.Image;
+import fr.univartois.butinfo.r304.flatcraft.view.SpriteStore;
+import java.util.Random;
 
 public class Factory implements CellFactory{
+
+    SpriteStore spriteStore;
+    Random random = new Random();
     @Override
     public void setSpriteStore(ISpriteStore spriteStore) {
-
+        this.spriteStore = (SpriteStore) spriteStore;
     }
 
     @Override
     public Cell createSky() {
-        Image image = new Image("./../view/images/air.png");
-        Sprite sprite = new Sprite(image);
-        MyCell myCell = new MyCell(sprite);
-        return myCell;
+            return createCell("ice");
     }
 
     @Override
     public Cell createSoilSurface() {
-        Image image = new Image("./../view/images/default_grass.png");
-        Sprite sprite = new Sprite(image);
-        MyCell myCell = new MyCell(sprite);
-        return myCell;
+        if(random.nextInt(10)<1)
+            return createRessouresCell("junglegrass");
+        if(random.nextInt(10)<2)
+            return createRessouresCell("water");
+        return createRessouresCell("grass");
     }
 
     @Override
     public Cell createSubSoil() {
-        Image image = new Image("./../view/images/default_stone.png");
-        Sprite sprite = new Sprite(image);
-        MyCell myCell = new MyCell(sprite);
-        return myCell;
+        return createRessouresCell("dirt");
     }
 
     @Override
     public Cell createTrunk() {
-        Image image = new Image("./../view/images/default_chest_front.png");
-        Sprite sprite = new Sprite(image);
-        MyCell myCell = new MyCell(sprite);
-        return myCell;
+        return createCell("chest_front");
     }
 
     @Override
     public Cell createLeaves() {
-        Image image = new Image("./../view/images/default_acacia_leaves.png");
-        Sprite sprite = new Sprite(image);
-        MyCell myCell = new MyCell(sprite);
-        return myCell;
+        return createCell("acacia_leaves");
+    }
+
+    public MyCell createCell(String name){
+        Sprite sprite = spriteStore.getSprite(name);
+        return new MyCell(sprite);
+    }
+
+    public Cell createRessouresCell(String name){
+        Sprite sprite = spriteStore.getSprite(name);
+        return new MyCell(new Resource(name, sprite, ToolType.NO_TOOL, 1));
     }
 }

@@ -5,7 +5,7 @@ import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 
 public class MyCell extends AbstractCell {
-    protected MyCell(int row, int column) {
+    public MyCell(int row, int column) {
         super(row, column);
     }
 
