@@ -170,8 +170,14 @@ public final class FlatcraftGame {
      * @return La carte du jeu créée.
      */
     private GameMap createMap() {
-        // TODO Implémentez cette méthode.
-        return null;
+        int spriteSize = spriteStore.getSpriteSize();
+
+        int mapWidthInPixels = width / spriteSize;
+        int mapHeightInPixels = height / spriteSize;
+
+        MapGenerator map = new MapGenerator();
+
+        return map.GenerateMap(mapHeightInPixels, mapWidthInPixels, cellFactory);
     }
 
     /**
