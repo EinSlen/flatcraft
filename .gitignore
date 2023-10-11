@@ -6,11 +6,13 @@
 build
 .gradle
 
-# Fichiers d'Eclipse.
+
+# Fichiers d'Eclipse (ou IntelliJ Idea).
 bin
 .classpath
 .project
 .settings
+.idea/
 
 # Divers.
 .DS_Store

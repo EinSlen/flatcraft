@@ -16,13 +16,20 @@
 
 package fr.univartois.butinfo.r304.flatcraft.model;
 
+import java.awt.*;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableMap;
+import javafx.scene.image.Image;
+
+import static javafx.collections.FXCollections.observableHashMap;
 
 /**
  * La classe {@link FlatcraftGame} permet de gérer une partie du jeu Flatcraft.
@@ -76,7 +83,7 @@ public final class FlatcraftGame {
     /**
      * La représentation du joueur.
      */
-    private IMovable player;
+    private Player player;
 
     /**
      * La liste des objets mobiles du jeu.
@@ -87,6 +94,7 @@ public final class FlatcraftGame {
      * L'animation simulant le temps qui passe dans le jeu.
      */
     private FlatcraftAnimation animation = new FlatcraftAnimation(this, movableObjects);
+
 
     /**
      * Crée une nouvelle instance de FlatcraftGame.
@@ -140,11 +148,19 @@ public final class FlatcraftGame {
         map = createMap();
         controller.prepare(map);
 
-        // TODO On crée le joueur, qui se trouve sur le sol à gauche de la carte.
+        IntegerProperty playerHealth = new SimpleIntegerProperty();
+        IntegerProperty playerExperience = new SimpleIntegerProperty();
+        ObservableMap<Resource, Integer> playerInventory = FXCollections.observableHashMap();
+        Image imageJoueur = new Image("./../view/images/player.png");
 
-        // TODO On fait le lien entre les différentes propriétés et leur affichage.
+        Player player = new Player(this, 0, 0, new Sprite(imageJoueur), playerHealth, playerExperience, playerInventory);
+        movableObjects.add(player);
 
-        // On démarre l'animation du jeu.
+        controller.bindTime(time);
+        controller.bindLevel(level);
+        controller.bindHealth(playerHealth);
+        controller.bindXP(playerExperience);
+
         animation.start();
     }
 
