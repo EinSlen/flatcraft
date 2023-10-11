@@ -270,7 +270,10 @@ public final class FlatcraftGame {
      * @param toDig La cellule sur laquelle creuser.
      */
     private void dig(Cell toDig) {
-
+        Factory cellFactory = new Factory();
+        if(toDig.dig(player)){
+            toDig = cellFactory.createSky();
+        }
     }
 
     /**
