@@ -33,12 +33,12 @@ public class MapGenerator {
      * @Return la carte générée
      */
     public SimpleGameMap GenerateMap(int height, int width, CellFactory cell) {
-        SimpleGameMap map = new SimpleGameMap(height, width, height/3);
+        SimpleGameMap map = new SimpleGameMap(height, width, height/2);
         for(int i = 0; i<height;i++) {
             for(int j = 0; j<width; j++) {
-                if(i>map.getSoilHeight()) map.setAt(i,j,cell.createSky());
+                if(i>map.getSoilHeight()) map.setAt(i,j,cell.createSubSoil());
                 if(i==map.getSoilHeight()) map.setAt(i,j,cell.createSoilSurface());
-                if(i<map.getSoilHeight()) map.setAt(i,j,cell.createSubSoil());
+                if(i<map.getSoilHeight()) map.setAt(i,j,cell.createSky() );
             }
         }
         return map;

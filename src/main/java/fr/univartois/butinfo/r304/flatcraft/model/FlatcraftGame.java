@@ -23,6 +23,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
+import fr.univartois.butinfo.r304.flatcraft.view.SpriteStore;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
@@ -151,9 +152,10 @@ public final class FlatcraftGame {
         IntegerProperty playerHealth = new SimpleIntegerProperty();
         IntegerProperty playerExperience = new SimpleIntegerProperty();
         ObservableMap<Resource, Integer> playerInventory = FXCollections.observableHashMap();
-        Image imageJoueur = new Image("./../view/images/player.png");
+        SpriteStore spriteStore1 = new SpriteStore();
+        Sprite sprite = spriteStore1.getSprite("player");
 
-        Player player = new Player(this, 0, 0, new Sprite(imageJoueur), playerHealth, playerExperience, playerInventory);
+        Player player = new Player(this, 0, 0, sprite, playerHealth, playerExperience, playerInventory);
         movableObjects.add(player);
 
         controller.bindTime(time);
