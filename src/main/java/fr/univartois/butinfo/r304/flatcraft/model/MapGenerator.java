@@ -33,7 +33,7 @@ public class MapGenerator {
      * @Return la carte générée
      */
     public SimpleGameMap GenerateMap(int height, int width, CellFactory cell) {
-        SimpleGameMap map = new SimpleGameMap(height, width, height/2);
+        SimpleGameMap map = new SimpleGameMap(height, width, (int) Math.floor(height/1.5));
         for(int i = 0; i<height;i++) {
             for(int j = 0; j<width; j++) {
                 if(i>map.getSoilHeight()) map.setAt(i,j,cell.createSubSoil());
