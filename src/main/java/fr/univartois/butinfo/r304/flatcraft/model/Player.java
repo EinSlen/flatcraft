@@ -4,8 +4,6 @@ import fr.univartois.butinfo.r304.flatcraft.model.movables.AbstractMovable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
 
 public class Player extends AbstractMovable {
@@ -35,9 +33,9 @@ public class Player extends AbstractMovable {
      */
     public Player(FlatcraftGame game, double xPosition, double yPosition, Sprite sprite, IntegerProperty pv, IntegerProperty xp, ObservableMap<Resource, Integer> inventaire) {
         super(game, xPosition, yPosition, sprite);
-        pv = new SimpleIntegerProperty(3);
-        xp = new SimpleIntegerProperty(1);
-        this.inventaire = FXCollections.observableHashMap();
+        this.pv = pv;
+        this.xp = xp;
+        this.inventaire = inventaire;
     }
 
     /**

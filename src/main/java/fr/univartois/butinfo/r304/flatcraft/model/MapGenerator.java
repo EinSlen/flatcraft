@@ -10,7 +10,7 @@ public class MapGenerator {
     private CellFactory cellFactory;
     private ISpriteStore spriteStore;
 
-    private MapGenerator SimpleGameMap;
+    private SimpleGameMap map;
 
     /**
      * Set le sprite dans cell Factory
@@ -19,7 +19,7 @@ public class MapGenerator {
     public void setSpriteStore(ISpriteStore spriteStore) {
         this.spriteStore = spriteStore;
         //Mettre le sprite pour cell factory
-        cellFactory.setSpriteStore(spriteStore);
+        this.cellFactory.setSpriteStore(spriteStore);
     }
 
 
@@ -33,7 +33,7 @@ public class MapGenerator {
      * @Return la carte générée
      */
     public SimpleGameMap GenerateMap(int height, int width, CellFactory cell) {
-        SimpleGameMap map = new SimpleGameMap(height, width, height/2);
+        this.map = new SimpleGameMap(height, width, height/2);
         for(int i = 0; i<height;i++) {
             for(int j = 0; j<width; j++) {
                 if(i>map.getSoilHeight()) map.setAt(i,j,cell.createSubSoil());

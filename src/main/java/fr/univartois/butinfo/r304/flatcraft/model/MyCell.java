@@ -18,7 +18,7 @@ public class MyCell extends AbstractCell {
 
     @Override
     public boolean move(IMovable movable) {
-        if(getResource() == null){
+        if(super.getResource() == null){
             int nouvelleLigne = getRow() * getSprite().getHeight();
             int nouvelleColonne = getColumn() * getSprite().getWidth();
             movable.setX(nouvelleLigne);
@@ -32,8 +32,8 @@ public class MyCell extends AbstractCell {
 
     @Override
     public boolean dig(IMovable player) {
-        if(getResource().getHardness()==0){
-            ((Player) player).ajouterInventaire(getResource());
+        if(super.getResource().getHardness()==0){
+            ((Player) player).ajouterInventaire(super.getResource());
             return true;
         }
         return false;

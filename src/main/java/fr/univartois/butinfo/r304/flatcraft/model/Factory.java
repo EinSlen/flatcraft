@@ -42,7 +42,7 @@ public class Factory implements CellFactory{
 
     @Override
     public Cell createLeaves() {
-        return createCell("acacia_leaves");
+        return createRessouresCell("acacia_leaves");
     }
 
     public MyCell createCell(String name){

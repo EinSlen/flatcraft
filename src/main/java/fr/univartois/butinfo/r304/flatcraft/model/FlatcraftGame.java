@@ -148,21 +148,18 @@ public final class FlatcraftGame {
         // On crée la carte du jeu.
         map = createMap();
         controller.prepare(map);
-
-        IntegerProperty playerHealth = new SimpleIntegerProperty();
-        IntegerProperty playerExperience = new SimpleIntegerProperty();
+        IntegerProperty playerHealth = new SimpleIntegerProperty(3);
+        IntegerProperty playerExperience = new SimpleIntegerProperty(1);
         ObservableMap<Resource, Integer> playerInventory = FXCollections.observableHashMap();
         SpriteStore spriteStore1 = new SpriteStore();
         Sprite sprite = spriteStore1.getSprite("player");
-
-        Player player = new Player(this, 0, 0, sprite, playerHealth, playerExperience, playerInventory);
+        this.player = new Player(this,  map.getSoilHeight(),0, sprite, playerHealth, playerExperience, playerInventory);
         movableObjects.add(player);
-
         controller.bindTime(time);
         controller.bindLevel(level);
         controller.bindHealth(playerHealth);
         controller.bindXP(playerExperience);
-
+        controller.addMovable(player);
         animation.start();
     }
 
@@ -208,7 +205,7 @@ public final class FlatcraftGame {
      * Fait se déplacer le joueur vers la gauche.
      */
     public void moveLeft() {
-        player.setHorizontalSpeed(-1);
+        player.setHorizontalSpeed(-50);
         move(player);
     }
 
@@ -216,7 +213,7 @@ public final class FlatcraftGame {
      * Fait se déplacer le joueur vers la droite.
      */
     public void moveRight() {
-        player.setHorizontalSpeed(1);
+        player.setHorizontalSpeed(50);
         move(player);
     }
 
@@ -262,7 +259,9 @@ public final class FlatcraftGame {
      */
     public void digDown() {
         Cell cell = getCellOf(player);
-        Cell cellToDig = map.getAt(cell.getRow(), cell.getColumn()-1);
+        Cell cellToDig = map.getAt(cell.getRow()+1, cell.getColumn());
+        System.out.println(cellToDig.getSprite().getImage().getUrl());
+        System.out.println(cellToDig.getResource());
         if (cellToDig != null){
             dig(cellToDig);
             move(player);
@@ -274,7 +273,7 @@ public final class FlatcraftGame {
      */
     public void digLeft() {
         Cell cell = getCellOf(player);
-        Cell cellToDig = map.getAt(cell.getRow()-1, cell.getColumn());
+        Cell cellToDig = map.getAt(cell.getRow(), cell.getColumn()-1);
         if (cellToDig != null){
             dig(cellToDig);
             move(player);
@@ -286,7 +285,7 @@ public final class FlatcraftGame {
      */
     public void digRight() {
         Cell cell = getCellOf(player);
-        Cell cellToDig = map.getAt(cell.getRow()+1, cell.getColumn());
+        Cell cellToDig = map.getAt(cell.getRow(), cell.getColumn()+1);
         if (cellToDig != null){
             dig(cellToDig);
             move(player);
@@ -299,9 +298,8 @@ public final class FlatcraftGame {
      * @param toDig La cellule sur laquelle creuser.
      */
     private void dig(Cell toDig) {
-        Factory cellFactory = new Factory();
         if(toDig.dig(player)){
-            toDig = cellFactory.createSky();
+            cellFactory.createSky();
         }
     }
 
