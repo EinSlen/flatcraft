@@ -153,7 +153,8 @@ public final class FlatcraftGame {
         ObservableMap<Resource, Integer> playerInventory = FXCollections.observableHashMap();
         SpriteStore spriteStore1 = new SpriteStore();
         Sprite sprite = spriteStore1.getSprite("player");
-        this.player = new Player(this,  map.getSoilHeight(),0, sprite, playerHealth, playerExperience, playerInventory);
+        System.out.println(map.getSoilHeight());
+        this.player = new Player(this, map.getSoilHeight(), 0, sprite, playerHealth, playerExperience, playerInventory);
         movableObjects.add(player);
         controller.bindTime(time);
         controller.bindLevel(level);
