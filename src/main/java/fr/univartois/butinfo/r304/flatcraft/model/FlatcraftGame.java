@@ -156,11 +156,11 @@ public final class FlatcraftGame {
         System.out.println(map.getSoilHeight());
         this.player = new Player(this, map.getSoilHeight(), 0, sprite, playerHealth, playerExperience, playerInventory);
         movableObjects.add(player);
+        controller.addMovable(player);
         controller.bindTime(time);
         controller.bindLevel(level);
         controller.bindHealth(playerHealth);
         controller.bindXP(playerExperience);
-        controller.addMovable(player);
         animation.start();
     }
 
@@ -300,7 +300,7 @@ public final class FlatcraftGame {
      */
     private void dig(Cell toDig) {
         if(toDig.dig(player)){
-            cellFactory.createSky();
+            toDig.replaceBy(cellFactory.createSky());
         }
     }
 

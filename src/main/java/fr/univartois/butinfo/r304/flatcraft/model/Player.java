@@ -75,8 +75,10 @@ public class Player extends AbstractMovable {
     }
 
     public void ajouterInventaire(Resource r){
-        Integer v = this.inventaire.get(r);
-        this.inventaire.replace(r, v+1);
+        if(inventaire.containsKey(r)){
+            inventaire.replace(r, inventaire.get(r)+1);
+        } else
+            inventaire.put(r, 1);
     }
 
     public void supprimerInventaire(Resource r){
