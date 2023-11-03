@@ -108,6 +108,7 @@ public final class SimpleGameMap implements GameMap {
      */
     @Override
     public int getSoilHeight() {
+
         return soilHeight;
     }
 

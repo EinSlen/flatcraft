@@ -156,7 +156,7 @@ public final class FlatcraftGame {
         SpriteStore spriteStore1 = new SpriteStore();
         Sprite sprite = spriteStore1.getSprite("player");
         System.out.println(map.getSoilHeight());
-        this.player = new Player(this, map.getSoilHeight(), 0, sprite, playerHealth, playerExperience, playerInventory);
+        this.player = new Player(this, 0, map.getSoilHeight()*spriteStore.getSpriteSize()-spriteStore.getSpriteSize(), sprite, playerHealth, playerExperience, playerInventory);
         movableObjects.add(player);
         controller.addMovable(player);
         controller.bindTime(time);
