@@ -96,6 +96,8 @@ public final class FlatcraftGame {
      */
     private FlatcraftAnimation animation = new FlatcraftAnimation(this, movableObjects);
 
+    private IMapGenerator genMap;
+
 
     /**
      * Crée une nouvelle instance de FlatcraftGame.
@@ -164,13 +166,19 @@ public final class FlatcraftGame {
         animation.start();
     }
 
+
+    public void setGenMap(IMapGenerator genMap) {
+        this.genMap = genMap;
+    }
+
     /**
      * Crée la carte du jeu.
      *
      * @return La carte du jeu créée.
      */
     private GameMap createMap() {
-        int spriteSize = spriteStore.getSpriteSize();
+        /**
+         int spriteSize = spriteStore.getSpriteSize();
 
         int mapWidthInPixels = width / spriteSize;
         int mapHeightInPixels = height / spriteSize;
@@ -178,6 +186,11 @@ public final class FlatcraftGame {
         MapGenerator map = new MapGenerator();
 
         return map.GenerateMap(mapHeightInPixels, mapWidthInPixels, cellFactory);
+         */
+        IMapGenerator map = this.genMap;
+        map.generateMap(height/ spriteStore.getSpriteSize(),width/ spriteStore.getSpriteSize(),cellFactory);
+        return map.getMap();
+
     }
 
     /**
