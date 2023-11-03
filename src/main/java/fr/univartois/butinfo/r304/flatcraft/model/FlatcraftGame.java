@@ -20,6 +20,9 @@ import java.awt.*;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import fr.univartois.butinfo.r304.flatcraft.model.mobs.strategy.Mob;
+import fr.univartois.butinfo.r304.flatcraft.model.mobs.strategy.aleatoire.DeplacementAleatoire;
+import fr.univartois.butinfo.r304.flatcraft.model.mobs.strategy.lineaire.DeplacementLineare;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
@@ -158,6 +161,9 @@ public final class FlatcraftGame {
         System.out.println(map.getSoilHeight());
         this.player = new Player(this, 0, map.getSoilHeight()*spriteStore.getSpriteSize()-spriteStore.getSpriteSize(), sprite, playerHealth, playerExperience, playerInventory);
         movableObjects.add(player);
+        Mob mob = new Mob(this,1000,map.getSoilHeight()*spriteStore.getSpriteSize()-spriteStore.getSpriteSize(), spriteStore1.getSprite("dirt"), new DeplacementAleatoire());
+        movableObjects.add(mob);
+        controller.addMovable(mob);
         controller.addMovable(player);
         controller.bindTime(time);
         controller.bindLevel(level);

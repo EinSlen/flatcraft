@@ -19,10 +19,10 @@ public class MyCell extends AbstractCell {
     @Override
     public boolean move(IMovable movable) {
         if(super.getResource() == null){
-            int nouvelleLigne = getRow() * getSprite().getHeight();
-            int nouvelleColonne = getColumn() * getSprite().getWidth();
-            movable.setX(nouvelleLigne);
-            movable.setY(nouvelleColonne);
+            int nouvelleLigne = getRow() * getSprite().getWidth();
+            int nouvelleColonne = getColumn() * getSprite().getHeight();
+            movable.setX(nouvelleColonne);
+            movable.setY(nouvelleLigne);
             return true;
         } else {
             return false;
