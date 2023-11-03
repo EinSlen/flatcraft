@@ -21,6 +21,7 @@ import java.io.IOException;
 import fr.univartois.butinfo.r304.flatcraft.controller.FlatcraftController;
 import fr.univartois.butinfo.r304.flatcraft.model.Factory;
 import fr.univartois.butinfo.r304.flatcraft.model.FlatcraftGame;
+import fr.univartois.butinfo.r304.flatcraft.model.MapGenerator;
 import fr.univartois.butinfo.r304.flatcraft.view.SpriteStore;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -66,6 +67,7 @@ public final class Flatcraft extends Application {
         FlatcraftGame game = new FlatcraftGame(GAME_WIDTH, GAME_HEIGHT, new SpriteStore(), factory);
         controller.setGame(game);
         game.setController(controller);
+        game.setGenMap(new MapGenerator());
         game.prepare();
 
         // On peut maintenant afficher la scène et la fenêtre.
@@ -83,8 +85,7 @@ public final class Flatcraft extends Application {
      *
      * @see #launch(String...)
      */
-    public static void main(String[] args) {
-        launch();
+    public static void main(String[] args) {launch();
     }
 
 }
