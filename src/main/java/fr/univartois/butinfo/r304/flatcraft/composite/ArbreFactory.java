@@ -3,16 +3,11 @@ package fr.univartois.butinfo.r304.flatcraft.composite;
 import fr.univartois.butinfo.r304.flatcraft.model.Cell;
 import fr.univartois.butinfo.r304.flatcraft.model.CellFactory;
 import fr.univartois.butinfo.r304.flatcraft.model.FlatcraftGame;
-import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 import fr.univartois.butinfo.r304.flatcraft.view.SpriteStore;
-import fr.univartois.butinfo.r304.flatcraft.composite.ComponentArbre;
 
 import java.util.Random;
-import java.util.Scanner;
-import java.util.ArrayList;
-import java.util.List;
 
-public class ArbreFactory implements ComponentArbre {
+public class ArbreFactory implements IComponent {
     private FlatcraftGame game;
     private CellFactory cellFactory;
     private static Random random = new Random();
@@ -26,7 +21,7 @@ public class ArbreFactory implements ComponentArbre {
         this.hauteurLimiteTronc = hauteurLimiteTronc;
     }
 
-    public void ajouterArbresAleatoires() {
+    public void ajouterAleatoires() {
         int arbresAjoutes = 0;
 
         while (arbresAjoutes < maxArbres) {

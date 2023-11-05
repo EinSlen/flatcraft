@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import fr.univartois.butinfo.r304.flatcraft.composite.ArbreFactory;
+import fr.univartois.butinfo.r304.flatcraft.composite.TerrilFactory;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
@@ -155,7 +156,10 @@ public final class FlatcraftGame {
         this.player = new Player(this, 0, map.getSoilHeight()*spriteStore.getSpriteSize()-spriteStore.getSpriteSize(), sprite, playerHealth, playerExperience, playerInventory);
         //ArbreMovable arbreMovable = new ArbreMovable(this, 0, 0, spriteStore1.getSprite("leaves"));
         ArbreFactory arbreFactory = new ArbreFactory(this, cellFactory, 5, 5);
-        arbreFactory.ajouterArbresAleatoires();
+        arbreFactory.ajouterAleatoires();
+
+        TerrilFactory terrilFactory = new TerrilFactory(this, cellFactory, 5);
+        terrilFactory.ajouterAleatoires();
 
         movableObjects.add(player);
         controller.addMovable(player);
