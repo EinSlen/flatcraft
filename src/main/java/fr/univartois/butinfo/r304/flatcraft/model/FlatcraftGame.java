@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import fr.univartois.butinfo.r304.flatcraft.model.arbreterri.ArbreFactory;
+import fr.univartois.butinfo.r304.flatcraft.model.arbreterri.FactoryComposite;
 import fr.univartois.butinfo.r304.flatcraft.model.cellules.Cell;
 import fr.univartois.butinfo.r304.flatcraft.model.cellules.CellFactory;
 import fr.univartois.butinfo.r304.flatcraft.model.arbreterri.TerrilFactory;
@@ -162,11 +163,13 @@ public final class FlatcraftGame {
         ObservableMap<Resource, Integer> playerInventory = FXCollections.observableHashMap();
         SpriteStore spriteStore1 = new SpriteStore();
         Sprite sprite = spriteStore1.getSprite("player");
-        this.player = new Player(this, 0, map.getSoilHeight()*spriteStore.getSpriteSize()-spriteStore.getSpriteSize(), sprite, playerHealth, playerExperience, playerInventory);
+        this.player = new Player(this, 0, map.getSoilHeight()*spriteStore.getSpriteSize()-spriteStore.getSpriteSize(), sprite, playerHealth, playerExperience, playerInventory);;
         ArbreFactory arbreFactory = new ArbreFactory(this, cellFactory, 5, 5);
-        arbreFactory.ajouterAleatoires();
         TerrilFactory terrilFactory = new TerrilFactory(this, cellFactory, 5);
-        terrilFactory.ajouterAleatoires();
+        FactoryComposite factory = new FactoryComposite();
+        factory.ajouter(arbreFactory);
+        factory.ajouter(terrilFactory);
+        factory.ajouterAleatoires();
         movableObjects.add(player);
 
         // Créer 1 mob pour la dimension normal, la gestion des dimensions n'est pas encore faite
