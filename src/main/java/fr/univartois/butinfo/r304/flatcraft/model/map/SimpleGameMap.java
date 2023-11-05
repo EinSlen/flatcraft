@@ -16,9 +16,9 @@
 
 package fr.univartois.butinfo.r304.flatcraft.model.map;
 
-import fr.univartois.butinfo.r304.flatcraft.model.Cell;
+import fr.univartois.butinfo.r304.flatcraft.model.cellules.Cell;
 import fr.univartois.butinfo.r304.flatcraft.model.GameMap;
-import fr.univartois.butinfo.r304.flatcraft.model.MyCell;
+import fr.univartois.butinfo.r304.flatcraft.model.cellules.MyCell;
 
 /**
  * La classe {@link SimpleGameMap} propose une implémentation de base de {@link GameMap},
@@ -129,7 +129,7 @@ public final class SimpleGameMap implements GameMap {
      * (non-Javadoc)
      *
      * @see fr.univartois.butinfo.r304.flatcraft.model.GameMap#setAt(int, int,
-     * fr.univartois.butinfo.r304.flatcraft.model.Cell)
+     * fr.univartois.butinfo.r304.flatcraft.model.cellules.Cell)
      */
     @Override
     public void setAt(int row, int column, Cell cell) {

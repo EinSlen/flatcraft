@@ -16,6 +16,8 @@
 
 package fr.univartois.butinfo.r304.flatcraft.model;
 
+import fr.univartois.butinfo.r304.flatcraft.model.cellules.Cell;
+
 /**
  * L'interface {@link GameMap} définit le contrat à remplir par les différentes
  * implémentations possibles d'une carte du jeu.

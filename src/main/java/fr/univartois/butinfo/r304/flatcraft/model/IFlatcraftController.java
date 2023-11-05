@@ -16,6 +16,7 @@
 
 package fr.univartois.butinfo.r304.flatcraft.model;
 
+import fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable;
 import javafx.beans.property.IntegerProperty;
 
 /**

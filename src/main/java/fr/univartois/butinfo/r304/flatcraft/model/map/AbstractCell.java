@@ -16,7 +16,7 @@
 
 package fr.univartois.butinfo.r304.flatcraft.model.map;
 
-import fr.univartois.butinfo.r304.flatcraft.model.Cell;
+import fr.univartois.butinfo.r304.flatcraft.model.cellules.Cell;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 import javafx.beans.property.ObjectProperty;
@@ -87,7 +87,7 @@ public abstract class AbstractCell implements Cell {
     /*
      * (non-Javadoc)
      *
-     * @see fr.univartois.butinfo.r304.flatcraft.model.Cell#getRow()
+     * @see fr.univartois.butinfo.r304.flatcraft.model.cellules.Cell#getRow()
      */
     @Override
     public int getRow() {
@@ -97,7 +97,7 @@ public abstract class AbstractCell implements Cell {
     /*
      * (non-Javadoc)
      *
-     * @see fr.univartois.butinfo.r304.flatcraft.model.Cell#getColumn()
+     * @see fr.univartois.butinfo.r304.flatcraft.model.cellules.Cell#getColumn()
      */
     @Override
     public int getColumn() {
@@ -107,7 +107,7 @@ public abstract class AbstractCell implements Cell {
     /*
      * (non-Javadoc)
      *
-     * @see fr.univartois.butinfo.r304.flatcraft.model.Cell#getSprite()
+     * @see fr.univartois.butinfo.r304.flatcraft.model.cellules.Cell#getSprite()
      */
     @Override
     public Sprite getSprite() {
@@ -117,7 +117,7 @@ public abstract class AbstractCell implements Cell {
     /*
      * (non-Javadoc)
      *
-     * @see fr.univartois.butinfo.r304.flatcraft.model.Cell#getSpriteProperty()
+     * @see fr.univartois.butinfo.r304.flatcraft.model.cellules.Cell#getSpriteProperty()
      */
     @Override
     public ObjectProperty<Sprite> getSpriteProperty() {
@@ -127,7 +127,7 @@ public abstract class AbstractCell implements Cell {
     /*
      * (non-Javadoc)
      *
-     * @see fr.univartois.butinfo.r304.flatcraft.model.Cell#getResource()
+     * @see fr.univartois.butinfo.r304.flatcraft.model.cellules.Cell#getResource()
      */
     @Override
     public Resource getResource() {
@@ -137,7 +137,7 @@ public abstract class AbstractCell implements Cell {
     /*
      * (non-Javadoc)
      *
-     * @see fr.univartois.butinfo.r304.flatcraft.model.Cell#getResourceProperty()
+     * @see fr.univartois.butinfo.r304.flatcraft.model.cellules.Cell#getResourceProperty()
      */
     @Override
     public ObjectProperty<Resource> getResourceProperty() {
@@ -148,7 +148,7 @@ public abstract class AbstractCell implements Cell {
      * (non-Javadoc)
      *
      * @see
-     * fr.univartois.butinfo.r304.flatcraft.model.Cell#replaceBy(fr.univartois.butinfo.
+     * fr.univartois.butinfo.r304.flatcraft.model.cellules.Cell#replaceBy(fr.univartois.butinfo.
      * r304.flatcraft.model.Cell)
      */
     @Override

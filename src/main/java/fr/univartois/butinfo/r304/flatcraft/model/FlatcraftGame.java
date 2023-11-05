@@ -17,10 +17,19 @@
 package fr.univartois.butinfo.r304.flatcraft.model;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-import fr.univartois.butinfo.r304.flatcraft.model.mobs.strategy.Mob;
-import fr.univartois.butinfo.r304.flatcraft.model.mobs.strategy.aleatoire.DeplacementAleatoire;
-import fr.univartois.butinfo.r304.flatcraft.model.compositeArbreTerri.ArbreFactory;
-import fr.univartois.butinfo.r304.flatcraft.model.compositeArbreTerri.TerrilFactory;
+
+import fr.univartois.butinfo.r304.flatcraft.model.arbreterri.ArbreFactory;
+import fr.univartois.butinfo.r304.flatcraft.model.cellules.Cell;
+import fr.univartois.butinfo.r304.flatcraft.model.cellules.CellFactory;
+import fr.univartois.butinfo.r304.flatcraft.model.arbreterri.TerrilFactory;
+import fr.univartois.butinfo.r304.flatcraft.model.map.IMapGenerator;
+import fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable;
+import fr.univartois.butinfo.r304.flatcraft.model.movables.mobs.fabrique.MobDim;
+import fr.univartois.butinfo.r304.flatcraft.model.movables.mobs.fabrique.normal.MNormal;
+import fr.univartois.butinfo.r304.flatcraft.model.movables.mobs.fabrique.otherdim.MOtherDim;
+import fr.univartois.butinfo.r304.flatcraft.model.movables.mobs.strategy.aleatoire.DeplacementAleatoire;
+import fr.univartois.butinfo.r304.flatcraft.model.movables.Player;
+import fr.univartois.butinfo.r304.flatcraft.model.movables.mobs.strategy.intelligent.DeplacementIntelligent;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
@@ -57,12 +66,12 @@ public final class FlatcraftGame {
     /**
      * L'instance e {@link ISpriteStore} utilisée pour créer les sprites du jeu.
      */
-    private ISpriteStore spriteStore;
+    private final ISpriteStore spriteStore;
 
     /**
      * L'instance de {@link CellFactory} utilisée pour créer les cellules du jeu.
      */
-    private CellFactory cellFactory;
+    private final CellFactory cellFactory;
 
     /**
      * La carte du jeu, sur laquelle le joueur évolue.
@@ -72,12 +81,12 @@ public final class FlatcraftGame {
     /**
      * Le temps écoulé depuis le début de la partie.
      */
-    private IntegerProperty time = new SimpleIntegerProperty(12);
+    private final IntegerProperty time = new SimpleIntegerProperty(12);
 
     /**
      * Le niveau actuel de la partie.
      */
-    private IntegerProperty level = new SimpleIntegerProperty(1);
+    private final IntegerProperty level = new SimpleIntegerProperty(1);
 
     /**
      * La représentation du joueur.
@@ -87,12 +96,12 @@ public final class FlatcraftGame {
     /**
      * La liste des objets mobiles du jeu.
      */
-    private List<IMovable> movableObjects = new CopyOnWriteArrayList<>();
+    private final List<IMovable> movableObjects = new CopyOnWriteArrayList<>();
 
     /**
      * L'animation simulant le temps qui passe dans le jeu.
      */
-    private FlatcraftAnimation animation = new FlatcraftAnimation(this, movableObjects);
+    private final FlatcraftAnimation animation = new FlatcraftAnimation(this, movableObjects);
 
     private IMapGenerator genMap;
 
@@ -154,17 +163,18 @@ public final class FlatcraftGame {
         SpriteStore spriteStore1 = new SpriteStore();
         Sprite sprite = spriteStore1.getSprite("player");
         this.player = new Player(this, 0, map.getSoilHeight()*spriteStore.getSpriteSize()-spriteStore.getSpriteSize(), sprite, playerHealth, playerExperience, playerInventory);
-        //ArbreMovable arbreMovable = new ArbreMovable(this, 0, 0, spriteStore1.getSprite("leaves"));
         ArbreFactory arbreFactory = new ArbreFactory(this, cellFactory, 5, 5);
         arbreFactory.ajouterAleatoires();
-
         TerrilFactory terrilFactory = new TerrilFactory(this, cellFactory, 5);
         terrilFactory.ajouterAleatoires();
-
         movableObjects.add(player);
-        Mob mob = new Mob(this,1000,map.getSoilHeight()*spriteStore.getSpriteSize()-spriteStore.getSpriteSize(), spriteStore1.getSprite("dirt"), new DeplacementAleatoire());
+
+        // Créer 1 mob pour la dimension normal, la gestion des dimensions n'est pas encore faite
+        MobDim mobDim = new MNormal();
+        IMovable mob = mobDim.render(this, new DeplacementIntelligent());
         movableObjects.add(mob);
         controller.addMovable(mob);
+
         controller.addMovable(player);
         controller.bindTime(time);
         controller.bindLevel(level);

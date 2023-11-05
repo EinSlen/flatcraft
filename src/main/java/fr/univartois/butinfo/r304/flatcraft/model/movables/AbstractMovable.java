@@ -17,7 +17,6 @@
 package fr.univartois.butinfo.r304.flatcraft.model.movables;
 
 import fr.univartois.butinfo.r304.flatcraft.model.FlatcraftGame;
-import fr.univartois.butinfo.r304.flatcraft.model.IMovable;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ObjectProperty;
@@ -83,7 +82,7 @@ public abstract class AbstractMovable implements IMovable {
     /*
      * (non-Javadoc)
      *
-     * @see fr.univartois.butinfo.r304.flatcraft.model.IMovable#getWidth()
+     * @see fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable#getWidth()
      */
     @Override
     public int getWidth() {
@@ -93,7 +92,7 @@ public abstract class AbstractMovable implements IMovable {
     /*
      * (non-Javadoc)
      *
-     * @see fr.univartois.butinfo.r304.flatcraft.model.IMovable#getHeight()
+     * @see fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable#getHeight()
      */
     @Override
     public int getHeight() {
@@ -103,7 +102,7 @@ public abstract class AbstractMovable implements IMovable {
     /*
      * (non-Javadoc)
      *
-     * @see fr.univartois.butinfo.r304.flatcraft.model.IMovable#setX(int)
+     * @see fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable#setX(int)
      */
     @Override
     public void setX(int xPosition) {
@@ -113,7 +112,7 @@ public abstract class AbstractMovable implements IMovable {
     /*
      * (non-Javadoc)
      *
-     * @see fr.univartois.butinfo.r304.flatcraft.model.IMovable#getX()
+     * @see fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable#getX()
      */
     @Override
     public int getX() {
@@ -123,7 +122,7 @@ public abstract class AbstractMovable implements IMovable {
     /*
      * (non-Javadoc)
      *
-     * @see fr.univartois.butinfo.r304.flatcraft.model.IMovable#getXProperty()
+     * @see fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable#getXProperty()
      */
     @Override
     public DoubleProperty getXProperty() {
@@ -133,7 +132,7 @@ public abstract class AbstractMovable implements IMovable {
     /*
      * (non-Javadoc)
      *
-     * @see fr.univartois.butinfo.r304.flatcraft.model.IMovable#setY(int)
+     * @see fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable#setY(int)
      */
     @Override
     public void setY(int yPosition) {
@@ -143,7 +142,7 @@ public abstract class AbstractMovable implements IMovable {
     /*
      * (non-Javadoc)
      *
-     * @see fr.univartois.butinfo.r304.flatcraft.model.IMovable#getY()
+     * @see fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable#getY()
      */
     @Override
     public int getY() {
@@ -153,7 +152,7 @@ public abstract class AbstractMovable implements IMovable {
     /*
      * (non-Javadoc)
      *
-     * @see fr.univartois.butinfo.r304.flatcraft.model.IMovable#getYProperty()
+     * @see fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable#getYProperty()
      */
     @Override
     public DoubleProperty getYProperty() {
@@ -163,7 +162,7 @@ public abstract class AbstractMovable implements IMovable {
     /*
      * (non-Javadoc)
      *
-     * @see fr.univartois.butinfo.r304.flatcraft.model.IMovable#setHorizontalSpeed(double)
+     * @see fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable#setHorizontalSpeed(double)
      */
     @Override
     public void setHorizontalSpeed(double speed) {
@@ -173,17 +172,17 @@ public abstract class AbstractMovable implements IMovable {
     /*
      * (non-Javadoc)
      *
-     * @see fr.univartois.butinfo.r304.flatcraft.model.IMovable#getHorizontalSpeed()
+     * @see fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable#getHorizontalSpeed()
      */
     @Override
-    public double getHorizontalSpeed() {
+    public double getHorizontalSpeed(int direction) {
         return horizontalSpeed;
     }
 
     /*
      * (non-Javadoc)
      *
-     * @see fr.univartois.butinfo.r304.flatcraft.model.IMovable#setVerticalSpeed(double)
+     * @see fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable#setVerticalSpeed(double)
      */
     @Override
     public void setVerticalSpeed(double speed) {
@@ -193,7 +192,7 @@ public abstract class AbstractMovable implements IMovable {
     /*
      * (non-Javadoc)
      *
-     * @see fr.univartois.butinfo.r304.flatcraft.model.IMovable#getVerticalSpeed()
+     * @see fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable#getVerticalSpeed()
      */
     @Override
     public double getVerticalSpeed() {
@@ -204,7 +203,7 @@ public abstract class AbstractMovable implements IMovable {
      * (non-Javadoc)
      *
      * @see
-     * fr.univartois.butinfo.r304.flatcraft.model.IMovable#setSprite(fr.univartois.butinfo
+     * fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable#setSprite(fr.univartois.butinfo
      * .r304.flatcraft.view.Sprite)
      */
     @Override
@@ -215,7 +214,7 @@ public abstract class AbstractMovable implements IMovable {
     /*
      * (non-Javadoc)
      *
-     * @see fr.univartois.butinfo.r304.flatcraft.model.IMovable#getSprite()
+     * @see fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable#getSprite()
      */
     @Override
     public Sprite getSprite() {
@@ -225,7 +224,7 @@ public abstract class AbstractMovable implements IMovable {
     /*
      * (non-Javadoc)
      *
-     * @see fr.univartois.butinfo.r304.flatcraft.model.IMovable#getSpriteProperty()
+     * @see fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable#getSpriteProperty()
      */
     @Override
     public ObjectProperty<Sprite> getSpriteProperty() {
@@ -235,7 +234,7 @@ public abstract class AbstractMovable implements IMovable {
     /*
      * (non-Javadoc)
      *
-     * @see fr.univartois.butinfo.r304.flatcraft.model.IMovable#move(long)
+     * @see fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable#move(long)
      */
     @Override
     public boolean move(long delta) {
@@ -295,7 +294,7 @@ public abstract class AbstractMovable implements IMovable {
     /*
      * (non-Javadoc)
      *
-     * @see fr.univartois.butinfo.r304.flatcraft.model.IMovable#self()
+     * @see fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable#self()
      */
     @Override
     public IMovable self() {
