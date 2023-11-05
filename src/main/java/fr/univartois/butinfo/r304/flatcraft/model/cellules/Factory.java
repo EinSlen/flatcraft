@@ -36,7 +36,7 @@ public class Factory implements CellFactory {
 
     @Override
     public Cell createTrunk() {
-        return createCell("chest_front");
+        return createCell("tree");
     }
 
     @Override
