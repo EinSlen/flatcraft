@@ -19,8 +19,8 @@ package fr.univartois.butinfo.r304.flatcraft.model;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import fr.univartois.butinfo.r304.flatcraft.composite.ArbreFactory;
-import fr.univartois.butinfo.r304.flatcraft.composite.TerrilFactory;
+import fr.univartois.butinfo.r304.flatcraft.model.compositeArbreTerri.ArbreFactory;
+import fr.univartois.butinfo.r304.flatcraft.model.compositeArbreTerri.TerrilFactory;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;

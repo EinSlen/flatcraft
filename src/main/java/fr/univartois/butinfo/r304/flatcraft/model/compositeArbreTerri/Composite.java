@@ -1,4 +1,4 @@
-package fr.univartois.butinfo.r304.flatcraft.composite;
+package fr.univartois.butinfo.r304.flatcraft.model.compositeArbreTerri;
 
 import java.util.ArrayList;
 import java.util.List;
