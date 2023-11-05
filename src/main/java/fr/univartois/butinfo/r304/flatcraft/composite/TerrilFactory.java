@@ -10,18 +10,17 @@ import java.util.Random;
 public class TerrilFactory implements IComponent {
     private FlatcraftGame game;
     private CellFactory cellFactory;
-    private Random random;
+    private static Random random = new Random();
     private int maxTerrilSize;
 
     public TerrilFactory(FlatcraftGame game, CellFactory cellFactory, int maxTerrilSize) {
         this.game = game;
         this.cellFactory = cellFactory;
-        this.random = new Random();
         this.maxTerrilSize = maxTerrilSize;
     }
 
     public void ajouterAleatoires() {
-        int terrilSize = maxTerrilSize;
+        int terrilSize = random.nextInt(maxTerrilSize) + 1;
         int terrilCol = random.nextInt(game.getWidth() / new SpriteStore().getSpriteSize());
         int hauteurCourante = game.getMap().getSoilHeight() - terrilSize;
 
