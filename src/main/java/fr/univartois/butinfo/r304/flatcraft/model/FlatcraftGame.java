@@ -15,14 +15,12 @@
  */
 
 package fr.univartois.butinfo.r304.flatcraft.model;
-
-import java.awt.*;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-
 import fr.univartois.butinfo.r304.flatcraft.model.mobs.strategy.Mob;
 import fr.univartois.butinfo.r304.flatcraft.model.mobs.strategy.aleatoire.DeplacementAleatoire;
-import fr.univartois.butinfo.r304.flatcraft.model.mobs.strategy.lineaire.DeplacementLineare;
+import fr.univartois.butinfo.r304.flatcraft.model.compositeArbreTerri.ArbreFactory;
+import fr.univartois.butinfo.r304.flatcraft.model.compositeArbreTerri.TerrilFactory;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
@@ -31,9 +29,6 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
-import javafx.scene.image.Image;
-
-import static javafx.collections.FXCollections.observableHashMap;
 
 /**
  * La classe {@link FlatcraftGame} permet de gérer une partie du jeu Flatcraft.
@@ -158,8 +153,14 @@ public final class FlatcraftGame {
         ObservableMap<Resource, Integer> playerInventory = FXCollections.observableHashMap();
         SpriteStore spriteStore1 = new SpriteStore();
         Sprite sprite = spriteStore1.getSprite("player");
-        System.out.println(map.getSoilHeight());
         this.player = new Player(this, 0, map.getSoilHeight()*spriteStore.getSpriteSize()-spriteStore.getSpriteSize(), sprite, playerHealth, playerExperience, playerInventory);
+        //ArbreMovable arbreMovable = new ArbreMovable(this, 0, 0, spriteStore1.getSprite("leaves"));
+        ArbreFactory arbreFactory = new ArbreFactory(this, cellFactory, 5, 5);
+        arbreFactory.ajouterAleatoires();
+
+        TerrilFactory terrilFactory = new TerrilFactory(this, cellFactory, 5);
+        terrilFactory.ajouterAleatoires();
+
         movableObjects.add(player);
         Mob mob = new Mob(this,1000,map.getSoilHeight()*spriteStore.getSpriteSize()-spriteStore.getSpriteSize(), spriteStore1.getSprite("dirt"), new DeplacementAleatoire());
         movableObjects.add(mob);
@@ -169,12 +170,18 @@ public final class FlatcraftGame {
         controller.bindLevel(level);
         controller.bindHealth(playerHealth);
         controller.bindXP(playerExperience);
+
+
         animation.start();
     }
 
 
     public void setGenMap(IMapGenerator genMap) {
         this.genMap = genMap;
+    }
+
+    public GameMap getMap() {
+        return map;
     }
 
     /**
@@ -343,5 +350,6 @@ public final class FlatcraftGame {
         // On récupère enfin la cellule à cette position dans la carte.
         return map.getAt(row, column);
     }
+
 
 }

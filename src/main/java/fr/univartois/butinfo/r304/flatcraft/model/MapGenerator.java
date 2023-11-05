@@ -3,6 +3,8 @@ package fr.univartois.butinfo.r304.flatcraft.model;
 import fr.univartois.butinfo.r304.flatcraft.model.map.SimpleGameMap;
 import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 
+import java.util.Random;
+
 public class MapGenerator implements IMapGenerator {
 
     private int width;
@@ -52,8 +54,9 @@ public class MapGenerator implements IMapGenerator {
                 for(int j = 0; j < width; j++){
                     if (i == map.getSoilHeight()){
                         map.setAt(i,j,cell.createSoilSurface());
+
                     }
-                    if(i < map.getSoilHeight()){
+                    else if(i < map.getSoilHeight()){
                         map.setAt(i,j, cell.createSky());
                     }
                     else{
@@ -70,5 +73,7 @@ public class MapGenerator implements IMapGenerator {
     public SimpleGameMap getMap() {
         return map;
     }
+
+
 }
 
