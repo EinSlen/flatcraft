@@ -238,7 +238,8 @@ public final class FlatcraftGame {
      * Fait se déplacer le joueur vers le bas.
      */
     public void moveDown() {
-        // TODO Implémentez cette méthode.
+        player.setVerticalSpeed(-50);
+        move(player);
     }
 
     /**
