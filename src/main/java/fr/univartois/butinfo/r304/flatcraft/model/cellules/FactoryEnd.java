@@ -41,6 +41,11 @@ public class FactoryEnd implements CellFactory{
         return createRessouresCell("obsidian_brick");
     }
 
+    @Override
+    public Cell createJunglegrass() {
+        return createRessouresCell("sandstone");
+    }
+
     public MyCell createCell(String name){
         Sprite sprite = spriteStore.getSprite(name);
         return new MyCell(sprite);

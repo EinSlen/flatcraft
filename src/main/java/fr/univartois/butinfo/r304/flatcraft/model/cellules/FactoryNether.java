@@ -42,6 +42,11 @@ public class FactoryNether implements CellFactory {
         return createRessouresCell("lava");
     }
 
+    @Override
+    public Cell createJunglegrass() {
+        return createRessouresCell("coal_block");
+    }
+
     public MyCell createCell(String name){
         Sprite sprite = spriteStore.getSprite(name);
         return new MyCell(sprite);
