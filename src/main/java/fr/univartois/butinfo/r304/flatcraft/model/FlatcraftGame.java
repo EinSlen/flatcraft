@@ -231,7 +231,8 @@ public final class FlatcraftGame {
      * Fait se déplacer le joueur vers le haut.
      */
     public void moveUp() {
-        // TODO Implémentez cette méthode.
+        player.setVerticalSpeed(50);
+        move(player);
     }
 
     /**
