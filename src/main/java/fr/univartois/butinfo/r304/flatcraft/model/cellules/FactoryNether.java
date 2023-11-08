@@ -6,7 +6,7 @@ import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 import fr.univartois.butinfo.r304.flatcraft.view.SpriteStore;
 import java.util.Random;
 
-public class Factory implements CellFactory {
+public class FactoryNether implements CellFactory {
 
     SpriteStore spriteStore;
     Random random = new Random();
@@ -17,31 +17,29 @@ public class Factory implements CellFactory {
 
     @Override
     public Cell createSky() {
-        return createCell("ice");
+        return createCell("coal_block");
     }
 
     @Override
     public Cell createSoilSurface() {
-        if(random.nextInt(10)<1)
-            return createRessouresCell("junglegrass");
         if(random.nextInt(10)<2)
-            return createRessouresCell("water");
-        return createRessouresCell("grass");
+            return createRessouresCell("lava");
+        return createRessouresCell("obsidian");
     }
 
     @Override
     public Cell createSubSoil() {
-        return createRessouresCell("dirt");
+        return createRessouresCell("obsidian");
     }
 
     @Override
     public Cell createTrunk() {
-        return createCell("tree");
+        return createCell("lava");
     }
 
     @Override
     public Cell createLeaves() {
-        return createRessouresCell("acacia_leaves");
+        return createRessouresCell("lava");
     }
 
     public MyCell createCell(String name){
