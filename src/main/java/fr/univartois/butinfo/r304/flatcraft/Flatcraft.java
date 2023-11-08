@@ -22,6 +22,7 @@ import fr.univartois.butinfo.r304.flatcraft.controller.FlatcraftController;
 import fr.univartois.butinfo.r304.flatcraft.model.cellules.CellFactory;
 import fr.univartois.butinfo.r304.flatcraft.model.FlatcraftGame;
 import fr.univartois.butinfo.r304.flatcraft.model.cellules.Factory;
+import fr.univartois.butinfo.r304.flatcraft.model.cellules.FactoryEnd;
 import fr.univartois.butinfo.r304.flatcraft.model.cellules.FactoryNether;
 import fr.univartois.butinfo.r304.flatcraft.model.map.MapGenerator;
 import fr.univartois.butinfo.r304.flatcraft.view.SpriteStore;
@@ -64,7 +65,7 @@ public final class Flatcraft extends Application {
         controller.setStage(stage);
 
         // On crée ensuite le jeu, que l'on lie au contrôleur.
-        CellFactory factory = new FactoryNether();
+        CellFactory factory = new FactoryEnd();
         FlatcraftGame game = new FlatcraftGame(GAME_WIDTH, GAME_HEIGHT, new SpriteStore(), factory);
         controller.setGame(game);
         game.setController(controller);
