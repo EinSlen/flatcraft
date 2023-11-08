@@ -174,7 +174,7 @@ public final class FlatcraftGame {
 
         // Créer 1 mob pour la dimension normal, la gestion des dimensions n'est pas encore faite
         MobDim mobDim = new MNormal();
-        IMovable mob = mobDim.render(this, new DeplacementIntelligent());
+        IMovable mob = mobDim.render(this, new DeplacementAleatoire());
         movableObjects.add(mob);
         controller.addMovable(mob);
 
@@ -293,7 +293,14 @@ public final class FlatcraftGame {
      * Fait creuser le joueur vers le haut.
      */
     public void digUp() {
-        // TODO Nous reviendrons plus tard sur cette méthode.
+        Cell cell = getCellOf(player);
+        Cell cellToDig = map.getAt(cell.getRow()-1, cell.getColumn());
+        System.out.println(cellToDig.getSprite().getImage().getUrl());
+        System.out.println(cellToDig.getResource());
+        if (cellToDig != null){
+            dig(cellToDig);
+            move(player);
+        }
     }
 
     /**
