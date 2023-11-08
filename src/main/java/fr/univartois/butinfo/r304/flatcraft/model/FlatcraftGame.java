@@ -39,6 +39,8 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
+import java.io.*;
+
 
 /**
  * La classe {@link FlatcraftGame} permet de gérer une partie du jeu Flatcraft.
@@ -285,8 +287,10 @@ public final class FlatcraftGame {
     /**
      * Fait sauter le joueur.
      */
-    public void jump() {
-        // TODO Cette méthode vous sera fournie ultérieurement.
+    public void jump() throws InterruptedException {
+        moveUp();
+        Thread.sleep(100);
+        move(player);
     }
 
     /**
