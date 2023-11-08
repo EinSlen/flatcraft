@@ -17,16 +17,20 @@ public class Factory implements CellFactory {
 
     @Override
     public Cell createSky() {
-            return createCell("ice");
+        if(random.nextInt(10)<2)
+            return createRessouresCell("cloud");
+        return createCell("ice");
     }
 
     @Override
     public Cell createSoilSurface() {
-        if(random.nextInt(10)<1)
-            return createRessouresCell("junglegrass");
         if(random.nextInt(10)<2)
             return createRessouresCell("water");
         return createRessouresCell("grass");
+    }
+
+    public Cell createJunglegrass() {
+        return createRessouresCell("junglegrass");
     }
 
     @Override

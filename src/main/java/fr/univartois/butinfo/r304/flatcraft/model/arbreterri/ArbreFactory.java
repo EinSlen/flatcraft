@@ -37,7 +37,7 @@ public class ArbreFactory implements IComponent {
     }
 
     private boolean peutPlacerArbre(int col, int hauteurTronc) {
-        // Vérifiez si l'emplacement est approprié pour un nouvel arbre
+
         // (personnaliser cela en fonction des besoins mais je pense si 0 > col-2 || map.width < col-2 RETURN FALSE à voir)
         return true;
     }
