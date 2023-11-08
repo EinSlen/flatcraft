@@ -39,6 +39,8 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
+import java.io.*;
+
 
 /**
  * La classe {@link FlatcraftGame} permet de gérer une partie du jeu Flatcraft.
@@ -174,7 +176,7 @@ public final class FlatcraftGame {
 
         // Créer 1 mob pour la dimension normal, la gestion des dimensions n'est pas encore faite
         MobDim mobDim = new MNormal();
-        IMovable mob = mobDim.render(this, new DeplacementIntelligent());
+        IMovable mob = mobDim.render(this, new DeplacementAleatoire());
         movableObjects.add(mob);
         controller.addMovable(mob);
 
@@ -231,14 +233,16 @@ public final class FlatcraftGame {
      * Fait se déplacer le joueur vers le haut.
      */
     public void moveUp() {
-        // TODO Implémentez cette méthode.
+        player.setVerticalSpeed(-50);
+        move(player);
     }
 
     /**
      * Fait se déplacer le joueur vers le bas.
      */
     public void moveDown() {
-        // TODO Implémentez cette méthode.
+        player.setVerticalSpeed(50);
+        move(player);
     }
 
     /**
@@ -283,15 +287,24 @@ public final class FlatcraftGame {
     /**
      * Fait sauter le joueur.
      */
-    public void jump() {
-        // TODO Cette méthode vous sera fournie ultérieurement.
+    public void jump() throws InterruptedException {
+        moveUp();
+        Thread.sleep(100);
+        move(player);
     }
 
     /**
      * Fait creuser le joueur vers le haut.
      */
     public void digUp() {
-        // TODO Nous reviendrons plus tard sur cette méthode.
+        Cell cell = getCellOf(player);
+        Cell cellToDig = map.getAt(cell.getRow()-1, cell.getColumn());
+        System.out.println(cellToDig.getSprite().getImage().getUrl());
+        System.out.println(cellToDig.getResource());
+        if (cellToDig != null){
+            dig(cellToDig);
+            move(player);
+        }
     }
 
     /**
