@@ -77,7 +77,7 @@ public final class SimpleGameMap implements GameMap {
         for (int i = 0; i < height; i++) {
             for (int j = 0; j < width; j++) {
                 // TODO Instanciez ici votre implémentation de Cell.
-                cells[i][j] = null;
+                cells[i][j] = new MyCell(i,j);;
             }
         }
     }
