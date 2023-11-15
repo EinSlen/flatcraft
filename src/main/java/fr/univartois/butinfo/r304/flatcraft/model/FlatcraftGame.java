@@ -50,6 +50,12 @@ import java.io.*;
  * @version 0.1.0
  */
 public final class FlatcraftGame {
+    private static FlatcraftGame instance;
+
+    public static FlatcraftGame getInstance(int width, int height, ISpriteStore spriteStore, CellFactory factory){
+        if(instance==null) instance = new FlatcraftGame(width, height, spriteStore, factory);
+        return instance;
+    }
 
     /**
      * La largeur de la carte du jeu affichée (en pixels).
@@ -118,7 +124,7 @@ public final class FlatcraftGame {
      *        {@link Sprite} du jeu.
      * @param factory La fabrique permettant de créer les cellules du jeux.
      */
-    public FlatcraftGame(int width, int height, ISpriteStore spriteStore, CellFactory factory) {
+    private FlatcraftGame(int width, int height, ISpriteStore spriteStore, CellFactory factory) {
         this.width = width;
         this.height = height;
         this.spriteStore = spriteStore;

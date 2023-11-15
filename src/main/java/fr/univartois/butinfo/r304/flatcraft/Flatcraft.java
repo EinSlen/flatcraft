@@ -65,8 +65,10 @@ public final class Flatcraft extends Application {
         controller.setStage(stage);
 
         // On crée ensuite le jeu, que l'on lie au contrôleur.
-        CellFactory factory = new FactoryEnd();
-        FlatcraftGame game = new FlatcraftGame(GAME_WIDTH, GAME_HEIGHT, SpriteStore.getInstance(), factory);
+
+        CellFactory factory = new Factory();
+        FlatcraftGame game = FlatcraftGame.getInstance(GAME_WIDTH, GAME_HEIGHT, SpriteStore.getInstance(), factory);
+
         controller.setGame(game);
         game.setController(controller);
         game.setGenMap(new MapGenerator());
