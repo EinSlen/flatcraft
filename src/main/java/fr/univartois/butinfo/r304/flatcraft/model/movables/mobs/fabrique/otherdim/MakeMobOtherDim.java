@@ -10,7 +10,7 @@ import fr.univartois.butinfo.r304.flatcraft.view.SpriteStore;
 public class MakeMobOtherDim implements IMobMake {
     @Override
     public IMovable render(FlatcraftGame game, IDeplacement deplacement) {
-        SpriteStore spriteStore = new SpriteStore();
+        SpriteStore spriteStore = SpriteStore.getInstance();
         Sprite sprite= spriteStore.getSprite("nc_rb");
         return new Mob(game,0,game.getMap().getSoilHeight()*spriteStore.getSpriteSize()-spriteStore.getSpriteSize(), sprite, deplacement);
     }
