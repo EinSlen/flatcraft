@@ -28,7 +28,7 @@ public class ArbreFactory implements IComponent {
             int col = random.nextInt(game.getWidth() / new SpriteStore().getSpriteSize());
             int hauteurTronc = random.nextInt(hauteurLimiteTronc) + 1;
 
-            if (!peutPlacerArbre(col, hauteurTronc)) {
+            if (!peutPlacerArbre(col)) {
                 continue;
             }
             genererArbre(col, hauteurTronc);
@@ -36,9 +36,9 @@ public class ArbreFactory implements IComponent {
         }
     }
 
-    private boolean peutPlacerArbre(int col, int hauteurTronc) {
-
-        // (personnaliser cela en fonction des besoins mais je pense si 0 > col-2 || map.width < col-2 RETURN FALSE à voir)
+    private boolean peutPlacerArbre(int col) {
+        if(0 > col-2 || game.getMap().getWidth() < col-2 )
+            return false;
         return true;
     }
 

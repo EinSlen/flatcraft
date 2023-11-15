@@ -161,7 +161,11 @@ public final class FlatcraftController implements IFlatcraftController {
         // L'appui (bref) sur la barre espace déclenche un saut.
         stage.addEventFilter(KeyEvent.KEY_TYPED, e -> {
             if (" ".equals(e.getCharacter())) {
-                game.jump();
+                try {
+                    game.jump();
+                } catch (InterruptedException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
 
