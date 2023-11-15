@@ -182,7 +182,7 @@ public final class FlatcraftGame {
 
         // Créer 1 mob pour la dimension normal, la gestion des dimensions n'est pas encore faite
         MobDim mobDim = new MNormal();
-        IMovable mob = mobDim.render(this, new DeplacementAleatoire());
+        IMovable mob = mobDim.render(this, DeplacementAleatoire.getInstance());
         movableObjects.add(mob);
         controller.addMovable(mob);
 
