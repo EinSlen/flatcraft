@@ -75,4 +75,6 @@ public interface CellFactory {
      */
     Cell createLeaves();
 
+    Cell createJunglegrass();
+
 }

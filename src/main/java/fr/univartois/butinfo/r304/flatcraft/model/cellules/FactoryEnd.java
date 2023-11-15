@@ -1,13 +1,14 @@
 package fr.univartois.butinfo.r304.flatcraft.model.cellules;
+
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.ToolType;
 import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 import fr.univartois.butinfo.r304.flatcraft.view.SpriteStore;
+
 import java.util.Random;
 
-public class Factory implements CellFactory {
-
+public class FactoryEnd implements CellFactory{
     SpriteStore spriteStore;
     Random random = new Random();
     @Override
@@ -17,25 +18,17 @@ public class Factory implements CellFactory {
 
     @Override
     public Cell createSky() {
-        if(random.nextInt(10)<2)
-            return createRessouresCell("cloud");
-        return createCell("ice");
+        return createCell("obsidian");
     }
 
     @Override
     public Cell createSoilSurface() {
-        if(random.nextInt(10)<2)
-            return createRessouresCell("water");
-        return createRessouresCell("grass");
-    }
-
-    public Cell createJunglegrass() {
-        return createRessouresCell("junglegrass");
+        return createRessouresCell("sandstone");
     }
 
     @Override
     public Cell createSubSoil() {
-        return createRessouresCell("dirt");
+        return createRessouresCell("sandstone");
     }
 
     @Override
@@ -45,7 +38,12 @@ public class Factory implements CellFactory {
 
     @Override
     public Cell createLeaves() {
-        return createRessouresCell("acacia_leaves");
+        return createRessouresCell("obsidian_brick");
+    }
+
+    @Override
+    public Cell createJunglegrass() {
+        return createRessouresCell("sandstone");
     }
 
     public MyCell createCell(String name){

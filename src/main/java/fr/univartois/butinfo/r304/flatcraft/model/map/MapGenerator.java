@@ -3,11 +3,15 @@ package fr.univartois.butinfo.r304.flatcraft.model.map;
 import fr.univartois.butinfo.r304.flatcraft.model.cellules.CellFactory;
 import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 
+import java.util.Random;
+
 public class MapGenerator implements IMapGenerator {
 
     private int width;
     private int height;
     private CellFactory cellFactory;
+
+    private static Random random = new Random();
     private ISpriteStore spriteStore;
 
     private SimpleGameMap map;
@@ -52,6 +56,9 @@ public class MapGenerator implements IMapGenerator {
                 for(int j = 0; j < width; j++){
                     if (i == map.getSoilHeight()){
                         map.setAt(i,j,cell.createSoilSurface());
+                        if(random.nextInt(10)<1) {
+                            map.setAt(i-1,j,cell.createJunglegrass());
+                        }
 
                     }
                     else if(i < map.getSoilHeight()){
