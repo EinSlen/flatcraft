@@ -9,7 +9,18 @@ import java.util.Random;
 public class Factory implements CellFactory {
 
     SpriteStore spriteStore;
+
+    private static Factory instance;
     Random random = new Random();
+
+    private Factory(){}
+
+    public static Factory getInstance(){
+        if (instance == null){
+            instance = new Factory();
+        }
+        return instance;
+    }
     @Override
     public void setSpriteStore(ISpriteStore spriteStore) {
         this.spriteStore = (SpriteStore) spriteStore;

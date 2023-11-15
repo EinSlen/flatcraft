@@ -10,6 +10,17 @@ import java.util.Random;
 
 public class FactoryEnd implements CellFactory{
     SpriteStore spriteStore;
+
+    private static FactoryEnd instance;
+
+    private FactoryEnd(){}
+
+    public static FactoryEnd getInstance(){
+        if (instance == null){
+            instance = new FactoryEnd();
+        }
+        return instance;
+    }
     Random random = new Random();
     @Override
     public void setSpriteStore(ISpriteStore spriteStore) {

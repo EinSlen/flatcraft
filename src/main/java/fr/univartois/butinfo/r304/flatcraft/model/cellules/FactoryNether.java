@@ -9,7 +9,20 @@ import java.util.Random;
 public class FactoryNether implements CellFactory {
 
     SpriteStore spriteStore;
+
+    private static FactoryNether instance;
+
     Random random = new Random();
+
+    private FactoryNether(){}
+
+    public static FactoryNether getInstance(){
+        if (instance == null){
+            instance = new FactoryNether();
+        }
+        return instance;
+    }
+
     @Override
     public void setSpriteStore(ISpriteStore spriteStore) {
         this.spriteStore = (SpriteStore) spriteStore;
