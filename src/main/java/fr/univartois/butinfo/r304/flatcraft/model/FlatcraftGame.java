@@ -163,7 +163,7 @@ public final class FlatcraftGame {
         IntegerProperty playerHealth = new SimpleIntegerProperty(3);
         IntegerProperty playerExperience = new SimpleIntegerProperty(1);
         ObservableMap<Resource, Integer> playerInventory = FXCollections.observableHashMap();
-        SpriteStore spriteStore1 = new SpriteStore();
+        SpriteStore spriteStore1 = SpriteStore.getInstance();
         Sprite sprite = spriteStore1.getSprite("player");
         this.player = new Player(this, 0, map.getSoilHeight()*spriteStore.getSpriteSize()-spriteStore.getSpriteSize(), sprite, playerHealth, playerExperience, playerInventory);;
         ArbreFactory arbreFactory = new ArbreFactory(this, cellFactory, 5, 5);
@@ -290,6 +290,8 @@ public final class FlatcraftGame {
     public void jump() throws InterruptedException {
         moveUp();
         Thread.sleep(100);
+        move(player);
+        moveDown();
         move(player);
     }
 
