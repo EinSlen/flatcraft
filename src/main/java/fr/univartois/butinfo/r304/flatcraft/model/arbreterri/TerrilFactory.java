@@ -21,7 +21,7 @@ public class TerrilFactory implements IComponent {
 
     public void ajouterAleatoires() {
         int terrilSize = random.nextInt(maxTerrilSize) + 1;
-        int terrilCol = random.nextInt(game.getWidth() / new SpriteStore().getSpriteSize());
+        int terrilCol = random.nextInt(game.getWidth() / SpriteStore.getInstance().getSpriteSize());
         int hauteurCourante = game.getMap().getSoilHeight() - terrilSize;
 
         for (int i = 0; i < terrilSize; i++) {

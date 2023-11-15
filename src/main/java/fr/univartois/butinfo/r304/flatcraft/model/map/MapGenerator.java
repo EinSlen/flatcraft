@@ -37,7 +37,7 @@ public class MapGenerator implements IMapGenerator {
      * @Return la carte générée
      */
     public SimpleGameMap GenerateMap(int height, int width, CellFactory cell) {
-        this.map = new SimpleGameMap(height, width, height/2);
+        this.map = SimpleGameMap.getInstance(height, width, height/2);
         for(int i = 0; i<height;i++) {
             for(int j = 0; j<width; j++) {
                 if(i>map.getSoilHeight()) map.setAt(i,j,cell.createSubSoil());
@@ -51,7 +51,7 @@ public class MapGenerator implements IMapGenerator {
     @Override
     public void generateMap(int height, int width, CellFactory cell) {
         if (map==null){
-            map = new SimpleGameMap(height,width,height/2);
+            map = SimpleGameMap.getInstance(height,width,height/2);
             for(int i = 0; i <height;i++){
                 for(int j = 0; j < width; j++){
                     if (i == map.getSoilHeight()){

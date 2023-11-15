@@ -30,6 +30,11 @@ import fr.univartois.butinfo.r304.flatcraft.model.cellules.MyCell;
  * @version 0.1.0
  */
 public final class SimpleGameMap implements GameMap {
+     private static SimpleGameMap instance ;
+     public static SimpleGameMap getInstance(int height, int width, int soilHeight){
+         if(instance==null) instance= new SimpleGameMap( height, width, soilHeight);
+         return instance;
+     }
 
     /**
      * Les cellules composant cette carte.
@@ -58,7 +63,7 @@ public final class SimpleGameMap implements GameMap {
      * @param width La largeur de la carte, en nombre de cellules.
      * @param soilHeight La hauteur à laquelle se situe la surface du sol.
      */
-    public SimpleGameMap(int height, int width, int soilHeight) {
+    private SimpleGameMap(int height, int width, int soilHeight) {
         if ((width <= 0) || (height <= 0)) {
             throw new IllegalArgumentException("Incorrect map dimension!");
         }

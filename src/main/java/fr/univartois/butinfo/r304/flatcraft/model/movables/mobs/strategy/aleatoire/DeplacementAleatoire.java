@@ -2,8 +2,16 @@ package fr.univartois.butinfo.r304.flatcraft.model.movables.mobs.strategy.aleato
 
 import fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.mobs.strategy.IDeplacement;
+import fr.univartois.butinfo.r304.flatcraft.model.movables.mobs.strategy.lineaire.DeplacementLineare;
 
 public class DeplacementAleatoire implements IDeplacement {
+    private static DeplacementAleatoire instance;
+    private DeplacementAleatoire(){};
+
+    public static DeplacementAleatoire getInstance(){
+        if(instance==null) instance = new DeplacementAleatoire();
+        return instance;
+    }
     @Override
     public void move(IMovable movable, long delta) {
         if(delta%5000==0){

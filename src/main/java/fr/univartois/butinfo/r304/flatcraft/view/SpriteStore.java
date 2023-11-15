@@ -39,6 +39,8 @@ public final class SpriteStore implements ISpriteStore {
      */
     private final Map<String, Sprite> spriteCache = new HashMap<>();
 
+    private static SpriteStore instance;
+
     /*
      * (non-Javadoc)
      *
@@ -58,6 +60,15 @@ public final class SpriteStore implements ISpriteStore {
         Sprite sprite = new Sprite(image);
         spriteCache.put(identifier, sprite);
         return sprite;
+    }
+
+    private SpriteStore() {}
+
+    public static SpriteStore getInstance(){
+        if (instance == null){
+            instance = new SpriteStore();
+        }
+        return instance;
     }
 
     /**

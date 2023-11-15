@@ -25,7 +25,7 @@ public class ArbreFactory implements IComponent {
         int arbresAjoutes = 0;
 
         while (arbresAjoutes < maxArbres) {
-            int col = random.nextInt(game.getWidth() / new SpriteStore().getSpriteSize());
+            int col = random.nextInt(game.getWidth() / SpriteStore.getInstance().getSpriteSize());
             int hauteurTronc = random.nextInt(hauteurLimiteTronc) + 1;
 
             if (!peutPlacerArbre(col)) {

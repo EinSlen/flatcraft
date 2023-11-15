@@ -2,8 +2,16 @@ package fr.univartois.butinfo.r304.flatcraft.model.movables.mobs.strategy.intell
 
 import fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.mobs.strategy.IDeplacement;
+import fr.univartois.butinfo.r304.flatcraft.model.movables.mobs.strategy.aleatoire.DeplacementAleatoire;
 
 public class DeplacementIntelligent implements IDeplacement {
+    private static DeplacementIntelligent instance;
+    private DeplacementIntelligent(){};
+
+    public static DeplacementIntelligent getInstance(){
+        if(instance==null) instance = new DeplacementIntelligent();
+        return instance;
+    }
     @Override
     public void move(IMovable movable, long delta) {
         int x = movable.getX();
