@@ -18,6 +18,8 @@ package fr.univartois.butinfo.r304.flatcraft.model.resources;
 
 import java.util.Objects;
 
+import fr.univartois.butinfo.r304.flatcraft.model.filon.OnMapState;
+import fr.univartois.butinfo.r304.flatcraft.model.filon.ResourceState;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 
 /**
@@ -46,6 +48,9 @@ public final class Resource {
      */
     private final ToolType toolType;
 
+
+    private ResourceState currentState;
+
     /**
      * La dureté de cette ressource.
      * Il s'agit du nombre de coups devant être appliqués avec un outil pour extraire
@@ -72,6 +77,7 @@ public final class Resource {
         this.sprite = sprite;
         this.toolType = toolType;
         this.hardness = hardness;
+        this.currentState = new OnMapState();
     }
 
     /**
@@ -126,6 +132,10 @@ public final class Resource {
         hardness--;
     }
 
+    public void changeState(ResourceState newState) {
+        this.currentState = newState;
+    }
+
     /**
      * Donne la ressource obtenue lorsque cette ressource est extraite de la carte.
      * Par défaut, la ressource obtenue ne change pas.
@@ -134,6 +144,14 @@ public final class Resource {
      */
     public Resource digBlock() {
         return this;
+    }
+
+    public void handleOnMap() {
+        currentState.handleOnMap(this);
+    }
+
+    public void handleInInventory() {
+        currentState.handleInInventory(this);
     }
 
     /*
