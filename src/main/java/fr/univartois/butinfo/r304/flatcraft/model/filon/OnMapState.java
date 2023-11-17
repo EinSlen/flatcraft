@@ -6,7 +6,9 @@ import fr.univartois.butinfo.r304.flatcraft.view.SpriteStore;
 public class OnMapState implements ResourceState {
     @Override
     public void handleOnMap(Resource resource) {
-        //mettre à jour le sprite, la dureté, etc.
+        //mettre à jour le sprite, etc.
+
+        resource.setSprite(new SpriteStore().getSprite(resource.getName()));
         resource.changeState(new OnMapState());
     }
 

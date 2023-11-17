@@ -62,7 +62,7 @@ public final class SpriteStore implements ISpriteStore {
         return sprite;
     }
 
-    private SpriteStore() {}
+    public SpriteStore() {}
 
     public static SpriteStore getInstance(){
         if (instance == null){

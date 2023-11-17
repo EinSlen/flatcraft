@@ -41,7 +41,7 @@ public final class Resource {
     /**
      * Le sprite représentant cette ressource.
      */
-    private final Sprite sprite;
+    private Sprite sprite;
 
     /**
      * Le type d'outils nécessaire pour extraire cette ressource de la carte.
@@ -96,6 +96,10 @@ public final class Resource {
      */
     public Sprite getSprite() {
         return sprite;
+    }
+
+    public void setSprite(Sprite sprite) {
+        this.sprite = sprite;
     }
 
     /**
