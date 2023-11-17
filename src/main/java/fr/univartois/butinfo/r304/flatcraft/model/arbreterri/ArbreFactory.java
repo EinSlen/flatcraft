@@ -47,7 +47,7 @@ public class ArbreFactory implements IComponent {
         // Générer le tronc de l'arbre
         for (int i = 0; i < hauteurTronc; i++) {
             try {
-                while ((game.getMap().getAt(hauteurCourante, col).getResource().getName() == "dirt")) {
+                while (("dirt".equals(game.getMap().getAt(hauteurCourante, col).getResource().getName()))) {
                     hauteurCourante--;
                 }
             } catch(Exception e) {}
