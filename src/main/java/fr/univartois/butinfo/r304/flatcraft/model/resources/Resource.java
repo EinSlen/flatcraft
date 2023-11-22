@@ -58,6 +58,8 @@ public final class Resource {
      */
     private int hardness;
 
+    private IState state;
+
     /**
      * Crée une nouvelle instance de Resource.
      *
@@ -69,15 +71,40 @@ public final class Resource {
      * @throws IllegalArgumentException Si la valeur de {@code hardness} est négative.
      */
     public Resource(String name, Sprite sprite, ToolType toolType, int hardness) {
-        if (hardness < 0) {
-            throw new IllegalArgumentException("Resource hardness should be non-negative!");
+        if (hardness < 0 || hardness > 5 ) {
+            throw new IllegalArgumentException("Resource hardness should be non-negative or above 5!");
         }
-
         this.name = name;
         this.sprite = sprite;
         this.toolType = toolType;
         this.hardness = hardness;
         this.currentState = new OnMapState();
+        this.state = initState(hardness);
+    }
+
+    private IState initState(int hardness){
+        IState state = null;
+        switch (hardness){
+            case 0:
+                state = new State0(this);
+                break;
+            case 1:
+                state = new State1(this);
+                break;
+            case 2:
+                state = new State2(this);
+                break;
+            case 3:
+                state = new State3(this);
+                break;
+            case 4:
+                state = new State4(this);
+                break;
+            case 5:
+                state = new State5(this);
+                break;
+        }
+        return state;
     }
 
     /**
@@ -119,7 +146,7 @@ public final class Resource {
      * @return La dureté de cette ressource.
      */
     public int getHardness() {
-        return hardness;
+        return state.getHardness();
     }
 
     /**
@@ -133,7 +160,15 @@ public final class Resource {
         if (hardness <= 0) {
             throw new IllegalStateException("Cannot dig resource with 0 hardness!");
         }
-        hardness--;
+        state.diminue();
+    }
+
+    public IState getState() {
+        return state;
+    }
+
+    public void changeState(IState state){
+        this.state = state;
     }
 
     public void changeState(ResourceState newState) {

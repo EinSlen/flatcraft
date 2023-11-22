@@ -29,7 +29,7 @@ public class Factory implements CellFactory {
     @Override
     public Cell createSky() {
         if(random.nextInt(10)<2)
-            return createRessouresCell("cloud");
+            return createCell("cloud");
         return createCell("ice");
     }
 
