@@ -239,32 +239,50 @@ public final class FlatcraftGame {
      * Fait se déplacer le joueur vers le haut.
      */
     public void moveUp() {
-        player.setVerticalSpeed(-50);
-        move(player);
+        Cell cell = getCellOf(player);
+        Cell cellToDig = map.getAt(cell.getRow()-1, cell.getColumn());
+        if(cellToDig.getResource() == null) {
+            player.setVerticalSpeed(-50);
+            move(player);
+        }
     }
 
     /**
      * Fait se déplacer le joueur vers le bas.
      */
     public void moveDown() {
-        player.setVerticalSpeed(50);
-        move(player);
+        Cell cell = getCellOf(player);
+        Cell cellToDig = map.getAt(cell.getRow()+1, cell.getColumn());
+        if(cellToDig.getResource() == null) {
+            player.setVerticalSpeed(50);
+            move(player);
+        }
+
     }
 
     /**
      * Fait se déplacer le joueur vers la gauche.
      */
     public void moveLeft() {
-        player.setHorizontalSpeed(-50);
-        move(player);
+        Cell cell = getCellOf(player);
+        Cell cellToDig = map.getAt(cell.getRow(), cell.getColumn()-1);
+        if(cellToDig.getResource() == null) {
+            player.setHorizontalSpeed(-50);
+            move(player);
+        }
     }
 
     /**
      * Fait se déplacer le joueur vers la droite.
      */
     public void moveRight() {
-        player.setHorizontalSpeed(50);
-        move(player);
+        Cell cell = getCellOf(player);
+        Cell cellToDig = map.getAt(cell.getRow(), cell.getColumn()+1);
+        System.out.println(cellToDig.getResource());
+        if(cellToDig.getResource() == null) {
+            player.setHorizontalSpeed(50);
+            move(player);
+        }
     }
 
     /**
@@ -300,6 +318,8 @@ public final class FlatcraftGame {
         moveDown();
         move(player);
     }
+
+
 
     /**
      * Fait creuser le joueur vers le haut.
