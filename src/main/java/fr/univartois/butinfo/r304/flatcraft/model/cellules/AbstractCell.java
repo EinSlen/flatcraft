@@ -16,6 +16,7 @@
 
 package fr.univartois.butinfo.r304.flatcraft.model.cellules;
 
+import fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 import javafx.beans.property.ObjectProperty;
@@ -41,6 +42,9 @@ public abstract class AbstractCell implements Cell {
      */
     private int column;
 
+    private CellState state;
+
+
     /**
      * La propriété contenant le sprite représentant le contenu de cette cellule sur la
      * carte.
@@ -62,6 +66,7 @@ public abstract class AbstractCell implements Cell {
     protected AbstractCell(int row, int column) {
         this.row = row;
         this.column = column;
+        this.state = new EmptyCellState();
     }
 
     /**
@@ -73,6 +78,7 @@ public abstract class AbstractCell implements Cell {
         this.spriteProperty.set(sprite);
     }
 
+
     /**
      * Crée une nouvelle instance de AbstractCell.
      *
@@ -81,6 +87,7 @@ public abstract class AbstractCell implements Cell {
     protected AbstractCell(Resource resource) {
         this.resourceProperty.set(resource);
         this.spriteProperty.set(resource.getSprite());
+
     }
 
     /*
@@ -91,6 +98,18 @@ public abstract class AbstractCell implements Cell {
     @Override
     public int getRow() {
         return row;
+    }
+
+    public void setState(CellState state) {
+        this.state = state;
+    }
+
+    public CellState getState() {
+        return state;
+    }
+
+    public void interactWithPlayer(IMovable movable) {
+        state.interactWithPlayer(movable, this);
     }
 
     /*
@@ -112,6 +131,7 @@ public abstract class AbstractCell implements Cell {
     public Sprite getSprite() {
         return spriteProperty.get();
     }
+
 
     /*
      * (non-Javadoc)
