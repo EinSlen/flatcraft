@@ -205,6 +205,14 @@ public final class FlatcraftGame {
         return map;
     }
 
+    public Player getPlayer() {
+        return player;
+    }
+
+    public CellFactory getCellFactory() {
+        return cellFactory;
+    }
+
     /**
      * Crée la carte du jeu.
      *
