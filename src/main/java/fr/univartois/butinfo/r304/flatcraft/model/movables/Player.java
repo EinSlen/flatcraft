@@ -7,6 +7,8 @@ import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 import javafx.beans.property.IntegerProperty;
 import javafx.collections.ObservableMap;
 
+import java.util.Optional;
+
 public class Player extends AbstractMovable {
 
     /**
@@ -81,6 +83,18 @@ public class Player extends AbstractMovable {
         } else
             inventaire.put(r, 1);
     }
+
+
+    public Optional<Resource> recupRessourceInventaire(String nom){
+        Optional<Resource> maRessource = Optional.empty();
+        for(Resource key : inventaire.keySet()){
+            if (nom.equals(key.getName())){
+                maRessource = Optional.ofNullable(key);
+            }
+        }
+        return maRessource;
+    }
+
 
     public void supprimerInventaire(Resource r){
         Integer v = this.inventaire.get(r);
