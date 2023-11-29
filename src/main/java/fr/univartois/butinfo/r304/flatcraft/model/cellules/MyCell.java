@@ -1,7 +1,6 @@
 package fr.univartois.butinfo.r304.flatcraft.model.cellules;
 
 import fr.univartois.butinfo.r304.flatcraft.model.FlatcraftGame;
-import fr.univartois.butinfo.r304.flatcraft.model.cellstate.CellState;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
@@ -33,15 +32,6 @@ public class MyCell extends AbstractCell {
         state.interactWithPlayer(movable, this);
         return true;
     }
-
-    public void interact(FlatcraftGame game){
-        state.interact(game,this);
-    }
-
-    public void setState(CellState state) {
-        this.state = state;
-    }
-
 
 
     @Override
