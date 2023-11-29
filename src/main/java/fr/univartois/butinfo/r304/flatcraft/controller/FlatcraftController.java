@@ -16,26 +16,17 @@
 
 package fr.univartois.butinfo.r304.flatcraft.controller;
 
-<<<<<<< HEAD
 import fr.univartois.butinfo.r304.flatcraft.model.cellules.Cell;
 import fr.univartois.butinfo.r304.flatcraft.model.FlatcraftGame;
 import fr.univartois.butinfo.r304.flatcraft.model.GameMap;
 import fr.univartois.butinfo.r304.flatcraft.model.IFlatcraftController;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable;
-=======
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
-import fr.univartois.butinfo.r304.flatcraft.model.Cell;
-import fr.univartois.butinfo.r304.flatcraft.model.FlatcraftGame;
-import fr.univartois.butinfo.r304.flatcraft.model.GameMap;
-import fr.univartois.butinfo.r304.flatcraft.model.IFlatcraftController;
-import fr.univartois.butinfo.r304.flatcraft.model.IMovable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.view.ResourceInInventory;
 import javafx.beans.binding.Bindings;
->>>>>>> 50d8e0e162c61b1c3988fba879d6544b5dd5cf67
 import javafx.beans.property.IntegerProperty;
 import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableMap;

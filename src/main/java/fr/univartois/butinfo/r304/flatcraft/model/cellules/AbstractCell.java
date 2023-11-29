@@ -17,6 +17,7 @@
 package fr.univartois.butinfo.r304.flatcraft.model.cellules;
 
 import fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable;
+import fr.univartois.butinfo.r304.flatcraft.model.movables.Player;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 import javafx.beans.property.ObjectProperty;
@@ -174,6 +175,32 @@ public abstract class AbstractCell implements Cell {
     public void replaceBy(Cell cell) {
         spriteProperty.set(cell.getSprite());
         resourceProperty.set(cell.getResource());
+    }
+
+    @Override
+    public boolean move(IMovable movable) {
+        if(getResource() == null){
+            int nouvelleLigne = getRow() * getSprite().getWidth();
+            int nouvelleColonne = getColumn() * getSprite().getHeight();
+            movable.setX(nouvelleColonne);
+            movable.setY(nouvelleLigne);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean dig(IMovable player) {
+        Resource resource = getResource();
+        if(resource != null){
+            resource.dig();
+            if(resource.getHardness()==0){
+                ((Player) player).ajouterInventaire(resource);
+                return true;
+            }
+        }
+        return false;
     }
 
 }
