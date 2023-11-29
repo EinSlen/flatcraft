@@ -334,7 +334,7 @@ public final class FlatcraftGame {
         Cell cellToDig = map.getAt(cell.getRow()-1, cell.getColumn());
         System.out.println(cellToDig.getSprite().getImage().getUrl());
         System.out.println(cellToDig.getResource());
-        if (cellToDig != null){
+        if (cellToDig.getResource() != null){
             dig(cellToDig);
             move(player);
         }
@@ -348,7 +348,7 @@ public final class FlatcraftGame {
         Cell cellToDig = map.getAt(cell.getRow()+1, cell.getColumn());
         System.out.println(cellToDig.getSprite().getImage().getUrl());
         System.out.println(cellToDig.getResource());
-        if (cellToDig != null){
+        if (cellToDig.getResource() != null){
             dig(cellToDig);
             move(player);
         }
@@ -360,7 +360,7 @@ public final class FlatcraftGame {
     public void digLeft() {
         Cell cell = getCellOf(player);
         Cell cellToDig = map.getAt(cell.getRow(), cell.getColumn()-1);
-        if (cellToDig != null){
+        if (cellToDig.getResource() != null){
             dig(cellToDig);
             move(player);
         }
@@ -372,7 +372,7 @@ public final class FlatcraftGame {
     public void digRight() {
         Cell cell = getCellOf(player);
         Cell cellToDig = map.getAt(cell.getRow(), cell.getColumn()+1);
-        if (cellToDig != null){
+        if (cellToDig.getResource() != null){
             dig(cellToDig);
             move(player);
         }
@@ -385,7 +385,9 @@ public final class FlatcraftGame {
      */
     private void dig(Cell toDig) {
         if(toDig.dig(player)){
-            toDig.replaceBy(cellFactory.createSky());
+            if(toDig.getResource()!=null)
+                player.ajouterInventaire(toDig.getResource());
+                toDig.replaceBy(cellFactory.createSky());
         }
     }
 
