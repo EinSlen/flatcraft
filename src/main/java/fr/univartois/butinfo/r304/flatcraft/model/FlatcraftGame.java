@@ -190,11 +190,13 @@ public final class FlatcraftGame {
         controller.bindLevel(level);
         controller.bindHealth(playerHealth);
         controller.bindXP(playerExperience);
-
-
+        controller.bindInventory(playerInventory);
         animation.start();
     }
 
+    public Player getPlayer() {
+        return player;
+    }
 
     public void setGenMap(IMapGenerator genMap) {
         this.genMap = genMap;
