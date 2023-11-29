@@ -87,7 +87,7 @@ public final class ResourceInInventory {
         countView.setFont(new Font(8));
         countView.setTextFill(Color.WHITE);
         countView.setBackground(
-                new Background(new BackgroundFill(Color.RED, new CornerRadii(45), Insets.EMPTY)));
+                new Background(new BackgroundFill(null, new CornerRadii(45), Insets.EMPTY)));
         countView.textProperty().bind(count.asString());
         pane.getChildren().add(countView);
     }
