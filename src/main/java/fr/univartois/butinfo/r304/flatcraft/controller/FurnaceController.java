@@ -199,6 +199,7 @@ public final class FurnaceController {
         game.getPlayer().ajouterInventaire(product);
     }
 
+
     /**
      * Supprime la totalité des ressources ayant été déposées dans le fourneau.
      */
