@@ -171,7 +171,7 @@ public final class FlatcraftGame {
         SpriteStore spriteStore1 = SpriteStore.getInstance();
         Sprite sprite = spriteStore1.getSprite("player");
         this.player = new Player(this, 0, map.getSoilHeight()*spriteStore.getSpriteSize()-spriteStore.getSpriteSize(), sprite, playerHealth, playerExperience, playerInventory);;
-        ArbreFactory arbreFactory = new ArbreFactory(this, cellFactory, 5, 5);
+        ArbreFactory arbreFactory = new ArbreFactory(this, cellFactory, 50, 5);
         TerrilFactory terrilFactory = new TerrilFactory(this, cellFactory, 5);
         FactoryComposite factory = new FactoryComposite();
         factory.ajouter(arbreFactory);
