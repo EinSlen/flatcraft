@@ -77,4 +77,7 @@ public interface CellFactory {
 
     Cell createJunglegrass();
 
+    Cell createStone();
+
 }
+

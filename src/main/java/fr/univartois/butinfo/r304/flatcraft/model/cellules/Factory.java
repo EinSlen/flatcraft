@@ -45,6 +45,29 @@ public class Factory implements CellFactory {
     }
 
     @Override
+    public Cell createStone() {
+        int randomValue = random.nextInt(100);
+        int mineral = random.nextInt(100);
+
+        if (randomValue < 80) {
+            return createRessouresCell("stone");
+        } else {
+            if (mineral < 5) {
+                return createRessouresCell("mineral_coal");
+            } else if (mineral < 15) {
+                return createRessouresCell("mineral_copper");
+            } else if (mineral < 30) {
+                return createRessouresCell("mineral_iron");
+            } else if (mineral < 50) {
+                return createRessouresCell("mineral_gold");
+            } else if (mineral < 80) {
+                return createRessouresCell("mineral_diamond");
+            }
+        }
+        return createRessouresCell("stone");
+    }
+
+    @Override
     public Cell createSubSoil() {
         return createRessouresCell("dirt");
     }
@@ -58,6 +81,8 @@ public class Factory implements CellFactory {
     public Cell createLeaves() {
         return createRessouresCell("acacia_leaves");
     }
+
+
 
     public MyCell createCell(String name){
         Sprite sprite = spriteStore.getSprite(name);
