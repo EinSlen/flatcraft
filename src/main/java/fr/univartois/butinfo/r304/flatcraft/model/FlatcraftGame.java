@@ -15,21 +15,18 @@
  */
 
 package fr.univartois.butinfo.r304.flatcraft.model;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-
 
 import fr.univartois.butinfo.r304.flatcraft.model.arbreterri.ArbreFactory;
 import fr.univartois.butinfo.r304.flatcraft.model.arbreterri.FactoryComposite;
+import fr.univartois.butinfo.r304.flatcraft.model.arbreterri.TerrilFactory;
 import fr.univartois.butinfo.r304.flatcraft.model.cellules.Cell;
 import fr.univartois.butinfo.r304.flatcraft.model.cellules.CellFactory;
-import fr.univartois.butinfo.r304.flatcraft.model.arbreterri.TerrilFactory;
 import fr.univartois.butinfo.r304.flatcraft.model.map.IMapGenerator;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable;
+import fr.univartois.butinfo.r304.flatcraft.model.movables.Player;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.mobs.fabrique.MobDim;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.mobs.fabrique.normal.MNormal;
-import fr.univartois.butinfo.r304.flatcraft.model.movables.mobs.strategy.aleatoire.DeplacementAleatoire;
-import fr.univartois.butinfo.r304.flatcraft.model.movables.Player;
+import fr.univartois.butinfo.r304.flatcraft.model.movables.mobs.strategy.intelligent.DeplacementIntelligent;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
@@ -38,7 +35,10 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
-import java.io.*;
+
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.logging.Logger;
 
 
 /**
@@ -113,6 +113,8 @@ public final class FlatcraftGame {
 
     private IMapGenerator genMap;
 
+    private Logger logger;
+
 
     /**
      * Crée une nouvelle instance de FlatcraftGame.
@@ -170,7 +172,7 @@ public final class FlatcraftGame {
         ObservableMap<Resource, Integer> playerInventory = FXCollections.observableHashMap();
         SpriteStore spriteStore1 = SpriteStore.getInstance();
         Sprite sprite = spriteStore1.getSprite("player");
-        this.player = new Player(this, 0, map.getSoilHeight()*spriteStore.getSpriteSize()-spriteStore.getSpriteSize(), sprite, playerHealth, playerExperience, playerInventory);;
+        this.player = new Player(this, 0, map.getSoilHeight()*spriteStore.getSpriteSize()-spriteStore.getSpriteSize(), sprite, playerHealth, playerExperience, playerInventory);
         ArbreFactory arbreFactory = new ArbreFactory(this, cellFactory, 50, 5);
         TerrilFactory terrilFactory = new TerrilFactory(this, cellFactory, 5);
         FactoryComposite factory = new FactoryComposite();
@@ -181,10 +183,9 @@ public final class FlatcraftGame {
 
         // Créer 1 mob pour la dimension normal, la gestion des dimensions n'est pas encore faite
         MobDim mobDim = new MNormal();
-        IMovable mob = mobDim.render(this, DeplacementAleatoire.getInstance());
+        IMovable mob = mobDim.render(this, DeplacementIntelligent.getInstance());
         movableObjects.add(mob);
         controller.addMovable(mob);
-
         controller.addMovable(player);
         controller.bindTime(time);
         controller.bindLevel(level);
@@ -219,16 +220,16 @@ public final class FlatcraftGame {
         /**
          int spriteSize = spriteStore.getSpriteSize();
 
-        int mapWidthInPixels = width / spriteSize;
-        int mapHeightInPixels = height / spriteSize;
+         int mapWidthInPixels = width / spriteSize;
+         int mapHeightInPixels = height / spriteSize;
 
-        MapGenerator map = new MapGenerator();
+         MapGenerator mapGen = new MapGenerator();
 
-        return map.GenerateMap(mapHeightInPixels, mapWidthInPixels, cellFactory);
+         return map.GenerateMap(mapHeightInPixels, mapWidthInPixels, cellFactory);
          */
-        IMapGenerator map = this.genMap;
-        map.generateMap(height/ spriteStore.getSpriteSize(),width/ spriteStore.getSpriteSize(),cellFactory);
-        return map.getMap();
+        IMapGenerator mapGen = this.genMap;
+        mapGen.generateMap(height/ spriteStore.getSpriteSize(),width/ spriteStore.getSpriteSize(),cellFactory);
+        return mapGen.getMap();
 
     }
 
@@ -248,7 +249,6 @@ public final class FlatcraftGame {
         Cell cellToDig = map.getAt(cell.getRow()-1, cell.getColumn());
         if(cellToDig.getResource() == null) {
             player.setVerticalSpeed(-50);
-            move(player);
         }
     }
 
@@ -269,23 +269,25 @@ public final class FlatcraftGame {
      * Fait se déplacer le joueur vers la gauche.
      */
     public void moveLeft() {
+        player.setHorizontalSpeed(0);
         Cell cell = getCellOf(player);
         Cell cellToDig = map.getAt(cell.getRow(), cell.getColumn()-1);
         if(cellToDig.getResource() == null) {
-            player.setHorizontalSpeed(-50);
+            player.setHorizontalSpeed(-45);
             move(player);
         }
+
     }
 
     /**
      * Fait se déplacer le joueur vers la droite.
      */
     public void moveRight() {
+        player.setHorizontalSpeed(0);
         Cell cell = getCellOf(player);
         Cell cellToDig = map.getAt(cell.getRow(), cell.getColumn()+1);
-        System.out.println(cellToDig.getResource());
         if(cellToDig.getResource() == null) {
-            player.setHorizontalSpeed(50);
+            player.setHorizontalSpeed(45);
             move(player);
         }
     }
@@ -316,11 +318,9 @@ public final class FlatcraftGame {
     /**
      * Fait sauter le joueur.
      */
-    public void jump() throws InterruptedException {
+    public void jump() {
         moveUp();
-        Thread.sleep(100);
-        move(player);
-        moveDown();
+        player.setVerticalSpeed(0);
         move(player);
     }
 
@@ -332,8 +332,7 @@ public final class FlatcraftGame {
     public void digUp() {
         Cell cell = getCellOf(player);
         Cell cellToDig = map.getAt(cell.getRow()-1, cell.getColumn());
-        System.out.println(cellToDig.getSprite().getImage().getUrl());
-        System.out.println(cellToDig.getResource());
+        logger.info(cellToDig.getSprite().getImage().getUrl());
         if (cellToDig.getResource() != null){
             dig(cellToDig);
             move(player);
@@ -346,8 +345,7 @@ public final class FlatcraftGame {
     public void digDown() {
         Cell cell = getCellOf(player);
         Cell cellToDig = map.getAt(cell.getRow()+1, cell.getColumn());
-        System.out.println(cellToDig.getSprite().getImage().getUrl());
-        System.out.println(cellToDig.getResource());
+        logger.info(cellToDig.getSprite().getImage().getUrl());
         if (cellToDig.getResource() != null){
             dig(cellToDig);
             move(player);
@@ -384,12 +382,14 @@ public final class FlatcraftGame {
      * @param toDig La cellule sur laquelle creuser.
      */
     private void dig(Cell toDig) {
-        if(toDig.dig(player)){
-            if(toDig.getResource()!=null)
+        if (toDig.dig(player)) {
+            if (toDig.getResource() != null) {
                 player.ajouterInventaire(toDig.getResource());
-                toDig.replaceBy(cellFactory.createSky());
+            }
+            toDig.replaceBy(cellFactory.createSky());
         }
     }
+
 
     /**
      * Récupére la cellule correspondant à la position d'un objet mobile.
@@ -440,3 +440,4 @@ public final class FlatcraftGame {
     }
 
 }
+
