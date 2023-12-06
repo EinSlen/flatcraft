@@ -18,6 +18,7 @@ package fr.univartois.butinfo.r304.flatcraft.model.resources;
 
 import java.util.Objects;
 
+import fr.univartois.butinfo.r304.flatcraft.model.filon.InInventoryState;
 import fr.univartois.butinfo.r304.flatcraft.model.filon.OnMapState;
 import fr.univartois.butinfo.r304.flatcraft.model.filon.ResourceState;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
@@ -78,7 +79,7 @@ public final class Resource {
         this.sprite = sprite;
         this.toolType = toolType;
         this.hardness = hardness;
-        this.currentState = new OnMapState();
+        this.currentState = changeCurrentState();
         this.state = initState(hardness);
     }
 
@@ -167,6 +168,17 @@ public final class Resource {
         return state;
     }
 
+    public ResourceState getCurrentState() {
+        return currentState;
+    }
+
+    public ResourceState changeCurrentState() {
+        if (this.getName().contains("mineral")) {
+            return new InInventoryState();
+        }
+        return new OnMapState();
+    }
+
     public void changeState(IState state){
         this.state = state;
     }
@@ -186,7 +198,7 @@ public final class Resource {
     }
 
     public void handleOnMap() {
-        currentState.handleOnMap(this);
+        this.handleOnMap();
     }
 
     public void handleInInventory() {
