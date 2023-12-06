@@ -113,8 +113,6 @@ public final class FlatcraftGame {
 
     private IMapGenerator genMap;
 
-    private Logger logger;
-
 
     /**
      * Crée une nouvelle instance de FlatcraftGame.
@@ -173,7 +171,7 @@ public final class FlatcraftGame {
         SpriteStore spriteStore1 = SpriteStore.getInstance();
         Sprite sprite = spriteStore1.getSprite("player");
         this.player = new Player(this, 0, map.getSoilHeight()*spriteStore.getSpriteSize()-spriteStore.getSpriteSize(), sprite, playerHealth, playerExperience, playerInventory);
-        ArbreFactory arbreFactory = new ArbreFactory(this, cellFactory, 50, 5);
+        ArbreFactory arbreFactory = new ArbreFactory(this, cellFactory, 5, 5);
         TerrilFactory terrilFactory = new TerrilFactory(this, cellFactory, 5);
         FactoryComposite factory = new FactoryComposite();
         factory.ajouter(arbreFactory);
@@ -332,7 +330,6 @@ public final class FlatcraftGame {
     public void digUp() {
         Cell cell = getCellOf(player);
         Cell cellToDig = map.getAt(cell.getRow()-1, cell.getColumn());
-        logger.info(cellToDig.getSprite().getImage().getUrl());
         if (cellToDig.getResource() != null){
             dig(cellToDig);
             move(player);
@@ -345,7 +342,6 @@ public final class FlatcraftGame {
     public void digDown() {
         Cell cell = getCellOf(player);
         Cell cellToDig = map.getAt(cell.getRow()+1, cell.getColumn());
-        logger.info(cellToDig.getSprite().getImage().getUrl());
         if (cellToDig.getResource() != null){
             dig(cellToDig);
             move(player);
