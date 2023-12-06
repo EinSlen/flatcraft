@@ -23,6 +23,7 @@ public class MyCell extends AbstractCell {
         this.state = new ResourceCellState();
     }
 
+    @Override
     public void setState(CellState state) {
         this.state = state;
     }
