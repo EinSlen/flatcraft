@@ -211,8 +211,8 @@ public final class FlatcraftGame {
         if(currentCell.getRow()==21 && currentCell.getColumn()==3 && i==0){
             i++;
             System.out.println(currentCell.getRow()+" "+currentCell.getColumn());
-            map = worldMapEngine.changeMap("normal",0);
-            cellFactory = Factory.getInstance();
+            map = worldMapEngine.changeMap("end",0);
+            cellFactory = FactoryEnd.getInstance();
             controller.prepare(map);
         }
     }

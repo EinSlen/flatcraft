@@ -8,6 +8,7 @@ import fr.univartois.butinfo.r304.flatcraft.model.arbreterri.TerrilFactory;
 import fr.univartois.butinfo.r304.flatcraft.model.cellules.*;
 import fr.univartois.butinfo.r304.flatcraft.view.SpriteStore;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class WorldMapEngine {
@@ -47,7 +48,7 @@ public class WorldMapEngine {
         return map.getMap();
     }
 
-    public void remplirMap(CellFactory cellFactory, GameMap map){ //TODO a revoir
+    public void remplirMap(CellFactory cellFactory, GameMap map){
         ArbreFactory arbreFactory = new ArbreFactory(flatcraftGame, cellFactory, map,50, 5);
         TerrilFactory terrilFactory = new TerrilFactory(flatcraftGame, cellFactory,map, 5);
         FactoryComposite factory = new FactoryComposite();
@@ -62,25 +63,27 @@ public class WorldMapEngine {
 
     //Permet de changer de tableau et de créer un tableau au besoin
     public GameMap changeMap(String monde, int localisation){
-        if("normal".equals(monde)){
-            if(normal.size()<localisation)
-                normal.add(genMap(cellFactory[0]));
-            System.out.println("Changement monde Normal");
-            tableauActuel = normal.get(localisation);
+        switch (monde){
+            case "normal":
+                if(normal.size()<localisation)
+                    normal.add(genMap(cellFactory[0]));
+                System.out.println("Changement monde Normal");
+                tableauActuel = normal.get(localisation);
+                break;
+            case "end":
+                if(end.size()<localisation)
+                    normal.add(genMap(cellFactory[1]));
+                System.out.println("Changement monde l'End");
+                tableauActuel = end.get(localisation);
+                break;
+            case "nether":
+                if(nether.size()<localisation)
+                    normal.add(genMap(cellFactory[2]));
+                System.out.println("Changement monde Nether");
+                tableauActuel = nether.get(localisation);
+                break;
         }
-       else if("end".equals(monde)){
-            if(end.size()<localisation)
-                normal.add(genMap(cellFactory[1]));
-            System.out.println("Changement monde l'End");
-            tableauActuel = end.get(localisation);
-        }
-        else if("nether".equals(monde)){
-            if(nether.size()<localisation)
-                normal.add(genMap(cellFactory[2]));
-            System.out.println("Changement monde Nether");
-            tableauActuel = nether.get(localisation);
-        }
-        return this.tableauActuel;
+        return tableauActuel;
     }
 
 }
