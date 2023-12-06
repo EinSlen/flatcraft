@@ -50,29 +50,44 @@ public class MapGenerator implements IMapGenerator {
 
     @Override
     public void generateMap(int height, int width, CellFactory cell) {
-        if (map==null){
-            map = SimpleGameMap.getInstance(height,width,height/2);
-            for(int i = 0; i <height;i++){
-                for(int j = 0; j < width; j++){
-                    if (i == map.getSoilHeight()){
-                        map.setAt(i,j,cell.createSoilSurface());
-                        if(random.nextInt(10)<1) {
-                            map.setAt(i-1,j,cell.createJunglegrass());
-                        }
+        if (map == null) {
+            map = SimpleGameMap.getInstance(height, width, height / 2);
+            int stoneLayer = height / 2;  // Hauteur à laquelle se trouve la couche de stone
+            int finstonelayer = (height / 2) + 3;
 
+            for (int i = 0; i < height; i++) {
+                for (int j = 0; j < width; j++) {
+                    if (i == map.getSoilHeight()) {
+                        // Ajout de la couche de terre en dessous de la surface
+                        map.setAt(i, j, cell.createSoilSurface());
+                        if (random.nextInt(10) < 1) {
+                            map.setAt(i - 1, j, cell.createJunglegrass());
+                        }
+                    } else if (i < map.getSoilHeight()) {
+                        map.setAt(i, j, cell.createSky());
+                    } else {
+                        map.setAt(i, j, cell.createStone());
                     }
-                    else if(i < map.getSoilHeight()){
-                        map.setAt(i,j, cell.createSky());
+                    if (i > stoneLayer+1 && i < stoneLayer + 4) {
+                        if (random.nextDouble() < 0.5) {
+                            map.setAt(i, j, cell.createSubSoil());
+                        } else {
+                            map.setAt(i, j, cell.createStone());
+                        }
                     }
-                    else{
-                        map.setAt(i,j,cell.createSubSoil());
+                    if (i == map.getSoilHeight()+1) {
+                        map.setAt(i, j, cell.createSubSoil());
                     }
                 }
             }
-        }else {
+        } else {
             System.err.println("La map est déjà générée ! ");
         }
     }
+
+
+
+
 
     @Override
     public SimpleGameMap getMap() {

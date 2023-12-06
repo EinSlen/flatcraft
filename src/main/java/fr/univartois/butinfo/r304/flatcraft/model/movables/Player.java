@@ -99,7 +99,10 @@ public class Player extends AbstractMovable {
 
     public void supprimerInventaire(Resource r){
         Integer v = this.inventaire.get(r);
-        this.inventaire.replace(r, v-1);
+        if(v==1)
+            this.inventaire.remove(r);
+        else
+            this.inventaire.replace(r, v-1);
     }
 
 }

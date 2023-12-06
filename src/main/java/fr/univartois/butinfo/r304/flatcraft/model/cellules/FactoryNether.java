@@ -60,6 +60,11 @@ public class FactoryNether implements CellFactory {
         return createRessouresCell("coal_block");
     }
 
+    @Override
+    public Cell createStone() {
+        return createRessouresCell("stone");
+    }
+
     public MyCell createCell(String name){
         Sprite sprite = spriteStore.getSprite(name);
         return new MyCell(sprite);

@@ -29,11 +29,15 @@ public class TerrilFactory implements IComponent {
             int startCol = terrilCol - i;
 
             for (int j = 0; j < nbBlocs; j++) {
-                Cell blocSousSol = cellFactory.createSubSoil();
-                game.getMap().setAt(hauteurCourante, startCol, blocSousSol);
+                // Vérifiez si les coordonnées sont dans les limites de la carte
+                if (hauteurCourante >= 0 && hauteurCourante < game.getHeight() && startCol >= 0 && startCol < game.getWidth()) {
+                    Cell blocSousSol = cellFactory.createSubSoil();
+                    game.getMap().setAt(hauteurCourante, startCol, blocSousSol);
+                }
                 startCol++;
             }
             hauteurCourante++;
         }
     }
+
 }

@@ -37,10 +37,15 @@ public class ArbreFactory implements IComponent {
     }
 
     private boolean peutPlacerArbre(int col) {
-        if(0 > col-2 || game.getMap().getWidth() < col-2 )
-            return false;
-        return true;
+        int minCol = 1;
+        int maxCol = game.getMap().getWidth() - 2;
+
+        int minRow = game.getMap().getSoilHeight() - 1;
+        int maxRow = game.getHeight() - 1;
+
+        return col >= minCol && col <= maxCol && minRow >= 0 && maxRow < game.getHeight();
     }
+
 
     private void genererArbre(int col, int hauteurTronc) {
         int hauteurCourante =  Math.max(game.getMap().getSoilHeight() - hauteurTronc, game.getMap().getSoilHeight() - 1);
