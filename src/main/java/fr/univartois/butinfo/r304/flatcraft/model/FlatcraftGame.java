@@ -113,8 +113,6 @@ public final class FlatcraftGame {
 
     private IMapGenerator genMap;
 
-    private Logger logger;
-
 
     /**
      * Crée une nouvelle instance de FlatcraftGame.
@@ -332,7 +330,6 @@ public final class FlatcraftGame {
     public void digUp() {
         Cell cell = getCellOf(player);
         Cell cellToDig = map.getAt(cell.getRow()-1, cell.getColumn());
-        logger.info(cellToDig.getSprite().getImage().getUrl());
         if (cellToDig.getResource() != null){
             dig(cellToDig);
             move(player);
@@ -345,7 +342,6 @@ public final class FlatcraftGame {
     public void digDown() {
         Cell cell = getCellOf(player);
         Cell cellToDig = map.getAt(cell.getRow()+1, cell.getColumn());
-        logger.info(cellToDig.getSprite().getImage().getUrl());
         if (cellToDig.getResource() != null){
             dig(cellToDig);
             move(player);
