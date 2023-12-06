@@ -6,7 +6,7 @@ import fr.univartois.butinfo.r304.flatcraft.model.movables.mobs.strategy.lineair
 
 public class DeplacementAleatoire implements IDeplacement {
     private static DeplacementAleatoire instance;
-    private DeplacementAleatoire(){};
+    private DeplacementAleatoire(){}
 
     public static DeplacementAleatoire getInstance(){
         if(instance==null) instance = new DeplacementAleatoire();

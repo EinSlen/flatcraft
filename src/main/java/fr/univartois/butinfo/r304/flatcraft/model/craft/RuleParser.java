@@ -16,6 +16,9 @@
 
 package fr.univartois.butinfo.r304.flatcraft.model.craft;
 
+import fr.univartois.butinfo.r304.flatcraft.model.craft.builder.RuleBuilder;
+import fr.univartois.butinfo.r304.flatcraft.model.craft.rule.Rule;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -71,7 +74,9 @@ public final class RuleParser {
      * @param quantity La quantité obtenue pour la ressource produite.
      */
     private void addRule(String rule, String product, int quantity) {
-        // TODO Ajoutez ici le code propre à votre application pour gérer les règles.
+        RuleBuilder builder = new RuleBuilder();
+        builder.addRule(rule).addProduct(product).addQuantity(quantity);
+        Rule craftedRule = builder.build();
     }
 
 }

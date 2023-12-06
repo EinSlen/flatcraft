@@ -13,6 +13,8 @@ public class FactoryEnd implements CellFactory{
 
     private static FactoryEnd instance;
 
+    private static final String SANDSTONE = "sandstone";
+
     private FactoryEnd(){}
 
     public static FactoryEnd getInstance(){
@@ -34,12 +36,12 @@ public class FactoryEnd implements CellFactory{
 
     @Override
     public Cell createSoilSurface() {
-        return createRessouresCell("sandstone");
+        return createRessouresCell(SANDSTONE);
     }
 
     @Override
     public Cell createSubSoil() {
-        return createRessouresCell("sandstone");
+        return createRessouresCell(SANDSTONE);
     }
 
     @Override
@@ -54,7 +56,7 @@ public class FactoryEnd implements CellFactory{
 
     @Override
     public Cell createJunglegrass() {
-        return createRessouresCell("sandstone");
+        return createRessouresCell(SANDSTONE);
     }
 
     @Override
