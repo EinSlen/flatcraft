@@ -36,7 +36,7 @@ public class MapGenerator implements IMapGenerator {
      * @Param width, height, CellFactory
      * @Return la carte générée
      */
-    public SimpleGameMap GenerateMap(int height, int width, CellFactory cell) {
+    public SimpleGameMap generateSimpleMap(int height, int width, CellFactory cell) {
         this.map = SimpleGameMap.getInstance(height, width, height/2);
         for(int i = 0; i<height;i++) {
             for(int j = 0; j<width; j++) {

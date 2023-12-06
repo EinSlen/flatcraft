@@ -55,7 +55,9 @@ public class ArbreFactory implements IComponent {
                 while (("dirt".equals(game.getMap().getAt(hauteurCourante, col).getResource().getName()))) {
                     hauteurCourante--;
                 }
-            } catch(Exception e) {}
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
             Cell tronc = cellFactory.createTrunk();
             game.getMap().setAt(hauteurCourante, col, tronc);
             hauteurCourante--;
