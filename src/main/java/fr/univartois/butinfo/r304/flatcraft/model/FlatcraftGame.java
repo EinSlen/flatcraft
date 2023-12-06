@@ -15,21 +15,18 @@
  */
 
 package fr.univartois.butinfo.r304.flatcraft.model;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-
 
 import fr.univartois.butinfo.r304.flatcraft.model.arbreterri.ArbreFactory;
 import fr.univartois.butinfo.r304.flatcraft.model.arbreterri.FactoryComposite;
+import fr.univartois.butinfo.r304.flatcraft.model.arbreterri.TerrilFactory;
 import fr.univartois.butinfo.r304.flatcraft.model.cellules.Cell;
 import fr.univartois.butinfo.r304.flatcraft.model.cellules.CellFactory;
-import fr.univartois.butinfo.r304.flatcraft.model.arbreterri.TerrilFactory;
 import fr.univartois.butinfo.r304.flatcraft.model.map.IMapGenerator;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable;
+import fr.univartois.butinfo.r304.flatcraft.model.movables.Player;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.mobs.fabrique.MobDim;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.mobs.fabrique.normal.MNormal;
-import fr.univartois.butinfo.r304.flatcraft.model.movables.mobs.strategy.aleatoire.DeplacementAleatoire;
-import fr.univartois.butinfo.r304.flatcraft.model.movables.Player;
+import fr.univartois.butinfo.r304.flatcraft.model.movables.mobs.strategy.intelligent.DeplacementIntelligent;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
@@ -38,7 +35,9 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
-import java.io.*;
+
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 
 /**
@@ -181,10 +180,9 @@ public final class FlatcraftGame {
 
         // Créer 1 mob pour la dimension normal, la gestion des dimensions n'est pas encore faite
         MobDim mobDim = new MNormal();
-        IMovable mob = mobDim.render(this, DeplacementAleatoire.getInstance());
+        IMovable mob = mobDim.render(this, DeplacementIntelligent.getInstance());
         movableObjects.add(mob);
         controller.addMovable(mob);
-
         controller.addMovable(player);
         controller.bindTime(time);
         controller.bindLevel(level);
@@ -248,7 +246,6 @@ public final class FlatcraftGame {
         Cell cellToDig = map.getAt(cell.getRow()-1, cell.getColumn());
         if(cellToDig.getResource() == null) {
             player.setVerticalSpeed(-50);
-            move(player);
         }
     }
 
@@ -269,23 +266,25 @@ public final class FlatcraftGame {
      * Fait se déplacer le joueur vers la gauche.
      */
     public void moveLeft() {
+        player.setHorizontalSpeed(0);
         Cell cell = getCellOf(player);
         Cell cellToDig = map.getAt(cell.getRow(), cell.getColumn()-1);
         if(cellToDig.getResource() == null) {
-            player.setHorizontalSpeed(-50);
+            player.setHorizontalSpeed(-45);
             move(player);
         }
+
     }
 
     /**
      * Fait se déplacer le joueur vers la droite.
      */
     public void moveRight() {
+        player.setHorizontalSpeed(0);
         Cell cell = getCellOf(player);
         Cell cellToDig = map.getAt(cell.getRow(), cell.getColumn()+1);
-        System.out.println(cellToDig.getResource());
         if(cellToDig.getResource() == null) {
-            player.setHorizontalSpeed(50);
+            player.setHorizontalSpeed(45);
             move(player);
         }
     }
@@ -318,9 +317,7 @@ public final class FlatcraftGame {
      */
     public void jump() throws InterruptedException {
         moveUp();
-        Thread.sleep(100);
-        move(player);
-        moveDown();
+        player.setVerticalSpeed(0);
         move(player);
     }
 

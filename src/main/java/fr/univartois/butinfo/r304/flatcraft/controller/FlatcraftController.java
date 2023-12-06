@@ -304,7 +304,6 @@ public final class FlatcraftController implements IFlatcraftController {
      *
      * @param code Le code de la touche sur laquelle le joueur a appuyé.
      */
-    @SuppressWarnings("incomplete-switch")
     private void move(KeyCode code) {
         switch (code) {
             case UP -> game.moveUp();
