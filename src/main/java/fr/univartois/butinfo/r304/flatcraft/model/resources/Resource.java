@@ -198,7 +198,7 @@ public final class Resource {
     }
 
     public void handleOnMap() {
-        this.handleOnMap();
+        currentState.handleOnMap(this);
     }
 
     public void handleInInventory() {
