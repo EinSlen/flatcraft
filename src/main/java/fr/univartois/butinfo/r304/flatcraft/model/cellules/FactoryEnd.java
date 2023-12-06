@@ -8,7 +8,7 @@ import fr.univartois.butinfo.r304.flatcraft.view.SpriteStore;
 
 import java.util.Random;
 
-public class FactoryEnd implements CellFactory{
+public class FactoryEnd implements CellFactory {
     SpriteStore spriteStore;
 
     private static FactoryEnd instance;

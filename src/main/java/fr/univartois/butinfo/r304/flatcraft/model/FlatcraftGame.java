@@ -16,21 +16,22 @@
 
 package fr.univartois.butinfo.r304.flatcraft.model;
 
-import fr.univartois.butinfo.r304.flatcraft.model.arbreterri.ArbreFactory;
-import fr.univartois.butinfo.r304.flatcraft.model.arbreterri.FactoryComposite;
-import fr.univartois.butinfo.r304.flatcraft.model.arbreterri.TerrilFactory;
 import fr.univartois.butinfo.r304.flatcraft.model.cellules.Cell;
 import fr.univartois.butinfo.r304.flatcraft.model.cellules.CellFactory;
+import fr.univartois.butinfo.r304.flatcraft.model.cellules.Factory;
+import fr.univartois.butinfo.r304.flatcraft.model.cellules.FactoryEnd;
 import fr.univartois.butinfo.r304.flatcraft.model.map.IMapGenerator;
+import fr.univartois.butinfo.r304.flatcraft.model.map.MapGenerator;
+import fr.univartois.butinfo.r304.flatcraft.model.map.WorldMapEngine;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.Player;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.mobs.fabrique.MobDim;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.mobs.fabrique.normal.MNormal;
+import fr.univartois.butinfo.r304.flatcraft.model.movables.mobs.strategy.aleatoire.DeplacementAleatoire;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.mobs.strategy.intelligent.DeplacementIntelligent;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
-import fr.univartois.butinfo.r304.flatcraft.view.SpriteStore;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
@@ -49,10 +50,15 @@ import java.util.concurrent.CopyOnWriteArrayList;
  */
 public final class FlatcraftGame {
     private static FlatcraftGame instance;
+    private WorldMapEngine worldMapEngine;
 
-    public static FlatcraftGame getInstance(int width, int height, ISpriteStore spriteStore, CellFactory factory){
-        if(instance==null) instance = new FlatcraftGame(width, height, spriteStore, factory);
+    public static FlatcraftGame getInstance(int width, int height, ISpriteStore spriteStore){
+        if(instance==null) instance = new FlatcraftGame(width, height, spriteStore);
         return instance;
+    }
+    public static FlatcraftGame getInstance(){
+        if(instance!=null) return instance;
+        return null;
     }
 
     /**
@@ -78,7 +84,7 @@ public final class FlatcraftGame {
     /**
      * L'instance de {@link CellFactory} utilisée pour créer les cellules du jeu.
      */
-    private final CellFactory cellFactory;
+    private CellFactory cellFactory;
 
     /**
      * La carte du jeu, sur laquelle le joueur évolue.
@@ -120,14 +126,11 @@ public final class FlatcraftGame {
      * @param height La hauteur de la carte du jeu (en pixels).
      * @param spriteStore L'instance de {@link ISpriteStore} permettant de créer les
      *        {@link Sprite} du jeu.
-     * @param factory La fabrique permettant de créer les cellules du jeux.
      */
-    private FlatcraftGame(int width, int height, ISpriteStore spriteStore, CellFactory factory) {
+    private FlatcraftGame(int width, int height, ISpriteStore spriteStore) {
         this.width = width;
         this.height = height;
         this.spriteStore = spriteStore;
-        this.cellFactory = factory;
-        this.cellFactory.setSpriteStore(spriteStore);
     }
 
     /**
@@ -161,28 +164,26 @@ public final class FlatcraftGame {
      * Prépare la partie de Flatcraft avant qu'elle ne démarre.
      */
     public void prepare() {
+        this.worldMapEngine = WorldMapEngine.getInstance();
         // On crée la carte du jeu.
-        map = createMap();
-        controller.prepare(map);
+        controller.prepare(worldMapEngine.changeMap("normal",0));
+        cellFactory = Factory.getInstance();
+        map = worldMapEngine.getTableauActuel();
         IntegerProperty playerHealth = new SimpleIntegerProperty(3);
         IntegerProperty playerExperience = new SimpleIntegerProperty(1);
         ObservableMap<Resource, Integer> playerInventory = FXCollections.observableHashMap();
-        SpriteStore spriteStore1 = SpriteStore.getInstance();
-        Sprite sprite = spriteStore1.getSprite("player");
-        this.player = new Player(this, 0, map.getSoilHeight()*spriteStore.getSpriteSize()-spriteStore.getSpriteSize(), sprite, playerHealth, playerExperience, playerInventory);;
-        ArbreFactory arbreFactory = new ArbreFactory(this, cellFactory, 50, 5);
-        TerrilFactory terrilFactory = new TerrilFactory(this, cellFactory, 5);
-        FactoryComposite factory = new FactoryComposite();
-        factory.ajouter(arbreFactory);
-        factory.ajouter(terrilFactory);
-        factory.ajouterAleatoires();
+        Sprite sprite = spriteStore.getSprite("player");
+        this.player = new Player(this, 0, worldMapEngine.getTableauActuel().getSoilHeight()*spriteStore.getSpriteSize()-spriteStore.getSpriteSize(), sprite, playerHealth, playerExperience, playerInventory);
         movableObjects.add(player);
-
         // Créer 1 mob pour la dimension normal, la gestion des dimensions n'est pas encore faite
         MobDim mobDim = new MNormal();
         IMovable mob = mobDim.render(this, DeplacementIntelligent.getInstance());
+        MobDim mobDim1 = new MNormal();
+        IMovable mob1 = mobDim1.render(this, DeplacementAleatoire.getInstance());
         movableObjects.add(mob);
+        movableObjects.add(mob1);
         controller.addMovable(mob);
+        controller.addMovable(mob1);
         controller.addMovable(player);
         controller.bindTime(time);
         controller.bindLevel(level);
@@ -200,34 +201,20 @@ public final class FlatcraftGame {
         this.genMap = genMap;
     }
 
-    public GameMap getMap() {
-        return map;
-    }
-
     public CellFactory getCellFactory() {
         return cellFactory;
     }
 
-    /**
-     * Crée la carte du jeu.
-     *
-     * @return La carte du jeu créée.
-     */
-    private GameMap createMap() {
-        /**
-         int spriteSize = spriteStore.getSpriteSize();
-
-        int mapWidthInPixels = width / spriteSize;
-        int mapHeightInPixels = height / spriteSize;
-
-        MapGenerator map = new MapGenerator();
-
-        return map.GenerateMap(mapHeightInPixels, mapWidthInPixels, cellFactory);
-         */
-        IMapGenerator map = this.genMap;
-        map.generateMap(height/ spriteStore.getSpriteSize(),width/ spriteStore.getSpriteSize(),cellFactory);
-        return map.getMap();
-
+    static int i =0;
+    private void changeDimensionV1(){
+        Cell currentCell = getCellOf(player);
+        if(currentCell.getRow()==21 && currentCell.getColumn()==3 && i==0){
+            i++;
+            System.out.println(currentCell.getRow()+" "+currentCell.getColumn());
+            map = worldMapEngine.changeMap("normal",0);
+            cellFactory = Factory.getInstance();
+            controller.prepare(map);
+        }
     }
 
     /**
@@ -287,6 +274,7 @@ public final class FlatcraftGame {
             player.setHorizontalSpeed(45);
             move(player);
         }
+        changeDimensionV1();
     }
 
     /**

@@ -1,6 +1,7 @@
 package fr.univartois.butinfo.r304.flatcraft.model.arbreterri;
 
 import fr.univartois.butinfo.r304.flatcraft.model.FlatcraftGame;
+import fr.univartois.butinfo.r304.flatcraft.model.GameMap;
 import fr.univartois.butinfo.r304.flatcraft.model.cellules.Cell;
 import fr.univartois.butinfo.r304.flatcraft.model.cellules.CellFactory;
 import fr.univartois.butinfo.r304.flatcraft.view.SpriteStore;
@@ -14,11 +15,14 @@ public class ArbreFactory implements IComponent {
     private final int maxArbres;
     private final int hauteurLimiteTronc;
 
-    public ArbreFactory(FlatcraftGame game, CellFactory cellFactory, int maxArbres, int hauteurLimiteTronc) {
+    private final GameMap map;
+
+    public ArbreFactory(FlatcraftGame game, CellFactory cellFactory,GameMap map, int maxArbres, int hauteurLimiteTronc) {
         this.game = game;
         this.cellFactory = cellFactory;
         this.maxArbres = maxArbres;
         this.hauteurLimiteTronc = hauteurLimiteTronc;
+        this.map=map;
     }
 
     public void ajouterAleatoires() {
@@ -38,9 +42,9 @@ public class ArbreFactory implements IComponent {
 
     private boolean peutPlacerArbre(int col) {
         int minCol = 1;
-        int maxCol = game.getMap().getWidth() - 2;
+        int maxCol = map.getWidth() - 2;
 
-        int minRow = game.getMap().getSoilHeight() - 1;
+        int minRow = map.getSoilHeight() - 1;
         int maxRow = game.getHeight() - 1;
 
         return col >= minCol && col <= maxCol && minRow >= 0 && maxRow < game.getHeight();
@@ -48,16 +52,16 @@ public class ArbreFactory implements IComponent {
 
 
     private void genererArbre(int col, int hauteurTronc) {
-        int hauteurCourante =  Math.max(game.getMap().getSoilHeight() - hauteurTronc, game.getMap().getSoilHeight() - 1);
+        int hauteurCourante =  Math.max(map.getSoilHeight() - hauteurTronc, map.getSoilHeight() - 1);
         // Générer le tronc de l'arbre
         for (int i = 0; i < hauteurTronc; i++) {
             try {
-                while (("dirt".equals(game.getMap().getAt(hauteurCourante, col).getResource().getName()))) {
+                while (("dirt".equals(map.getAt(hauteurCourante, col).getResource().getName()))) {
                     hauteurCourante--;
                 }
             } catch(Exception e) {}
             Cell tronc = cellFactory.createTrunk();
-            game.getMap().setAt(hauteurCourante, col, tronc);
+            map.setAt(hauteurCourante, col, tronc);
             hauteurCourante--;
         }
 
@@ -68,7 +72,7 @@ public class ArbreFactory implements IComponent {
             for (int offset = -feuillageRadius; offset <= feuillageRadius; offset++) {
                 if (Math.abs(offset) < feuillageRadius && row != troncRow) {
                     Cell feuillage = cellFactory.createLeaves();
-                    game.getMap().setAt(row+1, col + offset, feuillage);
+                    map.setAt(row+1, col + offset, feuillage);
                 }
             }
         }

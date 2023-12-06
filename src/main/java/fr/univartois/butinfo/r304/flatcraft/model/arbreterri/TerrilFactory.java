@@ -1,5 +1,6 @@
 package fr.univartois.butinfo.r304.flatcraft.model.arbreterri;
 
+import fr.univartois.butinfo.r304.flatcraft.model.GameMap;
 import fr.univartois.butinfo.r304.flatcraft.model.cellules.Cell;
 import fr.univartois.butinfo.r304.flatcraft.model.cellules.CellFactory;
 import fr.univartois.butinfo.r304.flatcraft.model.FlatcraftGame;
@@ -12,17 +13,19 @@ public class TerrilFactory implements IComponent {
     private final CellFactory cellFactory;
     private static final Random random = new Random();
     private final int maxTerrilSize;
+    private final GameMap map;
 
-    public TerrilFactory(FlatcraftGame game, CellFactory cellFactory, int maxTerrilSize) {
+    public TerrilFactory(FlatcraftGame game, CellFactory cellFactory, GameMap map, int maxTerrilSize) {
         this.game = game;
         this.cellFactory = cellFactory;
         this.maxTerrilSize = maxTerrilSize;
+        this.map=map;
     }
 
     public void ajouterAleatoires() {
         int terrilSize = random.nextInt(maxTerrilSize) + 1;
         int terrilCol = random.nextInt(game.getWidth() / SpriteStore.getInstance().getSpriteSize());
-        int hauteurCourante = game.getMap().getSoilHeight() - terrilSize;
+        int hauteurCourante = map.getSoilHeight() - terrilSize;
 
         for (int i = 0; i < terrilSize; i++) {
             int nbBlocs = 2 * i + 1;
@@ -32,7 +35,7 @@ public class TerrilFactory implements IComponent {
                 // Vérifiez si les coordonnées sont dans les limites de la carte
                 if (hauteurCourante >= 0 && hauteurCourante < game.getHeight() && startCol >= 0 && startCol < game.getWidth()) {
                     Cell blocSousSol = cellFactory.createSubSoil();
-                    game.getMap().setAt(hauteurCourante, startCol, blocSousSol);
+                    map.setAt(hauteurCourante, startCol, blocSousSol);
                 }
                 startCol++;
             }

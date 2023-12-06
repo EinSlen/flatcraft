@@ -21,7 +21,7 @@ import java.io.IOException;
 import fr.univartois.butinfo.r304.flatcraft.controller.FlatcraftController;
 import fr.univartois.butinfo.r304.flatcraft.model.cellules.CellFactory;
 import fr.univartois.butinfo.r304.flatcraft.model.FlatcraftGame;
-import fr.univartois.butinfo.r304.flatcraft.model.cellules.Factory;
+import fr.univartois.butinfo.r304.flatcraft.model.cellules.FactoryEnd;
 import fr.univartois.butinfo.r304.flatcraft.model.map.MapGenerator;
 import fr.univartois.butinfo.r304.flatcraft.view.SpriteStore;
 import javafx.application.Application;
@@ -64,8 +64,7 @@ public final class Flatcraft extends Application {
 
         // On crée ensuite le jeu, que l'on lie au contrôleur.
 
-        CellFactory factory = Factory.getInstance();
-        FlatcraftGame game = FlatcraftGame.getInstance(GAME_WIDTH, GAME_HEIGHT, SpriteStore.getInstance(), factory);
+        FlatcraftGame game = FlatcraftGame.getInstance(GAME_WIDTH, GAME_HEIGHT, SpriteStore.getInstance());
 
         controller.setGame(game);
         game.setController(controller);

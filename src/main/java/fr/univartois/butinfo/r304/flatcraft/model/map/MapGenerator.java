@@ -80,8 +80,6 @@ public class MapGenerator implements IMapGenerator {
                     }
                 }
             }
-        } else {
-            System.err.println("La map est déjà générée ! ");
         }
     }
 
