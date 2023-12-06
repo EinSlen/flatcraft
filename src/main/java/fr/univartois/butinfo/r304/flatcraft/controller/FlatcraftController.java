@@ -184,7 +184,7 @@ public final class FlatcraftController implements IFlatcraftController {
             if (" ".equals(e.getCharacter())) {
                 try {
                     game.jump();
-                } catch (InterruptedException ex) {
+                } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }
             }
