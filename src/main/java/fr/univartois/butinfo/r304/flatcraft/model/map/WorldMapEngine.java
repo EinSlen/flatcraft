@@ -29,8 +29,11 @@ public class WorldMapEngine {
 
     private WorldMapEngine() {
         normal.add(genMap(cellFactory[0]));
+        System.out.println("normal 1");
         end.add(genMap(cellFactory[1]));
+        System.out.println("end 1");
         nether.add(genMap(cellFactory[2]));
+        System.out.println("nether 1");
     }
 
     public static WorldMapEngine getInstance() {

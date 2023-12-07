@@ -16,10 +16,7 @@
 
 package fr.univartois.butinfo.r304.flatcraft.model;
 
-import fr.univartois.butinfo.r304.flatcraft.model.cellules.Cell;
-import fr.univartois.butinfo.r304.flatcraft.model.cellules.CellFactory;
-import fr.univartois.butinfo.r304.flatcraft.model.cellules.Factory;
-import fr.univartois.butinfo.r304.flatcraft.model.cellules.FactoryEnd;
+import fr.univartois.butinfo.r304.flatcraft.model.cellules.*;
 import fr.univartois.butinfo.r304.flatcraft.model.map.IMapGenerator;
 import fr.univartois.butinfo.r304.flatcraft.model.map.MapGenerator;
 import fr.univartois.butinfo.r304.flatcraft.model.map.WorldMapEngine;
@@ -118,6 +115,9 @@ public final class FlatcraftGame {
 
     private IMapGenerator genMap;
 
+    public IMapGenerator getGenMap() {
+        return genMap;
+    }
 
     /**
      * Crée une nouvelle instance de FlatcraftGame.
@@ -201,6 +201,7 @@ public final class FlatcraftGame {
         this.genMap = genMap;
     }
 
+
     public CellFactory getCellFactory() {
         return cellFactory;
     }
@@ -213,6 +214,20 @@ public final class FlatcraftGame {
             System.out.println(currentCell.getRow()+" "+currentCell.getColumn());
             map = worldMapEngine.changeMap("end",0);
             cellFactory = FactoryEnd.getInstance();
+            controller.prepare(map);
+        }
+        if(currentCell.getRow()==21 && currentCell.getColumn()==8 && i==1){
+            i++;
+            System.out.println(currentCell.getRow()+" "+currentCell.getColumn());
+            map = worldMapEngine.changeMap("nether",0);
+            cellFactory = FactoryNether.getInstance();
+            controller.prepare(map);
+        }
+        if(currentCell.getRow()==21 && currentCell.getColumn()==12 && i==2){
+            i++;
+            System.out.println(currentCell.getRow()+" "+currentCell.getColumn());
+            map = worldMapEngine.changeMap("normal",0);
+            cellFactory = Factory.getInstance();
             controller.prepare(map);
         }
     }
