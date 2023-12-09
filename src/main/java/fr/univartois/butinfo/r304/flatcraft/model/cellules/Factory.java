@@ -47,7 +47,7 @@ public class Factory implements CellFactory {
     }
 
     public Cell createJunglegrass() {
-        return createRessouresCell("junglegrass",1);
+        return createRessouresCell("ice","junglegrass",1);
     }
 
     @Override

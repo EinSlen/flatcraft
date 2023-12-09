@@ -205,7 +205,9 @@ public final class FlatcraftGame {
         return cellFactory;
     }
 
-    static int i =0;
+
+    //Bouchons pour tester le changement de monde
+    int i =0;
     private void changeDimensionV1(){
         Cell currentCell = getCellOf(player);
         if(currentCell.getRow()==21 && currentCell.getColumn()==3 && i==0){
@@ -274,7 +276,7 @@ public final class FlatcraftGame {
             player.setHorizontalSpeed(-45);
             move(player);
         }
-
+        changeDimensionV1();
     }
 
     /**
@@ -437,5 +439,4 @@ public final class FlatcraftGame {
         // TODO Vous devez compléter cette méthode.
         throw new UnsupportedOperationException("Pas encore implémentée !");
     }
-
 }
