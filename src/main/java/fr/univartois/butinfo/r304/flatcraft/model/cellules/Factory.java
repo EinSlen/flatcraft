@@ -4,6 +4,12 @@ import fr.univartois.butinfo.r304.flatcraft.model.resources.ToolType;
 import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 import fr.univartois.butinfo.r304.flatcraft.view.SpriteStore;
+import javafx.scene.SnapshotParameters;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
+
 import java.util.Random;
 
 public class Factory implements CellFactory {
@@ -36,12 +42,12 @@ public class Factory implements CellFactory {
     @Override
     public Cell createSoilSurface() {
         if(random.nextInt(10)<2)
-            return createRessouresCell("water");
-        return createRessouresCell("grass");
+            return createRessouresCell("ice","water",1);
+        return createRessouresCell("grass",1);
     }
 
     public Cell createJunglegrass() {
-        return createRessouresCell("junglegrass");
+        return createRessouresCell("junglegrass",1);
     }
 
     @Override
@@ -50,26 +56,26 @@ public class Factory implements CellFactory {
         int mineral = random.nextInt(100);
 
         if (randomValue < 80) {
-            return createRessouresCell("stone");
+            return createRessouresCell("stone",2);
         } else {
             if (mineral < 5) {
-                return createRessouresCell("mineral_coal");
+                return createRessouresCell("stone","mineral_coal",2);
             } else if (mineral < 15) {
-                return createRessouresCell("mineral_copper");
+                return createRessouresCell("stone","mineral_copper",2);
             } else if (mineral < 30) {
-                return createRessouresCell("mineral_iron");
+                return createRessouresCell("stone","mineral_iron",3);
             } else if (mineral < 50) {
-                return createRessouresCell("mineral_gold");
+                return createRessouresCell("stone","mineral_gold",4);
             } else if (mineral < 80) {
-                return createRessouresCell("mineral_diamond");
+                return createRessouresCell("stone","mineral_diamond",5);
             }
         }
-        return createRessouresCell("stone");
+        return createRessouresCell("stone","stone",2);
     }
 
     @Override
     public Cell createSubSoil() {
-        return createRessouresCell("dirt");
+        return createRessouresCell("dirt",2);
     }
 
     @Override
@@ -79,7 +85,7 @@ public class Factory implements CellFactory {
 
     @Override
     public Cell createLeaves() {
-        return createRessouresCell("acacia_leaves");
+        return createRessouresCell("ice","acacia_leaves",1);
     }
 
 
@@ -89,8 +95,28 @@ public class Factory implements CellFactory {
         return new MyCell(sprite);
     }
 
-    public Cell createRessouresCell(String name){
+    public Cell createRessouresCell(String name , int hardness){
         Sprite sprite = spriteStore.getSprite(name);
-        return new MyCell(new Resource(name, sprite, ToolType.NO_TOOL, 1));
+        return new MyCell(new Resource(name, sprite, ToolType.NO_TOOL, hardness));
+    }
+
+    private Cell createRessouresCell(String background, String name, int hardness){
+        Sprite sprite1 = spriteStore.getSprite(background);
+        Sprite sprite2 = spriteStore.getSprite(name);
+        Image image = makeImageWithBackground(sprite1,sprite2);
+        Sprite sprite = new Sprite(image);
+        return new MyCell(new Resource(name, sprite, ToolType.NO_TOOL, hardness));
+    }
+
+
+
+    public Image makeImageWithBackground(Sprite sprite1, Sprite sprite2){
+        Canvas canvas = new Canvas(sprite1.getWidth(),sprite2.getHeight());
+        GraphicsContext graphicsContext = canvas.getGraphicsContext2D();
+        graphicsContext.drawImage(sprite1.getImage(),0,0);
+        graphicsContext.drawImage(sprite2.getImage(),0,0);
+        SnapshotParameters snapshotParameters = new SnapshotParameters();
+        WritableImage image = new WritableImage((int) canvas.getWidth(), (int) canvas.getHeight());
+        return canvas.snapshot(snapshotParameters, image);
     }
 }

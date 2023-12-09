@@ -51,7 +51,7 @@ public class WorldMapEngine {
         return map.getMap();
     }
 
-    public void remplirMap(CellFactory cellFactory, GameMap map){
+    private void remplirMap(CellFactory cellFactory, GameMap map){
         ArbreFactory arbreFactory = new ArbreFactory(flatcraftGame, cellFactory, map,50, 5);
         TerrilFactory terrilFactory = new TerrilFactory(flatcraftGame, cellFactory,map, 5);
         FactoryComposite factory = new FactoryComposite();
@@ -68,19 +68,19 @@ public class WorldMapEngine {
     public GameMap changeMap(String monde, int localisation){
         switch (monde){
             case "normal":
-                if(normal.size()<localisation)
+                if(normal.size()-1<localisation)
                     normal.add(genMap(cellFactory[0]));
                 System.out.println("Changement monde Normal");
                 tableauActuel = normal.get(localisation);
                 break;
             case "end":
-                if(end.size()<localisation)
+                if(end.size()-1<localisation)
                     normal.add(genMap(cellFactory[1]));
                 System.out.println("Changement monde l'End");
                 tableauActuel = end.get(localisation);
                 break;
             case "nether":
-                if(nether.size()<localisation)
+                if(nether.size()-1<localisation)
                     normal.add(genMap(cellFactory[2]));
                 System.out.println("Changement monde Nether");
                 tableauActuel = nether.get(localisation);

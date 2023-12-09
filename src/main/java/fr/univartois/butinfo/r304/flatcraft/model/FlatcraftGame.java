@@ -18,7 +18,6 @@ package fr.univartois.butinfo.r304.flatcraft.model;
 
 import fr.univartois.butinfo.r304.flatcraft.model.cellules.*;
 import fr.univartois.butinfo.r304.flatcraft.model.map.IMapGenerator;
-import fr.univartois.butinfo.r304.flatcraft.model.map.MapGenerator;
 import fr.univartois.butinfo.r304.flatcraft.model.map.WorldMapEngine;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.Player;
