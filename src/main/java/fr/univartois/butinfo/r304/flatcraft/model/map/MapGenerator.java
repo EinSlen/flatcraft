@@ -4,17 +4,17 @@ import fr.univartois.butinfo.r304.flatcraft.model.cellules.CellFactory;
 import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 
 import java.util.Random;
-import java.util.logging.Logger;
 
 public class MapGenerator implements IMapGenerator {
 
+    private int width;
+    private int height;
     private CellFactory cellFactory;
 
     private static Random random = new Random();
     private ISpriteStore spriteStore;
 
     private SimpleGameMap map;
-    private Logger logger;
 
     /**
      * Set le sprite dans cell Factory
@@ -36,8 +36,8 @@ public class MapGenerator implements IMapGenerator {
      * @Param width, height, CellFactory
      * @Return la carte générée
      */
-    public SimpleGameMap generateSimpleMap(int height, int width, CellFactory cell) {
-        this.map = SimpleGameMap.getInstance(height, width, height/2);
+    public SimpleGameMap GenerateMap(int height, int width, CellFactory cell) {
+        this.map = new SimpleGameMap(height, width, height/2);
         for(int i = 0; i<height;i++) {
             for(int j = 0; j<width; j++) {
                 if(i>map.getSoilHeight()) map.setAt(i,j,cell.createSubSoil());
@@ -51,51 +51,35 @@ public class MapGenerator implements IMapGenerator {
     @Override
     public void generateMap(int height, int width, CellFactory cell) {
         if (map == null) {
-            map = SimpleGameMap.getInstance(height, width, height / 2);
-            generateSurface(height, width, cell);
-            generateSubSoil(height, width, cell);
-        } else {
-            logger.warning("La map est déjà générée ! ");
-        }
-    }
+            map = new SimpleGameMap(height, width, height / 2);
+            int stoneLayer = height / 2;  // Hauteur à laquelle se trouve la couche de stone
+            int finstonelayer = (height / 2) + 3;
 
-    private void generateSurface(int height, int width, CellFactory cell) {
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                if (i == map.getSoilHeight()) {
-                    map.setAt(i, j, cell.createSoilSurface());
-                    addJunglegrass(i, j, cell);
-                } else if (i < map.getSoilHeight()) {
-                    map.setAt(i, j, cell.createSky());
-                } else {
-                    map.setAt(i, j, cell.createStone());
+            for (int i = 0; i < height; i++) {
+                for (int j = 0; j < width; j++) {
+                    if (i == map.getSoilHeight()) {
+                        // Ajout de la couche de terre en dessous de la surface
+                        map.setAt(i, j, cell.createSoilSurface());
+                        if (random.nextInt(10) < 1) {
+                            map.setAt(i - 1, j, cell.createJunglegrass());
+                        }
+                    } else if (i < map.getSoilHeight()) {
+                        map.setAt(i, j, cell.createSky());
+                    } else {
+                        map.setAt(i, j, cell.createStone());
+                    }
+                    if (i > stoneLayer+1 && i < stoneLayer + 4) {
+                        if (random.nextDouble() < 0.5) {
+                            map.setAt(i, j, cell.createSubSoil());
+                        } else {
+                            map.setAt(i, j, cell.createStone());
+                        }
+                    }
+                    if (i == map.getSoilHeight()+1) {
+                        map.setAt(i, j, cell.createSubSoil());
+                    }
                 }
             }
-        }
-    }
-
-    private void addJunglegrass(int i, int j, CellFactory cell) {
-        if (random.nextInt(10) < 1) {
-            map.setAt(i - 1, j, cell.createJunglegrass());
-        }
-    }
-
-    private void generateSubSoil(int height, int width, CellFactory cell) {
-        int stoneLayer = height / 2;
-        int finStoneLayer = stoneLayer + 3;
-
-        for (int i = stoneLayer + 2; i < finStoneLayer; i++) {
-            for (int j = 0; j < width; j++) {
-                if (random.nextDouble() < 0.5) {
-                    map.setAt(i, j, cell.createSubSoil());
-                } else {
-                    map.setAt(i, j, cell.createStone());
-                }
-            }
-        }
-
-        for (int j = 0; j < width; j++) {
-            map.setAt(map.getSoilHeight() + 1, j, cell.createSubSoil());
         }
     }
 

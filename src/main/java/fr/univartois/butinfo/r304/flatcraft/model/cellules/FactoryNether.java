@@ -36,13 +36,13 @@ public class FactoryNether implements CellFactory {
     @Override
     public Cell createSoilSurface() {
         if(random.nextInt(10)<2)
-            return createRessouresCell("lava");
-        return createRessouresCell("obsidian");
+            return createRessouresCell("lava",1);
+        return createRessouresCell("obsidian",2);
     }
 
     @Override
     public Cell createSubSoil() {
-        return createRessouresCell("obsidian");
+        return createRessouresCell("obsidian",2);
     }
 
     @Override
@@ -52,17 +52,17 @@ public class FactoryNether implements CellFactory {
 
     @Override
     public Cell createLeaves() {
-        return createRessouresCell("lava");
+        return createRessouresCell("lava",1);
     }
 
     @Override
     public Cell createJunglegrass() {
-        return createRessouresCell("coal_block");
+        return createRessouresCell("coal_block",1);
     }
 
     @Override
     public Cell createStone() {
-        return createRessouresCell("stone");
+        return createRessouresCell("stone",2);
     }
 
     public MyCell createCell(String name){
@@ -70,8 +70,8 @@ public class FactoryNether implements CellFactory {
         return new MyCell(sprite);
     }
 
-    public Cell createRessouresCell(String name){
+    public Cell createRessouresCell(String name, int hardness){
         Sprite sprite = spriteStore.getSprite(name);
-        return new MyCell(new Resource(name, sprite, ToolType.NO_TOOL, 1));
+        return new MyCell(new Resource(name, sprite, ToolType.NO_TOOL, hardness));
     }
 }
