@@ -67,7 +67,7 @@ public abstract class AbstractCell implements Cell {
     protected AbstractCell(int row, int column) {
         this.row = row;
         this.column = column;
-        this.state = new EmptyCellState();
+        this.state = new ResourceCellState();
     }
 
     /**
@@ -107,10 +107,6 @@ public abstract class AbstractCell implements Cell {
 
     public CellState getState() {
         return state;
-    }
-
-    public void interactWithPlayer(IMovable movable) {
-        state.interactWithPlayer(movable, this);
     }
 
     /*
@@ -178,29 +174,12 @@ public abstract class AbstractCell implements Cell {
     }
 
     @Override
-    public boolean move(IMovable movable) {
-        if(getResource() == null){
-            int nouvelleLigne = getRow() * getSprite().getWidth();
-            int nouvelleColonne = getColumn() * getSprite().getHeight();
-            movable.setX(nouvelleColonne);
-            movable.setY(nouvelleLigne);
-            return true;
-        } else {
-            return false;
-        }
+    public boolean move(IMovable player) {
+        return state.interactWithPlayer(player, this);
     }
 
     @Override
     public boolean dig(IMovable player) {
-        Resource resource = getResource();
-        if(resource != null){
-            resource.dig();
-            if(resource.getHardness()==0){
-                ((Player) player).ajouterInventaire(resource);
-                return true;
-            }
-        }
-        return false;
+        return state.interactWithPlayer(player, this);
     }
-
 }

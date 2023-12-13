@@ -10,7 +10,7 @@ public class MyCell extends AbstractCell {
 
     public MyCell(int row, int column) {
         super(row, column);
-        this.state = new EmptyCellState();
+        this.state = new ResourceCellState();
     }
 
     protected MyCell(Sprite sprite) {
@@ -30,15 +30,13 @@ public class MyCell extends AbstractCell {
 
     @Override
     public boolean move(IMovable movable) {
-        state.interactWithPlayer(movable, this);
-        return true;
+        return super.move(movable);
     }
 
 
     @Override
     public boolean dig(IMovable player) {
-        state.interactWithPlayer(player, this);
-        return true;
+        return super.dig(player);
     }
 
 }

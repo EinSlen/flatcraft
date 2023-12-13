@@ -83,6 +83,8 @@ public interface Cell {
      */
     void replaceBy(Cell cell);
 
+    void setState(CellState state);
+
     /**
      * Déplace un objet mobile du jeu si cette cellule le permet.
      * Par exemple, si une cellule ne contient pas de ressource, l'objet peut "passer à
