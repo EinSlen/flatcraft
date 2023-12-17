@@ -43,9 +43,6 @@ public abstract class AbstractCell implements Cell {
      */
     private int column;
 
-    private CellState state;
-
-
     /**
      * La propriété contenant le sprite représentant le contenu de cette cellule sur la
      * carte.
@@ -67,7 +64,6 @@ public abstract class AbstractCell implements Cell {
     protected AbstractCell(int row, int column) {
         this.row = row;
         this.column = column;
-        this.state = new EmptyCellState();
     }
 
     /**
@@ -99,18 +95,6 @@ public abstract class AbstractCell implements Cell {
     @Override
     public int getRow() {
         return row;
-    }
-
-    public void setState(CellState state) {
-        this.state = state;
-    }
-
-    public CellState getState() {
-        return state;
-    }
-
-    public void interactWithPlayer(IMovable movable) {
-        state.interactWithPlayer(movable, this);
     }
 
     /*
@@ -175,32 +159,6 @@ public abstract class AbstractCell implements Cell {
     public void replaceBy(Cell cell) {
         spriteProperty.set(cell.getSprite());
         resourceProperty.set(cell.getResource());
-    }
-
-    @Override
-    public boolean move(IMovable movable) {
-        if(getResource() == null){
-            int nouvelleLigne = getRow() * getSprite().getWidth();
-            int nouvelleColonne = getColumn() * getSprite().getHeight();
-            movable.setX(nouvelleColonne);
-            movable.setY(nouvelleLigne);
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    @Override
-    public boolean dig(IMovable player) {
-        Resource resource = getResource();
-        if(resource != null){
-            resource.dig();
-            if(resource.getHardness()==0){
-                ((Player) player).ajouterInventaire(resource);
-                return true;
-            }
-        }
-        return false;
     }
 
 }

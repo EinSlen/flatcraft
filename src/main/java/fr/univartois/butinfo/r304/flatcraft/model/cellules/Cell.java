@@ -68,6 +68,8 @@ public interface Cell {
      */
     Resource getResource();
 
+    void setState(CellState state);
+
     /**
      * Donne la propriété contenant la ressource présente sur cette cellule sur la carte.
      *

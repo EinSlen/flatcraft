@@ -2,6 +2,7 @@ package fr.univartois.butinfo.r304.flatcraft.model.cellules;
 
 import fr.univartois.butinfo.r304.flatcraft.model.FlatcraftGame;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable;
+import fr.univartois.butinfo.r304.flatcraft.model.movables.Player;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 
@@ -10,7 +11,7 @@ public class MyCell extends AbstractCell {
 
     public MyCell(int row, int column) {
         super(row, column);
-        this.state = new EmptyCellState();
+        this.state = new ResourceCellState();
     }
 
     protected MyCell(Sprite sprite) {
@@ -30,15 +31,13 @@ public class MyCell extends AbstractCell {
 
     @Override
     public boolean move(IMovable movable) {
-        state.interactWithPlayer(movable, this);
-        return true;
-    }
+        return state.move(movable, this);
 
+    }
 
     @Override
     public boolean dig(IMovable player) {
-        state.interactWithPlayer(player, this);
-        return true;
+        return state.dig(player, this);
     }
 
 }
