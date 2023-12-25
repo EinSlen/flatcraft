@@ -80,7 +80,7 @@ public class Factory implements CellFactory {
 
     @Override
     public Cell createTrunk() {
-        return createCell("tree");
+        return createRessouresCell("tree", 2);
     }
 
     @Override

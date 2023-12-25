@@ -17,6 +17,8 @@
 package fr.univartois.butinfo.r304.flatcraft.model;
 
 import fr.univartois.butinfo.r304.flatcraft.model.cellules.*;
+import fr.univartois.butinfo.r304.flatcraft.model.craft.RuleParser;
+import fr.univartois.butinfo.r304.flatcraft.model.craft.rule.Rule;
 import fr.univartois.butinfo.r304.flatcraft.model.map.IMapGenerator;
 import fr.univartois.butinfo.r304.flatcraft.model.map.WorldMapEngine;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable;
@@ -26,6 +28,7 @@ import fr.univartois.butinfo.r304.flatcraft.model.movables.mobs.fabrique.normal.
 import fr.univartois.butinfo.r304.flatcraft.model.movables.mobs.strategy.aleatoire.DeplacementAleatoire;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.mobs.strategy.intelligent.DeplacementIntelligent;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.ToolType;
 import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 import javafx.beans.property.IntegerProperty;
@@ -33,6 +36,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -190,6 +194,16 @@ public final class FlatcraftGame {
         controller.bindXP(playerExperience);
         controller.bindInventory(playerInventory);
         animation.start();
+
+        RuleParser craftRuleParser = new RuleParser("craftrules.txt");
+        RuleParser furnaceRuleParser = new RuleParser("furnacerules.txt");
+
+        try {
+            craftRuleParser.parse();
+            furnaceRuleParser.parse();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public Player getPlayer() {
@@ -212,21 +226,18 @@ public final class FlatcraftGame {
         Cell currentCell = getCellOf(player);
         if(currentCell.getRow()==21 && currentCell.getColumn()==3 && i==0){
             i++;
-            System.out.println(currentCell.getRow()+" "+currentCell.getColumn());
             map = worldMapEngine.changeMap("end",0);
             cellFactory = FactoryEnd.getInstance();
             controller.prepare(map);
         }
         if(currentCell.getRow()==21 && currentCell.getColumn()==8 && i==1){
             i++;
-            System.out.println(currentCell.getRow()+" "+currentCell.getColumn());
             map = worldMapEngine.changeMap("nether",0);
             cellFactory = FactoryNether.getInstance();
             controller.prepare(map);
         }
         if(currentCell.getRow()==21 && currentCell.getColumn()==12 && i==2){
             i++;
-            System.out.println(currentCell.getRow()+" "+currentCell.getColumn());
             map = worldMapEngine.changeMap("normal",0);
             cellFactory = Factory.getInstance();
             controller.prepare(map);
@@ -333,8 +344,6 @@ public final class FlatcraftGame {
     public void digUp() {
         Cell cell = getCellOf(player);
         Cell cellToDig = map.getAt(cell.getRow()-1, cell.getColumn());
-        System.out.println(cellToDig.getSprite().getImage().getUrl());
-        System.out.println(cellToDig.getResource());
         if (cellToDig.getResource() != null){
             dig(cellToDig);
             move(player);
@@ -347,8 +356,6 @@ public final class FlatcraftGame {
     public void digDown() {
         Cell cell = getCellOf(player);
         Cell cellToDig = map.getAt(cell.getRow()+1, cell.getColumn());
-        System.out.println(cellToDig.getSprite().getImage().getUrl());
-        System.out.println(cellToDig.getResource());
         if (cellToDig.getResource() != null){
             dig(cellToDig);
             move(player);
@@ -423,9 +430,48 @@ public final class FlatcraftGame {
      * @return La ressource produite.
      */
     public Resource craft(Resource[][] inputResources) {
-        // TODO Vous devez compléter cette méthode.
-        throw new UnsupportedOperationException("Pas encore implémentée !");
+        Resource product = null;
+
+        RuleParser craftRuleParser = new RuleParser("craftrules.txt");
+        try {
+            craftRuleParser.parse();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        for (Rule rule : craftRuleParser.getRuleList()) {
+            String[] ruleElements = rule.getRule().split("_");
+
+                boolean allMatch = true;
+
+                for (int i = 0; i < inputResources.length; i++) {
+                    for (int j = 0; j < inputResources[i].length; j++) {
+                        String resourceName = (inputResources[i][j] != null) ? inputResources[i][j].getName().toLowerCase() : "empty";
+                        if (!ruleElements[i * inputResources[i].length + j].equals(resourceName)) {
+                            allMatch = false;
+                            break;
+                        }
+                    }
+                    if (!allMatch) {
+                        break;
+                    }
+                }
+
+                if (allMatch) {
+                    String name = (rule.getProduct().split(" ").length > 1 ) ?
+                        rule.getProduct().split(" ")[0].toLowerCase()
+                    :
+                        rule.getProduct().toLowerCase();
+                    Sprite sprite = spriteStore.getSprite(name);
+                    product = new Resource(name, sprite, ToolType.NO_TOOL, 0);
+                    break;
+                }
+        }
+
+        return product;
     }
+
+
 
     /**
      * Crée une nouvelle ressource à l'aide d'un combustible et d'une ressource, en suivant les
@@ -437,7 +483,34 @@ public final class FlatcraftGame {
      * @return La ressource produite.
      */
     public Resource cook(Resource fuel, Resource resource) {
-        // TODO Vous devez compléter cette méthode.
-        throw new UnsupportedOperationException("Pas encore implémentée !");
+        Resource cookedResource = null;
+        RuleParser cookRuleParser = new RuleParser("furnacerules.txt");
+
+        try {
+            cookRuleParser.parse();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        for (Rule rule : cookRuleParser.getRuleList()) {
+            // Vérifiez si les ressources passées en paramètres satisfont à la règle
+            if (rule.getRule().equals(fuel.getName() + "_" + resource.getName())) {
+                // Utilisez le RuleParser pour obtenir les informations nécessaires
+                cookedResource = createResourceFromRule(rule);
+                return cookedResource;
+            }
+        }
+
+        return cookedResource;
     }
+
+    private Resource createResourceFromRule(Rule rule) {
+        // Utilisez les informations du RuleParser pour créer la nouvelle ressource
+        Sprite sprite = spriteStore.getSprite(rule.getProduct().split(" ")[0]); // Assurez-vous que spriteStore est correctement initialisé
+        ToolType toolType = ToolType.NO_TOOL; // Remplacez par la logique appropriée
+        int hardness = 0; // Remplacez par la logique appropriée
+
+        return new Resource(rule.getProduct(), sprite, toolType, hardness);
+    }
+
 }

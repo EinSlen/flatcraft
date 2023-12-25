@@ -22,6 +22,8 @@ import fr.univartois.butinfo.r304.flatcraft.model.craft.rule.Rule;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * La classe {@link RuleParser} permet de lire un fichier de règles de craft.
@@ -37,6 +39,8 @@ public final class RuleParser {
      */
     private final String fileName;
 
+    private List<Rule> ruleList;
+
     /**
      * Crée une nouvelle instance de RuleParser.
      *
@@ -44,6 +48,7 @@ public final class RuleParser {
      */
     public RuleParser(String fileName) {
         this.fileName = fileName;
+        this.ruleList = new ArrayList<>();
     }
 
     /**
@@ -74,9 +79,14 @@ public final class RuleParser {
      * @param quantity La quantité obtenue pour la ressource produite.
      */
     private void addRule(String rule, String product, int quantity) {
-        RuleBuilder builder = new RuleBuilder();
-        builder.addRule(rule).addProduct(product).addQuantity(quantity);
-        Rule craftedRule = builder.build();
+        RuleBuilder ruleBuilder = new RuleBuilder();
+        Rule newRule = ruleBuilder.setRule(rule).setProduct(product).setQuantity(quantity).build();
+        ruleList.add(newRule);
+
     }
+    public List<Rule> getRuleList() {
+        return ruleList;
+    }
+
 
 }
