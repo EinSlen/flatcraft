@@ -498,21 +498,14 @@ public final class FlatcraftGame {
             // Vérifiez si les ressources passées en paramètres satisfont à la règle
             if (rule.getRule().equals(resource.getName())) {
                 // Utilisez le RuleParser pour obtenir les informations nécessaires
-                cookedResource = createResourceFromRule(rule);
+                Sprite sprite = spriteStore.getSprite(rule.getProduct().split(" ")[0]);
+
+                cookedResource = new Resource(rule.getProduct(), sprite,  ToolType.NO_TOOL, 0);
                 return cookedResource;
             }
         }
 
         return cookedResource;
-    }
-
-    private Resource createResourceFromRule(Rule rule) {
-        // Utilisez les informations du RuleParser pour créer la nouvelle ressource
-        Sprite sprite = spriteStore.getSprite(rule.getProduct().split(" ")[0]); // Assurez-vous que spriteStore est correctement initialisé
-        ToolType toolType = ToolType.NO_TOOL; // Remplacez par la logique appropriée
-        int hardness = 0; // Remplacez par la logique appropriée
-
-        return new Resource(rule.getProduct(), sprite, toolType, hardness);
     }
 
 }
