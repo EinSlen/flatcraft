@@ -101,6 +101,10 @@ public final class FlatcraftGame {
      */
     private final IntegerProperty level = new SimpleIntegerProperty(1);
 
+    private RuleParser craftRuleParser;
+
+    private RuleParser furnaceRuleParser;
+
     /**
      * La représentation du joueur.
      */
@@ -195,12 +199,12 @@ public final class FlatcraftGame {
         controller.bindInventory(playerInventory);
         animation.start();
 
-        RuleParser craftRuleParser = new RuleParser("craftrules.txt");
-        RuleParser furnaceRuleParser = new RuleParser("furnacerules.txt");
+        this.craftRuleParser = new RuleParser("craftrules.txt");
+        this.furnaceRuleParser = new RuleParser("furnacerules.txt");
 
         try {
-            craftRuleParser.parse();
-            furnaceRuleParser.parse();
+            this.craftRuleParser.parse();
+            this.furnaceRuleParser.parse();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -432,18 +436,9 @@ public final class FlatcraftGame {
     public Resource craft(Resource[][] inputResources) {
         Resource product = null;
 
-        RuleParser craftRuleParser = new RuleParser("craftrules.txt");
-        try {
-            craftRuleParser.parse();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        for (Rule rule : craftRuleParser.getRuleList()) {
+        for (Rule rule : this.craftRuleParser.getRuleList()) {
             String[] ruleElements = rule.getRule().split("_");
-
                 boolean allMatch = true;
-
                 for (int i = 0; i < inputResources.length; i++) {
                     for (int j = 0; j < inputResources[i].length; j++) {
                         String resourceName = (inputResources[i][j] != null) ? inputResources[i][j].getName().toLowerCase() : "empty";
@@ -467,7 +462,6 @@ public final class FlatcraftGame {
                     break;
                 }
         }
-
         return product;
     }
 
@@ -483,29 +477,13 @@ public final class FlatcraftGame {
      * @return La ressource produite.
      */
     public Resource cook(Resource fuel, Resource resource) {
-        Resource cookedResource = null;
-        RuleParser cookRuleParser = new RuleParser("furnacerules.txt");
-
-        try {
-            cookRuleParser.parse();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        System.out.println(resource.getName());
-
-        for (Rule rule : cookRuleParser.getRuleList()) {
-            // Vérifiez si les ressources passées en paramètres satisfont à la règle
+        for (Rule rule : this.furnaceRuleParser.getRuleList()) {
             if (rule.getRule().equals(resource.getName())) {
-                // Utilisez le RuleParser pour obtenir les informations nécessaires
                 Sprite sprite = spriteStore.getSprite(rule.getProduct().split(" ")[0]);
-
-                cookedResource = new Resource(rule.getProduct(), sprite,  ToolType.NO_TOOL, 0);
-                return cookedResource;
+                return new Resource(rule.getProduct(), sprite,  ToolType.NO_TOOL, 0);
             }
         }
-
-        return cookedResource;
+        return null;
     }
 
 }
