@@ -180,7 +180,7 @@ public final class FurnaceController {
     @FXML
     private void cook() {
         // On crée la nouvelle ressource.
-        product = game.cook(resources[0], resources[1]);
+        product = game.cook(resources[1], resources[0]);
         productView.setImage(product.getSprite().getImage());
 
         // On met à jour les actions disponibles.

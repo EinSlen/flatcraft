@@ -492,9 +492,11 @@ public final class FlatcraftGame {
             e.printStackTrace();
         }
 
+        System.out.println(resource.getName());
+
         for (Rule rule : cookRuleParser.getRuleList()) {
             // Vérifiez si les ressources passées en paramètres satisfont à la règle
-            if (rule.getRule().equals(fuel.getName() + "_" + resource.getName())) {
+            if (rule.getRule().equals(resource.getName())) {
                 // Utilisez le RuleParser pour obtenir les informations nécessaires
                 cookedResource = createResourceFromRule(rule);
                 return cookedResource;

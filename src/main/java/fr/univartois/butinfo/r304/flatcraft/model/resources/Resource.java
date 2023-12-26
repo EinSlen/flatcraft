@@ -37,7 +37,7 @@ public final class Resource {
     /**
      * Le nom unique identifiant le type de cette ressource.
      */
-    private final String name;
+    private String name;
 
     /**
      * Le sprite représentant cette ressource.
@@ -124,6 +124,10 @@ public final class Resource {
      */
     public Sprite getSprite() {
         return sprite;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setSprite(Sprite sprite) {

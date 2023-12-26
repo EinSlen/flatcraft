@@ -13,7 +13,8 @@ public class InInventoryState implements ResourceState {
 
     public void handleInInventory(Resource resource) {
         //mineral_MINERAIS => MINERAIS_lump
-        resource.setSprite(new SpriteStore().getSprite(resource.getName().split("_")[1].toLowerCase() +"_lump"));
+        resource.setName(resource.getName().split("_")[1].toLowerCase() +"_lump");
+        resource.setSprite(new SpriteStore().getSprite(resource.getName()));
         resource.changeState(new OnMapState());
     }
 
