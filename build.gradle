@@ -20,6 +20,7 @@ repositories {
 
 // Le nom de la classe contenant la méthode "main".
 application {
+    mainModule = 'fr.univartois.butinfo.r304.flatcraft'
     mainClass = 'fr.univartois.butinfo.r304.flatcraft.Flatcraft'
 }
 
