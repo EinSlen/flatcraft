@@ -16,7 +16,11 @@
 
 package fr.univartois.butinfo.r304.flatcraft.model.cellules;
 
+<<<<<<< HEAD:src/main/java/fr/univartois/butinfo/r304/flatcraft/model/cellules/Cell.java
 import fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable;
+=======
+import fr.univartois.butinfo.r304.flatcraft.model.resources.Inventoriable;
+>>>>>>> 5da6b6e8cbd7d3adc6c1d522907d64255d054cc3:src/main/java/fr/univartois/butinfo/r304/flatcraft/model/Cell.java
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 import javafx.beans.property.ObjectProperty;
@@ -62,6 +66,15 @@ public interface Cell {
     ObjectProperty<Sprite> getSpriteProperty();
 
     /**
+     * Modifie la ressource présente sur cette cellule sur la carte.
+     *
+     * @param resource La ressource à placer sur cette cellule.
+     *
+     * @return Si la ressource a pu être déposée.
+     */
+    boolean setResource(Inventoriable resource);
+
+    /**
      * Donne la ressource présente sur cette cellule sur la carte.
      *
      * @return La ressource présente sur cette cellule sur la carte.
@@ -86,6 +99,15 @@ public interface Cell {
     void replaceBy(Cell cell);
 
     /**
+     * Vérifie si un objet mobile peut se trouver sur cette cellule.
+     *
+     * @param movable L'objet mobile.
+     *
+     * @return Si l'objet mobile peut se trouver sur cette cellule.
+     */
+    boolean accepts(IMovable movable);
+
+    /**
      * Déplace un objet mobile du jeu si cette cellule le permet.
      * Par exemple, si une cellule ne contient pas de ressource, l'objet peut "passer à
      * travers" cette cellule.
@@ -106,5 +128,12 @@ public interface Cell {
      */
     // TODO Remplacez le type de ce paramètre par le type correspondant à votre joueur.
     boolean dig(IMovable player);
+
+    /**
+     * Exécute l'action permise par la ressource contenue dans cette cellule.
+     * Cette méthode est sans effet si la cellule ne contient pas de ressource ou si la
+     * ressource ne propose pas d'action.
+     */
+    void execute();
 
 }

@@ -3,6 +3,7 @@ package fr.univartois.butinfo.r304.flatcraft.model.movables;
 import fr.univartois.butinfo.r304.flatcraft.model.FlatcraftGame;
 import fr.univartois.butinfo.r304.flatcraft.model.filon.InInventoryState;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.AbstractMovable;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.Inventoriable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.view.ResourceInInventory;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
@@ -27,7 +28,7 @@ public class Player extends AbstractMovable {
     /**
      * Attribut représentant l'inventaire du joueur
      */
-    private ObservableMap<Resource, Integer> inventaire;
+    private ObservableMap<Inventoriable, Integer> inventaire;
 
     /**
      * Crée une nouvelle instance de AbstractMovable.
@@ -37,7 +38,7 @@ public class Player extends AbstractMovable {
      * @param yPosition La position en y initiale de l'objet.
      * @param sprite    L'instance de {@link Sprite} représentant l'objet.
      */
-    public Player(FlatcraftGame game, double xPosition, double yPosition, Sprite sprite, IntegerProperty pv, IntegerProperty xp, ObservableMap<Resource, Integer> inventaire) {
+    public Player(FlatcraftGame game, double xPosition, double yPosition, Sprite sprite, IntegerProperty pv, IntegerProperty xp, ObservableMap<Inventoriable, Integer> inventaire) {
         super(game, xPosition, yPosition, sprite);
         this.pv = pv;
         this.xp = xp;
@@ -68,7 +69,7 @@ public class Player extends AbstractMovable {
         return xp;
     }
 
-    public ObservableMap<Resource, Integer> getInventaire() {
+    public ObservableMap<Inventoriable, Integer> getInventaire() {
         return inventaire;
     }
 
@@ -90,9 +91,9 @@ public class Player extends AbstractMovable {
     }
 
 
-    public Optional<Resource> recupRessourceInventaire(String nom){
-        Optional<Resource> maRessource = Optional.empty();
-        for(Resource key : inventaire.keySet()){
+    public Optional<Inventoriable> recupRessourceInventaire(String nom){
+        Optional<Inventoriable> maRessource = Optional.empty();
+        for(Inventoriable key : inventaire.keySet()){
             if (nom.equals(key.getName())){
                 maRessource = Optional.ofNullable(key);
             }

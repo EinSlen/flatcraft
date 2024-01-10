@@ -19,6 +19,7 @@ package fr.univartois.butinfo.r304.flatcraft.controller;
 import java.util.Optional;
 
 import fr.univartois.butinfo.r304.flatcraft.model.FlatcraftGame;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.Inventoriable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -46,7 +47,7 @@ public final class FurnaceController {
     /**
      * Le combustible et la ressource déposée dans le fourneau.
      */
-    private Resource[] resources = new Resource[2];
+    private Inventoriable[] resources = new Inventoriable[2];
 
     /**
      * La grille représentant le fourneau dans lequel les ressources sont déposées.
@@ -69,7 +70,7 @@ public final class FurnaceController {
     /**
      * Le produit obtenu à l'issue de la cuisson.
      */
-    private Resource product;
+    private Inventoriable product;
 
     /**
      * La vue représentant la ressource produite à l'issue de la cuisson.
@@ -180,14 +181,23 @@ public final class FurnaceController {
     @FXML
     private void cook() {
         // On crée la nouvelle ressource.
+<<<<<<< HEAD
         product = game.cook(resources[1], resources[0]);
         productView.setImage(product.getSprite().getImage());
+=======
+        product = game.cook(resources[0], resources[1]);
+>>>>>>> 5da6b6e8cbd7d3adc6c1d522907d64255d054cc3
 
-        // On met à jour les actions disponibles.
-        addButton.setDisable(false);
-        furnaceGrid.setDisable(true);
-        cookButton.setDisable(true);
-        clearButton.setDisable(true);
+        if (product != null) {
+            // On affiche le produit obtenu.
+            productView.setImage(product.getSprite().getImage());
+
+            // On met à jour les actions disponibles.
+            addButton.setDisable(false);
+            furnaceGrid.setDisable(true);
+            cookButton.setDisable(true);
+            clearButton.setDisable(true);
+        }
     }
 
     /**
@@ -195,8 +205,26 @@ public final class FurnaceController {
      */
     @FXML
     private void addToInventory() {
+<<<<<<< HEAD
         //  Récupérer le joueur ou définir une méthode pour pouvoir effectuer l'ajout.
         game.getPlayer().ajouterInventaire(product);
+=======
+        // TODO Récupérer le joueur ou définir une méthode pour pouvoir effectuer l'ajout.
+
+        // Une fois la ressource ajoutée, il faut vider le fourneau.
+        resources[0] = null;
+        fuelView.setImage(null);
+        resources[1] = null;
+        resourceView.setImage(null);
+        product = null;
+        productView.setImage(null);
+
+        // On met à jour les actions disponibles.
+        furnaceGrid.setDisable(false);
+        addButton.setDisable(true);
+        cookButton.setDisable(true);
+        clearButton.setDisable(true);
+>>>>>>> 5da6b6e8cbd7d3adc6c1d522907d64255d054cc3
     }
 
 

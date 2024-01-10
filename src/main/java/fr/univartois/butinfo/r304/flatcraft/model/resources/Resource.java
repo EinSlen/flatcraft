@@ -32,7 +32,7 @@ import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
  *
  * @version 0.1.0
  */
-public final class Resource {
+public final class Resource implements Inventoriable {
 
     /**
      * Le nom unique identifiant le type de cette ressource.
@@ -108,20 +108,22 @@ public final class Resource {
         return state;
     }
 
-    /**
-     * Donne le nom unique identifiant le type de cette ressource.
+    /*
+     * (non-Javadoc)
      *
-     * @return Le nom de cette ressource.
+     * @see fr.univartois.butinfo.r304.flatcraft.model.resources.Inventoriable#getName()
      */
+    @Override
     public String getName() {
         return name;
     }
 
-    /**
-     * Donne le sprite représentant cette ressource.
+    /*
+     * (non-Javadoc)
      *
-     * @return Le sprite représentant cette ressource.
+     * @see fr.univartois.butinfo.r304.flatcraft.model.resources.Inventoriable#getSprite()
      */
+    @Override
     public Sprite getSprite() {
         return sprite;
     }
@@ -136,19 +138,24 @@ public final class Resource {
 
     /**
      * Donne le type d'outils nécessaire pour extraire cette ressource de la carte.
+=======
+    /*
+     * (non-Javadoc)
+>>>>>>> 5da6b6e8cbd7d3adc6c1d522907d64255d054cc3
      *
-     * @return Le type d'outils à utiliser.
+     * @see fr.univartois.butinfo.r304.flatcraft.model.resources.Inventoriable#getToolType()
      */
+    @Override
     public ToolType getToolType() {
         return toolType;
     }
 
     /**
-     * Donne la dureté de cette ressource.
+     * Donne la dureté de cet élément.
      * Il s'agit du nombre de coups devant être appliqués avec un outil pour extraire
-     * cette ressource depuis la map.
+     * cet élément depuis la carte.
      *
-     * @return La dureté de cette ressource.
+     * @return La dureté de cet élément.
      */
     public int getHardness() {
         return state.getHardness();
@@ -207,6 +214,17 @@ public final class Resource {
 
     public void handleInInventory() {
         currentState.handleInInventory(this);
+    }
+
+    /*
+     * (non-Javadoc)
+     *
+     * @see fr.univartois.butinfo.r304.flatcraft.model.resources.Inventoriable#execute()
+     */
+    @Override
+    public void execute() {
+        // On ne fait rien ici.
+        // Une ressource ne propose pas d'action par défaut.
     }
 
     /*
