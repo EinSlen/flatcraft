@@ -141,7 +141,7 @@ public final class FurnaceController {
             if (dragboard.hasString() && dragboard.hasImage()) {
                 //  Remplacez cette affectation par la récupération de la ressource dans l'inventaire du joueur.
                 //Optional<Resource> resource = Optional.empty();
-                Optional<Resource> resource = game.getPlayer().recupRessourceInventaire(dragboard.getString());
+                Optional<Inventoriable> resource = game.getPlayer().recupRessourceInventaire(dragboard.getString());
                 if (resource.isPresent()) {
                     resources[index] = resource.get();
                     cookButton.setDisable(false);
@@ -181,12 +181,9 @@ public final class FurnaceController {
     @FXML
     private void cook() {
         // On crée la nouvelle ressource.
-<<<<<<< HEAD
         product = game.cook(resources[1], resources[0]);
         productView.setImage(product.getSprite().getImage());
-=======
-        product = game.cook(resources[0], resources[1]);
->>>>>>> 5da6b6e8cbd7d3adc6c1d522907d64255d054cc3
+
 
         if (product != null) {
             // On affiche le produit obtenu.
@@ -205,10 +202,8 @@ public final class FurnaceController {
      */
     @FXML
     private void addToInventory() {
-<<<<<<< HEAD
-        //  Récupérer le joueur ou définir une méthode pour pouvoir effectuer l'ajout.
+
         game.getPlayer().ajouterInventaire(product);
-=======
         // TODO Récupérer le joueur ou définir une méthode pour pouvoir effectuer l'ajout.
 
         // Une fois la ressource ajoutée, il faut vider le fourneau.
@@ -224,7 +219,6 @@ public final class FurnaceController {
         addButton.setDisable(true);
         cookButton.setDisable(true);
         clearButton.setDisable(true);
->>>>>>> 5da6b6e8cbd7d3adc6c1d522907d64255d054cc3
     }
 
 

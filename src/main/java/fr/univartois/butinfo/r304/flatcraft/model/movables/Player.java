@@ -81,7 +81,7 @@ public class Player extends AbstractMovable {
         this.xp.set(xp);
     }
 
-    public void ajouterInventaire(Resource r){
+    public void ajouterInventaire(Inventoriable r){
         if(r.getCurrentState().equals(new InInventoryState()))
             r.handleInInventory();
         if(inventaire.containsKey(r)){
