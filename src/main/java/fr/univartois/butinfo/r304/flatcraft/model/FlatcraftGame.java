@@ -440,7 +440,7 @@ public final class FlatcraftGame {
     private void dig(Cell toDig) {
         if(toDig.dig(player)){
             if(toDig.getResource()!=null)
-                //player.ajouterInventaire(toDig.getResource());
+                player.ajouterInventaire(toDig.getResource());
                 toDig.setState(new EmptyCellState());
                 toDig.replaceBy(cellFactory.createSky());
         }
