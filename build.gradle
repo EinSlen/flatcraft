@@ -7,6 +7,8 @@ plugins {
     id 'application'
     id 'java'
     id 'org.openjfx.javafxplugin' version '0.0.13'
+    id 'org.beryx.jlink' version '2.26.0'
+
 }
 
 // La version du langage Java utilisée dans le projet.
@@ -20,11 +22,19 @@ repositories {
 
 // Le nom de la classe contenant la méthode "main".
 application {
+    mainModule = 'fr.univartois.butinfo.r304.flatcraft'
     mainClass = 'fr.univartois.butinfo.r304.flatcraft.Flatcraft'
 }
 
 // La version de JavaFX utilisée dans le projet, et les composants requis.
 javafx {
-    version = '17.0.8'
+    version = '17.0.2'
     modules = ['javafx.controls', 'javafx.fxml']
+}
+
+jlink {
+    options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
+    launcher {
+        name = 'flatcraft'
+    }
 }
