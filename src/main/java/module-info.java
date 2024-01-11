@@ -1,4 +1,4 @@
-module fr.univartois.butinfo.r304.flatcraft.Flatcraft {
+module fr.univartois.butinfo.r304.flatcraft {
     exports fr.univartois.butinfo.r304.flatcraft;
 
     opens fr.univartois.butinfo.r304.flatcraft.controller to javafx.fxml;
