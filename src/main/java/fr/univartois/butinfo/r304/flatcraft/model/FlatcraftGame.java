@@ -318,7 +318,6 @@ public final class FlatcraftGame {
      * Fait se déplacer le joueur vers la gauche.
      */
     public void moveLeft() {
-        player.setHorizontalSpeed(0);
         Cell cell = getCellOf(player);
         Cell cellToDig = map.getAt(cell.getRow(), cell.getColumn()-1);
         if(cellToDig.getResource() == null) {
@@ -334,7 +333,6 @@ public final class FlatcraftGame {
      * Fait se déplacer le joueur vers la droite.
      */
     public void moveRight() {
-        player.setHorizontalSpeed(0);
         Cell cell = getCellOf(player);
         Cell cellToDig = map.getAt(cell.getRow(), cell.getColumn()+1);
         if(cellToDig.getResource() == null) {

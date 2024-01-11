@@ -36,7 +36,7 @@ public class MyCell extends AbstractCell {
 
     @Override
     public boolean accepts(IMovable movable) {
-        return false;
+        return true;
     }
 
     @Override

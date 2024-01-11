@@ -7,7 +7,7 @@ public class OnMapState implements ResourceState {
     public void handleOnMap(Resource resource) {
         //mettre à jour le sprite, etc.
 
-        resource.setSprite(new SpriteStore().getSprite(resource.getName()));
+        resource.setSprite(SpriteStore.getInstance().getSprite(resource.getName()));
         resource.changeState(new OnMapState());
     }
 
