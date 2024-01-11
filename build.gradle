@@ -29,3 +29,14 @@ javafx {
     version = '17.0.8'
     modules = ['javafx.controls', 'javafx.fxml']
 }
+
+plugins {
+    id 'org.beryx.jlink' version '2.26.0'
+}
+
+jlink {
+    options = ['--strip-debug', '--compress', '2', '--no-header-files', '--no-man-pages']
+    launcher {
+        name = 'flatcraft'
+    }
+}
