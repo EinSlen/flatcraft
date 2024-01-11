@@ -68,8 +68,6 @@ public interface Cell {
      */
     Resource getResource();
 
-    void setState(CellState state);
-
     /**
      * Donne la propriété contenant la ressource présente sur cette cellule sur la carte.
      *
@@ -84,6 +82,8 @@ public interface Cell {
      * @param cell La cellule qui doit remplacer celle-ci.
      */
     void replaceBy(Cell cell);
+
+    void setState(CellState state);
 
     /**
      * Déplace un objet mobile du jeu si cette cellule le permet.

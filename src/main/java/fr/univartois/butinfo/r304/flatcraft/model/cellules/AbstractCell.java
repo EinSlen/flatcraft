@@ -43,6 +43,9 @@ public abstract class AbstractCell implements Cell {
      */
     private int column;
 
+    private CellState state;
+
+
     /**
      * La propriété contenant le sprite représentant le contenu de cette cellule sur la
      * carte.
@@ -64,6 +67,7 @@ public abstract class AbstractCell implements Cell {
     protected AbstractCell(int row, int column) {
         this.row = row;
         this.column = column;
+        this.state = new ResourceCellState();
     }
 
     /**
@@ -95,6 +99,14 @@ public abstract class AbstractCell implements Cell {
     @Override
     public int getRow() {
         return row;
+    }
+
+    public void setState(CellState state) {
+        this.state = state;
+    }
+
+    public CellState getState() {
+        return state;
     }
 
     /*
@@ -161,4 +173,14 @@ public abstract class AbstractCell implements Cell {
         resourceProperty.set(cell.getResource());
     }
 
+    @Override
+    public boolean move(IMovable player) {
+        return state.interactWithPlayer(player, this);
+    }
+
+    @Override
+    public boolean dig(IMovable player) {
+        return state.interactWithPlayer(player, this);
+    }
 }
+
