@@ -74,7 +74,7 @@ public final class Flatcraft extends Application {
        // FlatcraftGame game = FlatcraftGame.getInstance(GAME_WIDTH, GAME_HEIGHT, SpriteStore.getInstance());
 
         // TODO Utiliser ici la bonne factory pour créer les objets du jeu.
-        FlatcraftGame game = new FlatcraftGame(GAME_WIDTH, GAME_HEIGHT, MAP_REPEAT, new SpriteStore(), null);
+        FlatcraftGame game = FlatcraftGame.getInstance(GAME_WIDTH, GAME_HEIGHT, MAP_REPEAT, new SpriteStore(), null);
         controller.setGame(game);
         game.setController(controller);
         game.setGenMap(new MapGenerator());
