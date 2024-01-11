@@ -20,16 +20,11 @@ import fr.univartois.butinfo.r304.flatcraft.model.cellules.Cell;
 import fr.univartois.butinfo.r304.flatcraft.model.FlatcraftGame;
 import fr.univartois.butinfo.r304.flatcraft.model.GameMap;
 import fr.univartois.butinfo.r304.flatcraft.model.IFlatcraftController;
-<<<<<<< HEAD
 import fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
-=======
-import fr.univartois.butinfo.r304.flatcraft.model.IMovable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Inventoriable;
->>>>>>> 5da6b6e8cbd7d3adc6c1d522907d64255d054cc3
 import fr.univartois.butinfo.r304.flatcraft.view.ResourceInInventory;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.IntegerProperty;
@@ -291,12 +286,8 @@ public final class FlatcraftController implements IFlatcraftController {
                 dragResource(resource);
                 inventory.getChildren().add(resource.getNode());
 
-<<<<<<< HEAD
-            } else if (change.wasRemoved() && (change.getValueRemoved() == 1)  && (change.getValueRemoved() == 2)) {
-=======
             } else if (change.wasRemoved() && (!change.wasAdded())
                     && (change.getValueRemoved() == 1)) {
->>>>>>> 5da6b6e8cbd7d3adc6c1d522907d64255d054cc3
                 // La ressource doit être retirée de l'affichage.
                 ResourceInInventory resource = resourcesInInventory.remove(change.getKey());
                 inventory.getChildren().remove(resource.getNode());
@@ -327,12 +318,7 @@ public final class FlatcraftController implements IFlatcraftController {
      *
      * @param code Le code de la touche sur laquelle le joueur a appuyé.
      */
-<<<<<<< HEAD
-    private void move(KeyCode code) {
-=======
-    @SuppressWarnings("incomplete-switch")
     private void pressKey(KeyCode code) {
->>>>>>> 5da6b6e8cbd7d3adc6c1d522907d64255d054cc3
         switch (code) {
             case D -> game.dropResource();
             case S -> game.switchResource();
@@ -420,15 +406,9 @@ public final class FlatcraftController implements IFlatcraftController {
 
         // Lorsque la ressource est déposée, elle est retirée de l'inventaire du joueur.
         resource.getNode().setOnDragDone(event -> {
-<<<<<<< HEAD
-            game.getPlayer().supprimerInventaire(resource.getResource());
-            event.consume();
-=======
             if (event.getAcceptingObject() != null) {
-                // TODO Retirer de l'inventaire du joueur la ressource qui a été déposée.
                 event.consume();
             }
->>>>>>> 5da6b6e8cbd7d3adc6c1d522907d64255d054cc3
         });
     }
 

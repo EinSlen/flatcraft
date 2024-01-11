@@ -56,4 +56,7 @@ public interface Inventoriable {
      */
     void execute();
 
+    Object getCurrentState();
+
+    void handleInInventory();
 }

@@ -16,11 +16,8 @@
 
 package fr.univartois.butinfo.r304.flatcraft.model.cellules;
 
-<<<<<<< HEAD:src/main/java/fr/univartois/butinfo/r304/flatcraft/model/cellules/Cell.java
 import fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable;
-=======
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Inventoriable;
->>>>>>> 5da6b6e8cbd7d3adc6c1d522907d64255d054cc3:src/main/java/fr/univartois/butinfo/r304/flatcraft/model/Cell.java
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 import javafx.beans.property.ObjectProperty;
