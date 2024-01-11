@@ -19,6 +19,7 @@ package fr.univartois.butinfo.r304.flatcraft.controller;
 import java.util.Optional;
 
 import fr.univartois.butinfo.r304.flatcraft.model.FlatcraftGame;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.Inventoriable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
@@ -48,7 +49,7 @@ public final class CraftTableController {
     /**
      * Les ressources déposées sur la table de craft.
      */
-    private Resource[][] resources;
+    private Inventoriable[][] resources;
 
     /**
      * La grille représentant la table sur laquelle les ressources sont déposées.
@@ -64,7 +65,7 @@ public final class CraftTableController {
     /**
      * Le produit obtenu à l'issue du craft.
      */
-    private Resource product;
+    private Inventoriable product;
 
     /**
      * La vue représentant la ressource produite à l'issue du craft.
@@ -96,7 +97,7 @@ public final class CraftTableController {
     @FXML
     private void initialize() {
         // On initialise le tableau des ressources, qui est initialement vide.
-        this.resources = new Resource[craftGrid.getRowCount()][craftGrid.getColumnCount()];
+        this.resources = new Inventoriable[craftGrid.getRowCount()][craftGrid.getColumnCount()];
 
         // On initialise ensuite les vues pour ces ressources.
         this.resourceViews = new ImageView[craftGrid.getRowCount()][craftGrid.getColumnCount()];
@@ -198,13 +199,17 @@ public final class CraftTableController {
     private void craft() {
         // On crée la nouvelle ressource.
         product = game.craft(resources);
-        productView.setImage(product.getSprite().getImage());
 
-        // On met à jour les actions disponibles.
-        addButton.setDisable(false);
-        craftGrid.setDisable(true);
-        craftButton.setDisable(true);
-        clearButton.setDisable(true);
+        if (product != null) {
+            // On affiche le produit obtenu.
+            productView.setImage(product.getSprite().getImage());
+
+            // On met à jour les actions disponibles.
+            addButton.setDisable(false);
+            craftGrid.setDisable(true);
+            craftButton.setDisable(true);
+            clearButton.setDisable(true);
+        }
     }
 
     /**
@@ -212,9 +217,29 @@ public final class CraftTableController {
      */
     @FXML
     private void addToInventory() {
+<<<<<<< HEAD
         //  Ajoutez un l'inventaire du joueur la ressource "product" ayant été produite.
         game.getPlayer().ajouterInventaire(product);
 
+=======
+        // TODO Ajoutez un l'inventaire du joueur la ressource "product" ayant été produite.
+
+        // Une fois la ressource ajoutée, il faut vider la table de craft.
+        for (int i = 0; i < resources.length; i++) {
+            for (int j = 0; j < resources[i].length; j++) {
+                resources[i][j] = null;
+                resourceViews[i][j].setImage(null);
+            }
+        }
+        product = null;
+        productView.setImage(null);
+
+        // On met à jour les actions disponibles.
+        craftGrid.setDisable(false);
+        addButton.setDisable(true);
+        craftButton.setDisable(true);
+        clearButton.setDisable(true);
+>>>>>>> 5da6b6e8cbd7d3adc6c1d522907d64255d054cc3
     }
 
     /**

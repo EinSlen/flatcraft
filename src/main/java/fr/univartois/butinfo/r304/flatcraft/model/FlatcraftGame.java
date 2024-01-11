@@ -29,6 +29,13 @@ import fr.univartois.butinfo.r304.flatcraft.model.movables.mobs.strategy.aleatoi
 import fr.univartois.butinfo.r304.flatcraft.model.movables.mobs.strategy.intelligent.DeplacementIntelligent;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.ToolType;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+import fr.univartois.butinfo.r304.flatcraft.model.resources.Inventoriable;
 import fr.univartois.butinfo.r304.flatcraft.view.ISpriteStore;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 import javafx.beans.property.IntegerProperty;
@@ -39,7 +46,7 @@ import javafx.collections.ObservableMap;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-
+import javafx.collections.ObservableMap;
 
 /**
  * La classe {@link FlatcraftGame} permet de gérer une partie du jeu Flatcraft.
@@ -52,8 +59,8 @@ public final class FlatcraftGame {
     private static FlatcraftGame instance;
     private WorldMapEngine worldMapEngine;
 
-    public static FlatcraftGame getInstance(int width, int height, ISpriteStore spriteStore){
-        if(instance==null) instance = new FlatcraftGame(width, height, spriteStore);
+    public static FlatcraftGame getInstance(int width, int height, int mapRepeat, ISpriteStore spriteStore, CellFactory factory){
+        if(instance==null) instance = new FlatcraftGame(width, height, mapRepeat, spriteStore, factory);
         return instance;
     }
     public static FlatcraftGame getInstance(){
@@ -70,6 +77,11 @@ public final class FlatcraftGame {
      * La hauteur de la carte du jeu affichée (en pixels).
      */
     private final int height;
+
+    /**
+     * Le nombre de fois que la carte se "répète" horizontalement.
+     */
+    private final int mapRepeat;
 
     /**
      * Le contrôleur de l'application.
@@ -92,6 +104,12 @@ public final class FlatcraftGame {
     private GameMap map;
 
     /**
+     * La position à gauche de la carte dans la fenêtre.
+     * Celle-ci change lorsque l'utilisateur se déplace horizontalement.
+     */
+    private IntegerProperty leftAnchor = new SimpleIntegerProperty(0);
+
+    /**
      * Le temps écoulé depuis le début de la partie.
      */
     private final IntegerProperty time = new SimpleIntegerProperty(12);
@@ -109,6 +127,19 @@ public final class FlatcraftGame {
      * La représentation du joueur.
      */
     private Player player;
+
+    /**
+     * La dernière direction suivie par le joueur.
+     * Elle est stockée sous la forme d'un entier, afin d'indiquer s'il avance ou s'il
+     * recule.
+     */
+    private int lastDirection = 1;
+
+    /**
+     * L'iterateur permettant de parcourir les ressources contenues dans l'inventaire du
+     * joueur.
+     */
+    private Iterator<Inventoriable> inventoryIterator;
 
     /**
      * La liste des objets mobiles du jeu.
@@ -131,12 +162,15 @@ public final class FlatcraftGame {
      *
      * @param width La largeur de la carte du jeu (en pixels).
      * @param height La hauteur de la carte du jeu (en pixels).
+     * @param mapRepeat Le nombre de fois que la carte se "répète" horizontalement.
      * @param spriteStore L'instance de {@link ISpriteStore} permettant de créer les
      *        {@link Sprite} du jeu.
      */
-    private FlatcraftGame(int width, int height, ISpriteStore spriteStore) {
+    public FlatcraftGame(int width, int height, int mapRepeat, ISpriteStore spriteStore,
+            CellFactory factory) {
         this.width = width;
         this.height = height;
+        this.mapRepeat = mapRepeat;
         this.spriteStore = spriteStore;
     }
 
@@ -146,7 +180,7 @@ public final class FlatcraftGame {
      * @return La largeur de la carte du jeu affichée (en pixels).
      */
     public int getWidth() {
-        return width;
+        return width * mapRepeat;
     }
 
     /**
@@ -178,7 +212,7 @@ public final class FlatcraftGame {
         map = worldMapEngine.getTableauActuel();
         IntegerProperty playerHealth = new SimpleIntegerProperty(3);
         IntegerProperty playerExperience = new SimpleIntegerProperty(1);
-        ObservableMap<Resource, Integer> playerInventory = FXCollections.observableHashMap();
+        ObservableMap<Inventoriable, Integer> playerInventory = FXCollections.observableHashMap();
         Sprite sprite = spriteStore.getSprite("player");
         this.player = new Player(this, 0, worldMapEngine.getTableauActuel().getSoilHeight()*spriteStore.getSpriteSize()-spriteStore.getSpriteSize(), sprite, playerHealth, playerExperience, playerInventory);
         movableObjects.add(player);
@@ -292,6 +326,8 @@ public final class FlatcraftGame {
             move(player);
         }
         changeDimensionV1();
+        // TODO Implémentez cette méthode.
+        lastDirection = -1;
     }
 
     /**
@@ -306,6 +342,8 @@ public final class FlatcraftGame {
             move(player);
         }
         changeDimensionV1();
+        // TODO Implémentez cette méthode.
+        lastDirection = 1;
     }
 
     /**
@@ -314,6 +352,7 @@ public final class FlatcraftGame {
      * @param movable L'objet à déplacer.
      */
     private void move(IMovable movable) {
+        // On applique la gravité.
         Cell currentCell = getCellOf(movable);
         for (int row = currentCell.getRow() + 1; row < map.getHeight(); row++) {
             Cell below = map.getAt(row, currentCell.getColumn());
@@ -321,6 +360,11 @@ public final class FlatcraftGame {
                 break;
             }
         }
+
+        // On positionne la carte pour afficher la section où se trouve le joueur.
+        int middlePosition = player.getX() + player.getWidth() / 2;
+        int mapSection = middlePosition / width;
+        leftAnchor.set(-mapSection * width);
     }
 
     /**
@@ -416,13 +460,50 @@ public final class FlatcraftGame {
         // On commence par récupérer la position du centre de l'objet.
         int midX = movable.getX() + (movable.getWidth() / 2);
         int midY = movable.getY() + (movable.getHeight() / 2);
+        return getCellAt(midX, midY);
+    }
 
+    /**
+     * Donne la cellule à la position donnée sur la carte.
+     *
+     * @param x La position en x de la cellule.
+     * @param y La position en y de la cellule.
+     *
+     * @return La cellule à la position donnée.
+     */
+    public Cell getCellAt(int x, int y) {
         // On traduit cette position en position dans la carte.
-        int row = midY / spriteStore.getSpriteSize();
-        int column = midX / spriteStore.getSpriteSize();
+        int row = y / spriteStore.getSpriteSize();
+        int column = x / spriteStore.getSpriteSize();
 
         // On récupère enfin la cellule à cette position dans la carte.
         return map.getAt(row, column);
+    }
+
+    /**
+     * Récupére la cellule correspondant à la prochaine position d'un objet mobile.
+     * Il s'agit de la cellule voisine de celle sur laquelle l'objet en question occupe le
+     * plus de place, en suivant la dernière direction suivie par joueur.
+     *
+     * @param movable L'objet mobile dont la prochaine cellule doit être récupérée.
+     *
+     * @return La prochaine cellule occupée par l'objet mobile.
+     */
+    private Optional<Cell> getNextCellOf(IMovable movable) {
+        // On commence par récupérer la position du centre de l'objet.
+        int midX = movable.getX() + (movable.getWidth() / 2);
+        int midY = movable.getY() + (movable.getHeight() / 2);
+
+        // On traduit cette position en position dans la carte.
+        int row = midY / spriteStore.getSpriteSize();
+        int column = midX / spriteStore.getSpriteSize() + lastDirection;
+
+        // On récupère enfin la cellule à cette position dans la carte.
+        if (column < map.getWidth()) {
+            return Optional.of(map.getAt(row, column));
+        }
+
+        return Optional.empty();
     }
 
     /**
@@ -433,8 +514,8 @@ public final class FlatcraftGame {
      *
      * @return La ressource produite.
      */
-    public Resource craft(Resource[][] inputResources) {
-        Resource product = null;
+    public Inventoriable craft(Inventoriable[][] inputResources) {
+        Inventoriable product = null;
 
         for (Rule rule : this.craftRuleParser.getRuleList()) {
             String[] ruleElements = rule.getRule().split("_");
@@ -468,22 +549,69 @@ public final class FlatcraftGame {
 
 
     /**
-     * Crée une nouvelle ressource à l'aide d'un combustible et d'une ressource, en suivant les
-     * règles du fourneau.
+     * Crée une nouvelle ressource à l'aide d'un combustible et d'une ressource, en
+     * suivant les règles du fourneau.
      *
      * @param fuel Le matériau combustible utilisé dans le fourneau.
      * @param resource La ressource à transformer.
      *
      * @return La ressource produite.
      */
-    public Resource cook(Resource fuel, Resource resource) {
+    public Inventoriable cook(Inventoriable fuel, Inventoriable resource) {
         for (Rule rule : this.furnaceRuleParser.getRuleList()) {
             if (rule.getRule().equals(resource.getName())) {
                 Sprite sprite = spriteStore.getSprite(rule.getProduct().split(" ")[0]);
-                return new Resource(rule.getProduct(), sprite,  ToolType.NO_TOOL, 0);
+                return new Resource(rule.getProduct(), sprite, ToolType.NO_TOOL, 0);
             }
         }
         return null;
+    }
+    /**
+     * Dépose sur la carte la ressource que le joueur a actuellement en main.
+     */
+    public void dropResource() {
+        // On commence par rechercher la cellule voisine de celle du joueur, si elle
+        // existe.
+        Optional<Cell> next = getNextCellOf(player);
+        if (next.isEmpty()) {
+            return;
+        }
+
+        // Le dépôt ne peut fonctionner que si la cellule ne contient pas de ressource.
+        Cell target = next.get();
+        // TODO Récupérer la ressource que le joueur a actuellement en main.
+        Inventoriable inHand = null;
+        if (target.setResource(inHand)) {
+            // TODO Retirer la ressource de l'inventaire du joueur.
+            switchResource();
+        }
+    }
+
+    /**
+     * Modifie la ressource que l'utilisateur a actuellement en main.
+     * C'est la prochaine ressource dans l'inventaire qui est choisie.
+     */
+    public void switchResource() {
+        if ((inventoryIterator == null) || (!inventoryIterator.hasNext())) {
+            // TODO Récupérer l'inventaire du joueur.
+            ObservableMap<Inventoriable, Integer> inventory = null;
+            inventoryIterator = inventory.keySet().iterator();
+        }
+
+        Inventoriable inHand = inventoryIterator.next();
+        // TODO Remplacer l'objet dans la main du joueur par inHand.
+    }
+
+    /**
+     * Exécute l'action associée à la ressource située sur la cellule voisine de celle du
+     * joueur.
+     */
+    public void executeResource() {
+        Optional<Cell> next = getNextCellOf(player);
+        if (next.isPresent()) {
+            Cell cell = next.get();
+            cell.execute();
+        }
     }
 
 }
