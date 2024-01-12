@@ -231,6 +231,7 @@ public final class FlatcraftGame {
         controller.bindHealth(playerHealth);
         controller.bindXP(playerExperience);
         controller.bindInventory(playerInventory);
+        controller.bindLeftAnchor(leftAnchor);
         animation.start();
 
         this.craftRuleParser = new RuleParser("craftrules.txt");

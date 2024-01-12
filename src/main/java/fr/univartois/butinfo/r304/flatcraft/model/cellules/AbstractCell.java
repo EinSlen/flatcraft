@@ -174,8 +174,16 @@ public abstract class AbstractCell implements Cell {
     }
 
     @Override
-    public boolean move(IMovable player) {
-        return state.interactWithPlayer(player, this);
+    public boolean move(IMovable movable) {
+        if(getResource() == null){
+            int nouvelleLigne = getRow() * getSprite().getWidth();
+            int nouvelleColonne = getColumn() * getSprite().getHeight();
+            movable.setX(nouvelleColonne);
+            movable.setY(nouvelleLigne);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
