@@ -207,7 +207,7 @@ public final class FlatcraftGame {
     public void prepare() {
         this.worldMapEngine = WorldMapEngine.getInstance();
         // On crée la carte du jeu.
-        controller.prepare(worldMapEngine.changeMap("normal",0));
+        controller.prepare(worldMapEngine.changeMap(WorldMapEngine.MondeName.NORMAL));
         cellFactory = Factory.getInstance();
         map = worldMapEngine.getTableauActuel();
         IntegerProperty playerHealth = new SimpleIntegerProperty(3);
@@ -265,19 +265,19 @@ public final class FlatcraftGame {
         Cell currentCell = getCellOf(player);
         if(currentCell.getRow()==21 && currentCell.getColumn()==3 && i==0){
             i++;
-            map = worldMapEngine.changeMap("end",0);
+            map = worldMapEngine.changeMap(WorldMapEngine.MondeName.END);
             cellFactory = FactoryEnd.getInstance();
             controller.prepare(map);
         }
         if(currentCell.getRow()==21 && currentCell.getColumn()==8 && i==1){
             i++;
-            map = worldMapEngine.changeMap("nether",0);
+            map = worldMapEngine.changeMap(WorldMapEngine.MondeName.NETHER);
             cellFactory = FactoryNether.getInstance();
             controller.prepare(map);
         }
         if(currentCell.getRow()==21 && currentCell.getColumn()==12 && i==2){
             i++;
-            map = worldMapEngine.changeMap("normal",0);
+            map = worldMapEngine.changeMap(WorldMapEngine.MondeName.NORMAL);
             cellFactory = Factory.getInstance();
             controller.prepare(map);
         }

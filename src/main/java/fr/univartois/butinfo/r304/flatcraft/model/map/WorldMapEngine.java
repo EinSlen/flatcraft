@@ -7,15 +7,14 @@ import fr.univartois.butinfo.r304.flatcraft.model.arbreterri.FactoryComposite;
 import fr.univartois.butinfo.r304.flatcraft.model.arbreterri.TerrilFactory;
 import fr.univartois.butinfo.r304.flatcraft.model.cellules.*;
 import fr.univartois.butinfo.r304.flatcraft.view.SpriteStore;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+
+import java.util.*;
 
 public class WorldMapEngine {
     private static WorldMapEngine instance;
-    private final List<GameMap> normal = new ArrayList<>();
-    private final List<GameMap> end = new ArrayList<>();
-    private final List<GameMap> nether = new ArrayList<>();
+    public enum MondeName {NORMAL,NETHER,END}
+    private final Map<MondeName, GameMap> mapList = new HashMap<>();
+
     private final CellFactory[] cellFactory = new CellFactory[]{
             Factory.getInstance(),
             FactoryEnd.getInstance(),
@@ -28,12 +27,12 @@ public class WorldMapEngine {
     private GameMap tableauActuel;
 
     private WorldMapEngine() {
-        normal.add(genMap(cellFactory[0]));
-        System.out.println("normal 1");
-        end.add(genMap(cellFactory[1]));
-        System.out.println("end 1");
-        nether.add(genMap(cellFactory[2]));
-        System.out.println("nether 1");
+        mapList.put(MondeName.NORMAL,genMap(cellFactory[0]));
+        System.out.println("créer : monde normal");
+        mapList.put(MondeName.END, genMap(cellFactory[1]));
+        System.out.println("créer : monde end");
+        mapList.put(MondeName.NETHER,genMap(cellFactory[2]));
+        System.out.println("créer : mondenether");
     }
 
     public static WorldMapEngine getInstance() {
@@ -64,26 +63,20 @@ public class WorldMapEngine {
         return tableauActuel;
     }
 
-    //Permet de changer de tableau et de créer un tableau au besoin
-    public GameMap changeMap(String monde, int localisation){
+    //Permet de changer de monde
+    public GameMap changeMap(MondeName monde){
         switch (monde){
-            case "normal":
-                if(normal.size()-1<localisation)
-                    normal.add(genMap(cellFactory[0]));
+            case NORMAL:
                 System.out.println("Changement monde Normal");
-                tableauActuel = normal.get(localisation);
+                tableauActuel = mapList.get(monde);
                 break;
-            case "end":
-                if(end.size()-1<localisation)
-                    normal.add(genMap(cellFactory[1]));
+            case END:
                 System.out.println("Changement monde l'End");
-                tableauActuel = end.get(localisation);
+                tableauActuel = mapList.get(monde);
                 break;
-            case "nether":
-                if(nether.size()-1<localisation)
-                    normal.add(genMap(cellFactory[2]));
+            case NETHER:
                 System.out.println("Changement monde Nether");
-                tableauActuel = nether.get(localisation);
+                tableauActuel = mapList.get(monde);
                 break;
         }
         return tableauActuel;
