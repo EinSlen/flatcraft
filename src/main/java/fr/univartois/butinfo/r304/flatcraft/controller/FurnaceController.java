@@ -208,7 +208,6 @@ public final class FurnaceController {
      */
     @FXML
     private void addToInventory() {
-
         for(int i = 0; i<quantity; i++) {
             game.getPlayer().ajouterInventaire(product);
         }
