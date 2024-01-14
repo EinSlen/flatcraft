@@ -17,6 +17,7 @@ package fr.univartois.butinfo.r304.flatcraft.controller;
 import java.util.Optional;
 
 import fr.univartois.butinfo.r304.flatcraft.model.FlatcraftGame;
+import fr.univartois.butinfo.r304.flatcraft.model.craft.rule.Rule;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Inventoriable;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
@@ -63,6 +64,8 @@ public final class CraftTableController {
      * Le produit obtenu à l'issue du craft.
      */
     private Inventoriable product;
+
+    private int quantity;
 
     /**
      * La vue représentant la ressource produite à l'issue du craft.
@@ -198,6 +201,11 @@ public final class CraftTableController {
         product = game.craft(resources);
 
         if (product != null) {
+            for(Rule rule : game.getCraftRuleParser().getRuleList()) {
+                if(rule.getProduct().equalsIgnoreCase(product.getName())) {
+                    quantity = rule.getQuantity();
+                }
+            }
             // On affiche le produit obtenu.
             productView.setImage(product.getSprite().getImage());
 
@@ -215,7 +223,10 @@ public final class CraftTableController {
     @FXML
     private void addToInventory() {
         //  Ajoutez un l'inventaire du joueur la ressource "product" ayant été produite.
-        game.getPlayer().ajouterInventaire(product);
+        for(int i = 0; i<quantity; i++) {
+            game.getPlayer().ajouterInventaire(product);
+        }
+
         // Une fois la ressource ajoutée, il faut vider la table de craft.
         for (int i = 0; i < resources.length; i++) {
             for (int j = 0; j < resources[i].length; j++) {

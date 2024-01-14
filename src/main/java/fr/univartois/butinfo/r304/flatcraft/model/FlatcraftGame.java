@@ -252,6 +252,13 @@ public final class FlatcraftGame {
         return cellFactory;
     }
 
+    public RuleParser getCraftRuleParser() {
+        return craftRuleParser;
+    }
+
+    public RuleParser getFurnaceRuleParser() {
+        return furnaceRuleParser;
+    }
 
     //Bouchons pour tester le changement de monde
     int i =0;

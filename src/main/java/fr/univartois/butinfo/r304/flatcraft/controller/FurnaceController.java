@@ -17,6 +17,7 @@ package fr.univartois.butinfo.r304.flatcraft.controller;
 import java.util.Optional;
 
 import fr.univartois.butinfo.r304.flatcraft.model.FlatcraftGame;
+import fr.univartois.butinfo.r304.flatcraft.model.craft.rule.Rule;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Inventoriable;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -68,6 +69,8 @@ public final class FurnaceController {
      * Le produit obtenu à l'issue de la cuisson.
      */
     private Inventoriable product;
+
+    private int quantity;
 
     /**
      * La vue représentant la ressource produite à l'issue de la cuisson.
@@ -179,10 +182,16 @@ public final class FurnaceController {
     private void cook() {
         // On crée la nouvelle ressource.
         product = game.cook(resources[1], resources[0]);
-        productView.setImage(product.getSprite().getImage());
+
 
 
         if (product != null) {
+            for(Rule rule : game.getFurnaceRuleParser().getRuleList()) {
+                if(rule.getProduct().equalsIgnoreCase(product.getName())) {
+                    quantity = rule.getQuantity();
+                }
+            }
+
             // On affiche le produit obtenu.
             productView.setImage(product.getSprite().getImage());
 
@@ -200,7 +209,9 @@ public final class FurnaceController {
     @FXML
     private void addToInventory() {
 
-        game.getPlayer().ajouterInventaire(product);
+        for(int i = 0; i<quantity; i++) {
+            game.getPlayer().ajouterInventaire(product);
+        }
         // TODO Récupérer le joueur ou définir une méthode pour pouvoir effectuer l'ajout.
 
         // Une fois la ressource ajoutée, il faut vider le fourneau.
