@@ -10,16 +10,16 @@ import fr.univartois.butinfo.r304.flatcraft.view.SpriteStore;
 
 import java.util.*;
 
-public class WorldMapEngine {
+import static java.lang.System.*;
+
+public final class WorldMapEngine {
     private static WorldMapEngine instance;
     public enum MondeName {NORMAL,NETHER,END}
+    private static final int ARBRES=500;
+    private static final int TERRIL=50;
+    private static final int HAUTEUR_TRONC =5;
     private final Map<MondeName, GameMap> mapList = new HashMap<>();
 
-    private final CellFactory[] cellFactory = new CellFactory[]{
-            Factory.getInstance(),
-            FactoryEnd.getInstance(),
-            FactoryNether.getInstance()
-    };
     private final FlatcraftGame flatcraftGame = FlatcraftGame.getInstance();
 
     private final SpriteStore spriteStore = SpriteStore.getInstance();
@@ -27,12 +27,17 @@ public class WorldMapEngine {
     private GameMap tableauActuel;
 
     private WorldMapEngine() {
+        CellFactory[] cellFactory = new CellFactory[]{
+                Factory.getInstance(),
+                FactoryEnd.getInstance(),
+                FactoryNether.getInstance()
+        };
         mapList.put(MondeName.NORMAL,genMap(cellFactory[0]));
-        System.out.println("créer : monde normal");
+        out.println("créer : monde normal");
         mapList.put(MondeName.END, genMap(cellFactory[1]));
-        System.out.println("créer : monde end");
+        out.println("créer : monde end");
         mapList.put(MondeName.NETHER,genMap(cellFactory[2]));
-        System.out.println("créer : mondenether");
+        out.println("créer : mondenether");
     }
 
     public static WorldMapEngine getInstance() {
@@ -43,16 +48,18 @@ public class WorldMapEngine {
     private GameMap genMap(CellFactory cellFactory){
         cellFactory.setSpriteStore(spriteStore);
         IMapGenerator map = new MapGenerator();
-        map.generateMap(flatcraftGame.getHeight()/ spriteStore.getSpriteSize(),
-                flatcraftGame.getWidth()/ spriteStore.getSpriteSize(),
-                cellFactory);
+        if (flatcraftGame != null) {
+            map.generateMap(flatcraftGame.getHeight()/ spriteStore.getSpriteSize(),
+                    flatcraftGame.getWidth()/ spriteStore.getSpriteSize(),
+                    cellFactory);
+        }
         remplirMap(cellFactory, map.getMap());
         return map.getMap();
     }
 
     private void remplirMap(CellFactory cellFactory, GameMap map){
-        ArbreFactory arbreFactory = new ArbreFactory(flatcraftGame, cellFactory, map,50, 5);
-        TerrilFactory terrilFactory = new TerrilFactory(flatcraftGame, cellFactory,map, 5);
+        ArbreFactory arbreFactory = new ArbreFactory(flatcraftGame, cellFactory, map,ARBRES, HAUTEUR_TRONC);
+        TerrilFactory terrilFactory = new TerrilFactory(flatcraftGame, cellFactory,map, TERRIL);
         FactoryComposite factory = new FactoryComposite();
         factory.ajouter(arbreFactory);
         factory.ajouter(terrilFactory);
@@ -67,17 +74,19 @@ public class WorldMapEngine {
     public GameMap changeMap(MondeName monde){
         switch (monde){
             case NORMAL:
-                System.out.println("Changement monde Normal");
+                out.println("Changement monde Normal");
                 tableauActuel = mapList.get(monde);
                 break;
             case END:
-                System.out.println("Changement monde l'End");
+                out.println("Changement monde l'End");
                 tableauActuel = mapList.get(monde);
                 break;
             case NETHER:
-                System.out.println("Changement monde Nether");
+                out.println("Changement monde Nether");
                 tableauActuel = mapList.get(monde);
                 break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + monde);
         }
         return tableauActuel;
     }
