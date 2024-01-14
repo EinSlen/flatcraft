@@ -2,11 +2,9 @@ package fr.univartois.butinfo.r304.flatcraft.model.movables.mobs.strategy.aleato
 
 import fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.mobs.strategy.IDeplacement;
-import fr.univartois.butinfo.r304.flatcraft.model.movables.mobs.strategy.lineaire.DeplacementLineare;
 
 import java.util.Random;
 
-import static java.lang.Math.*;
 
 public class DeplacementAleatoire implements IDeplacement {
     private static DeplacementAleatoire instance;
