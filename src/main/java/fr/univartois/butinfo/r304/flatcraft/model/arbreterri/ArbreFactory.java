@@ -59,7 +59,7 @@ public class ArbreFactory implements IComponent {
                 while (("dirt".equals(map.getAt(hauteurCourante, col).getResource().getName()))) {
                     hauteurCourante--;
                 }
-            } catch(Exception e) {}
+            } catch(Exception e) {e.printStackTrace();}
             Cell tronc = cellFactory.createTrunk();
             map.setAt(hauteurCourante, col, tronc);
             hauteurCourante--;
