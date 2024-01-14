@@ -4,6 +4,7 @@ import fr.univartois.butinfo.r304.flatcraft.model.FlatcraftGame;
 import fr.univartois.butinfo.r304.flatcraft.model.filon.InInventoryState;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Inventoriable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
+import fr.univartois.butinfo.r304.flatcraft.model.resources.ToolType;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 import javafx.beans.property.IntegerProperty;
 import javafx.collections.ObservableMap;
@@ -16,6 +17,8 @@ public class Player extends AbstractMovable {
      * Attribut représentant les points de vie du joueur
      */
     private IntegerProperty pv;
+
+    private Inventoriable tool;
 
     /**
      * Attribut représentant l'expéience du joueur
@@ -40,6 +43,7 @@ public class Player extends AbstractMovable {
         this.pv = pv;
         this.xp = xp;
         this.inventaire = inventaire;
+        this.tool = new Resource("", null, ToolType.NO_TOOL, 0);
     }
 
     /**
@@ -49,6 +53,10 @@ public class Player extends AbstractMovable {
      */
     public int getPv() {
         return pv.get();
+    }
+
+    public Inventoriable getTool() {
+        return tool;
     }
 
     /**+-

@@ -24,23 +24,9 @@ package fr.univartois.butinfo.r304.flatcraft.model.resources;
  * @version 0.1.0
  */
 public enum ToolType {
-
-    /**
-     * Le type d'outils nécessaire pour récupérer un élément qui ne requiert pas d'outil
-     * particulier pour être récupéré.
-     */
     NO_TOOL,
-
-    /**
-     * Le type d'outils nécessaire pour récupérer un élément qui requiert un outil de
-     * force moyenne pour être récupéré.
-     */
     MEDIUM_TOOL,
-
-    /**
-     * Le type d'outils nécessaire pour récupérer un élément qui requiert un outil de
-     * force élevée pour être récupéré.
-     */
     HARD_TOOL;
 
 }
+

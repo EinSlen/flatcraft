@@ -42,12 +42,12 @@ public class Factory implements CellFactory {
     @Override
     public Cell createSoilSurface() {
         if(random.nextInt(10)<2)
-            return createRessouresCell("ice","water",1);
-        return createRessouresCell("grass",1);
+            return createRessouresCell("ice","water", ToolType.NO_TOOL,1);
+        return createRessouresCell("grass", ToolType.NO_TOOL,1);
     }
 
     public Cell createJunglegrass() {
-        return createRessouresCell("ice","junglegrass",1);
+        return createRessouresCell("ice","junglegrass",ToolType.NO_TOOL,1);
     }
 
     @Override
@@ -56,36 +56,36 @@ public class Factory implements CellFactory {
         int mineral = random.nextInt(100);
 
         if (randomValue < 80) {
-            return createRessouresCell("stone",2);
+            return createRessouresCell("stone", ToolType.MEDIUM_TOOL,2);
         } else {
             if (mineral < 5) {
-                return createRessouresCell("stone","mineral_coal",2);
+                return createRessouresCell("stone","mineral_coal",ToolType.MEDIUM_TOOL,2);
             } else if (mineral < 15) {
-                return createRessouresCell("stone","mineral_copper",2);
+                return createRessouresCell("stone","mineral_copper",ToolType.MEDIUM_TOOL,2);
             } else if (mineral < 30) {
-                return createRessouresCell("stone","mineral_iron",3);
+                return createRessouresCell("stone","mineral_iron",ToolType.MEDIUM_TOOL,3);
             } else if (mineral < 50) {
-                return createRessouresCell("stone","mineral_gold",4);
+                return createRessouresCell("stone","mineral_gold",ToolType.MEDIUM_TOOL,4);
             } else if (mineral < 80) {
-                return createRessouresCell("stone","mineral_diamond",5);
+                return createRessouresCell("stone","mineral_diamond",ToolType.HARD_TOOL,5);
             }
         }
-        return createRessouresCell("stone","stone",2);
+        return createRessouresCell("stone", ToolType.MEDIUM_TOOL,2);
     }
 
     @Override
     public Cell createSubSoil() {
-        return createRessouresCell("dirt",2);
+        return createRessouresCell("dirt",ToolType.NO_TOOL, 2);
     }
 
     @Override
     public Cell createTrunk() {
-        return createRessouresCell("tree", 2);
+        return createRessouresCell("tree", ToolType.NO_TOOL, 2);
     }
 
     @Override
     public Cell createLeaves() {
-        return createRessouresCell("ice","acacia_leaves",1);
+        return createRessouresCell("ice","acacia_leaves", ToolType.NO_TOOL, 1);
     }
 
 
@@ -95,17 +95,17 @@ public class Factory implements CellFactory {
         return new MyCell(sprite);
     }
 
-    public Cell createRessouresCell(String name , int hardness){
+    public Cell createRessouresCell(String name , ToolType tool, int hardness){
         Sprite sprite = spriteStore.getSprite(name);
-        return new MyCell(new Resource(name, sprite, ToolType.NO_TOOL, hardness));
+        return new MyCell(new Resource(name, sprite, tool, hardness));
     }
 
-    private Cell createRessouresCell(String background, String name, int hardness){
+    private Cell createRessouresCell(String background, String name,ToolType tool,  int hardness){
         Sprite sprite1 = spriteStore.getSprite(background);
         Sprite sprite2 = spriteStore.getSprite(name);
         Image image = makeImageWithBackground(sprite1,sprite2);
         Sprite sprite = new Sprite(image);
-        return new MyCell(new Resource(name, sprite, ToolType.NO_TOOL, hardness));
+        return new MyCell(new Resource(name, sprite, tool, hardness));
     }
 
 

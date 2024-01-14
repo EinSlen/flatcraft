@@ -392,7 +392,7 @@ public final class FlatcraftGame {
     public void digUp() {
         Cell cell = getCellOf(player);
         Cell cellToDig = map.getAt(cell.getRow()-1, cell.getColumn());
-        if (cellToDig.getResource() != null){
+        if (cellToDig.getResource() != null && player.getTool().getToolType().compareTo(cellToDig.getResource().getToolType()) >= 0){
             dig(cellToDig);
             move(player);
         }
@@ -404,7 +404,8 @@ public final class FlatcraftGame {
     public void digDown() {
         Cell cell = getCellOf(player);
         Cell cellToDig = map.getAt(cell.getRow()+1, cell.getColumn());
-        if (cellToDig.getResource() != null){
+
+        if (cellToDig.getResource() != null && player.getTool().getToolType().compareTo(cellToDig.getResource().getToolType()) >= 0){
             dig(cellToDig);
             move(player);
         }
@@ -416,7 +417,7 @@ public final class FlatcraftGame {
     public void digLeft() {
         Cell cell = getCellOf(player);
         Cell cellToDig = map.getAt(cell.getRow(), cell.getColumn()-1);
-        if (cellToDig.getResource() != null){
+        if (cellToDig.getResource() != null && player.getTool().getToolType().compareTo(cellToDig.getResource().getToolType()) >= 0){
             dig(cellToDig);
             move(player);
         }
@@ -428,7 +429,7 @@ public final class FlatcraftGame {
     public void digRight() {
         Cell cell = getCellOf(player);
         Cell cellToDig = map.getAt(cell.getRow(), cell.getColumn()+1);
-        if (cellToDig.getResource() != null){
+        if (cellToDig.getResource() != null && player.getTool().getToolType().compareTo(cellToDig.getResource().getToolType()) >= 0){
             dig(cellToDig);
             move(player);
         }
@@ -559,13 +560,12 @@ public final class FlatcraftGame {
      * @return La ressource produite.
      */
     public Inventoriable cook(Inventoriable fuel, Inventoriable resource) {
-
-        for (Rule rule : this.furnaceRuleParser.getRuleList()) {
-            if (rule.getRule().equals(resource.getName())) {
-                Sprite sprite = spriteStore.getSprite(rule.getProduct().split(" ")[0]);
-                return new Resource(rule.getProduct(), sprite, ToolType.NO_TOOL, 0);
+            for (Rule rule : this.furnaceRuleParser.getRuleList()) {
+                if (rule.getRule().equals(resource.getName())) {
+                    Sprite sprite = spriteStore.getSprite(rule.getProduct().split(" ")[0]);
+                    return new Resource(rule.getProduct(), sprite, ToolType.NO_TOOL, 0);
+                }
             }
-        }
         return null;
     }
     /**
