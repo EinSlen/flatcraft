@@ -559,6 +559,7 @@ public final class FlatcraftGame {
      * @return La ressource produite.
      */
     public Inventoriable cook(Inventoriable fuel, Inventoriable resource) {
+
         for (Rule rule : this.furnaceRuleParser.getRuleList()) {
             if (rule.getRule().equals(resource.getName())) {
                 Sprite sprite = spriteStore.getSprite(rule.getProduct().split(" ")[0]);
@@ -574,17 +575,19 @@ public final class FlatcraftGame {
         // On commence par rechercher la cellule voisine de celle du joueur, si elle
         // existe.
         Optional<Cell> next = getNextCellOf(player);
-        if (next.isEmpty()) {
+        if (next.isPresent() && next.get().getResource()!=null) {
             return;
         }
-
         // Le dépôt ne peut fonctionner que si la cellule ne contient pas de ressource.
         Cell target = next.get();
-        // TODO Récupérer la ressource que le joueur a actuellement en main.
-        Inventoriable inHand = null;
+        Inventoriable inHand = inventoryIterator.next();
         if (target.setResource(inHand)) {
-            // TODO Retirer la ressource de l'inventaire du joueur.
-            switchResource();
+            player.supprimerInventaire(inHand);
+            inventoryIterator = player.getInventaire().keySet().iterator();
+            if (!player.getInventaire().containsKey(inHand)) {
+                switchResource();
+            }
+            System.out.println(player.getInventaire());
         }
     }
 
@@ -595,12 +598,13 @@ public final class FlatcraftGame {
     public void switchResource() {
         if ((inventoryIterator == null) || (!inventoryIterator.hasNext())) {
             // TODO Récupérer l'inventaire du joueur.
-            ObservableMap<Inventoriable, Integer> inventory = null;
+            ObservableMap<Inventoriable, Integer> inventory = player.getInventaire();
             inventoryIterator = inventory.keySet().iterator();
         }
 
         Inventoriable inHand = inventoryIterator.next();
         // TODO Remplacer l'objet dans la main du joueur par inHand.
+        System.out.println(inHand);
     }
 
     /**

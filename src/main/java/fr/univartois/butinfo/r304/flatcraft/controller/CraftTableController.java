@@ -161,6 +161,7 @@ public final class CraftTableController {
                 Optional<Inventoriable> resource = game.getPlayer().recupRessourceInventaire(dragboard.getString());
                 if (resource.isPresent()) {
                     resources[row][column] = resource.get();
+                    game.getPlayer().supprimerInventaire(resource.get());
                     craftButton.setDisable(false);
                     clearButton.setDisable(false);
                     success = true;
