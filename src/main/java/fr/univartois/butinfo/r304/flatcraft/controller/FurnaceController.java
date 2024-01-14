@@ -144,6 +144,7 @@ public final class FurnaceController {
                 Optional<Inventoriable> resource = game.getPlayer().recupRessourceInventaire(dragboard.getString());
                 if (resource.isPresent()) {
                     resources[index] = resource.get();
+                    game.getPlayer().supprimerInventaire(resource.get());
                     cookButton.setDisable(false);
                     clearButton.setDisable(false);
                     success = true;
