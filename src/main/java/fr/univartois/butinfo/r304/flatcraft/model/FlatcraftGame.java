@@ -1,6 +1,5 @@
 /**
  * Ce logiciel est distribué à des fins éducatives.
- *
  * Il est fourni "tel quel", sans garantie d’aucune sorte, explicite
  * ou implicite, notamment sans garantie de qualité marchande, d’adéquation
  * à un usage particulier et d’absence de contrefaçon.
@@ -9,7 +8,6 @@
  * soit dans le cadre d’un contrat, d’un délit ou autre, en provenance de,
  * consécutif à ou en relation avec le logiciel ou son utilisation, ou avec
  * d’autres éléments du logiciel.
- *
  * (c) 2023 Romain Wallon - Université d'Artois.
  * Tous droits réservés.
  */
@@ -44,9 +42,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
-import javafx.collections.ObservableMap;
 
 /**
  * La classe {@link FlatcraftGame} permet de gérer une partie du jeu Flatcraft.
@@ -159,7 +154,6 @@ public final class FlatcraftGame {
 
     /**
      * Crée une nouvelle instance de FlatcraftGame.
-     *
      * @param width La largeur de la carte du jeu (en pixels).
      * @param height La hauteur de la carte du jeu (en pixels).
      * @param mapRepeat Le nombre de fois que la carte se "répète" horizontalement.
@@ -440,10 +434,11 @@ public final class FlatcraftGame {
      */
     private void dig(Cell toDig) {
         if(toDig.dig(player)){
-            if(toDig.getResource()!=null)
+            if(toDig.getResource()!=null) {
                 player.ajouterInventaire(toDig.getResource());
                 toDig.setState(new EmptyCellState());
                 toDig.replaceBy(cellFactory.createSky());
+            }
         }
     }
 
