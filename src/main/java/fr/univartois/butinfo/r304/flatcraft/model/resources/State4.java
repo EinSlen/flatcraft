@@ -1,8 +1,6 @@
 package fr.univartois.butinfo.r304.flatcraft.model.resources;
 
 public class State4 implements IState{
-
-    private final int hardness = 4;
     private final Resource resource;
 
     public State4(Resource resource) {
@@ -16,6 +14,6 @@ public class State4 implements IState{
 
     @Override
     public int getHardness() {
-        return this.hardness;
+        return 4;
     }
 }
