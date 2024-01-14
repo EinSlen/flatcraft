@@ -1,14 +1,10 @@
 package fr.univartois.butinfo.r304.flatcraft.model.movables.mobs.strategy.intelligent;
 
 import fr.univartois.butinfo.r304.flatcraft.model.FlatcraftGame;
-import fr.univartois.butinfo.r304.flatcraft.model.GameMap;
 import fr.univartois.butinfo.r304.flatcraft.model.cellules.Cell;
-import fr.univartois.butinfo.r304.flatcraft.model.cellules.CellFactory;
-import fr.univartois.butinfo.r304.flatcraft.model.cellules.Factory;
 import fr.univartois.butinfo.r304.flatcraft.model.map.WorldMapEngine;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.mobs.strategy.IDeplacement;
-import fr.univartois.butinfo.r304.flatcraft.model.movables.mobs.strategy.aleatoire.DeplacementAleatoire;
 import fr.univartois.butinfo.r304.flatcraft.view.SpriteStore;
 
 public class DeplacementIntelligent implements IDeplacement {
