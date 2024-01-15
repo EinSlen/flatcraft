@@ -20,7 +20,7 @@ public class MyCell extends AbstractCell {
 
     protected MyCell(Resource resource) {
         super(resource);
-        this.state = new ResourceCellState();
+        this.state = new EmptyCellState();
     }
 
     @Override
@@ -35,7 +35,7 @@ public class MyCell extends AbstractCell {
 
     @Override
     public boolean accepts(IMovable movable) {
-        return true;
+        return state.accepts(movable);
     }
 
     @Override
@@ -46,6 +46,7 @@ public class MyCell extends AbstractCell {
 
     @Override
     public boolean dig(IMovable player) {
+        state = new EmptyCellState();
         return super.dig(player);
     }
 

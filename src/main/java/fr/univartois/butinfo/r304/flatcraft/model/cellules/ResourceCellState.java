@@ -11,6 +11,7 @@ public class ResourceCellState implements CellState {
             resource.dig();
             if (resource.getHardness() == 0) {
                 cell.setState(new EmptyCellState());
+                System.out.println("changelenbt");
                 return true;
             }
         }
@@ -19,6 +20,6 @@ public class ResourceCellState implements CellState {
 
     @Override
     public boolean accepts(IMovable movable) {
-        return false;
+        return true;
     }
 }

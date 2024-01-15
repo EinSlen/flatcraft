@@ -184,8 +184,15 @@ public abstract class AbstractCell implements Cell {
     }
 
     @Override
+    public boolean accepts(IMovable movable) {
+        //return true;
+        return state.accepts(movable);
+    }
+    @Override
     public boolean dig(IMovable player) {
-        return state.interactWithPlayer(player, this);
+        boolean result = state.interactWithPlayer(player, this);
+        //state = new EmptyCellState();
+        return result;
     }
 }
 

@@ -245,8 +245,7 @@ public abstract class AbstractMovable implements IMovable {
         double newY = updatePosition(yPosition.get(), verticalSpeed, delta, 0, limitMaxY);
 
         // On vérifie qu'il n'y a pas un obstacle.
-        if (!game.getCellAt((int) newX, (int) newY).accepts(this)) {
-            System.out.println("probleme");
+        if (game.getCellAt((int) newX, (int) newY).accepts(this)) {
             return false;
         }
 
