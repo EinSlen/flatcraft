@@ -16,4 +16,9 @@ public class EmptyCellState implements CellState {
         }
         return false;
     }
+
+    @Override
+    public boolean accepts(IMovable movable) {
+        return true;
+    }
 }

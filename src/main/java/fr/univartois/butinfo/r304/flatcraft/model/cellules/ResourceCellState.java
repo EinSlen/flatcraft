@@ -16,4 +16,9 @@ public class ResourceCellState implements CellState {
         }
         return false;
     }
+
+    @Override
+    public boolean accepts(IMovable movable) {
+        return false;
+    }
 }

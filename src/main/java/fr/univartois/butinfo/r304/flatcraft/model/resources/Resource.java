@@ -14,11 +14,14 @@
 
 package fr.univartois.butinfo.r304.flatcraft.model.resources;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 import fr.univartois.butinfo.r304.flatcraft.model.filon.InInventoryState;
 import fr.univartois.butinfo.r304.flatcraft.model.filon.OnMapState;
 import fr.univartois.butinfo.r304.flatcraft.model.filon.ResourceState;
+import fr.univartois.butinfo.r304.flatcraft.model.fuel.FuelStrategy;
 import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 
 /**
@@ -37,10 +40,14 @@ public final class Resource implements Inventoriable {
      */
     private String name;
 
+    private static final List<String> COMBUSTIBLE_RESOURCES = Arrays.asList("wood", "coal", "tree", "stick");
+
     /**
      * Le sprite représentant cette ressource.
      */
     private Sprite sprite;
+
+    private FuelStrategy fuelStrategy;
 
     /**
      * Le type d'outils nécessaire pour extraire cette ressource de la carte.
@@ -82,28 +89,15 @@ public final class Resource implements Inventoriable {
     }
 
     private IState initState(int hardness){
-        IState state = null;
-        switch (hardness){
-            case 0:
-                state = new State0(this);
-                break;
-            case 1:
-                state = new State1(this);
-                break;
-            case 2:
-                state = new State2(this);
-                break;
-            case 3:
-                state = new State3(this);
-                break;
-            case 4:
-                state = new State4(this);
-                break;
-            case 5:
-                state = new State5(this);
-                break;
-        }
-        return state;
+        return switch (hardness) {
+            case 0 -> new State0(this);
+            case 1 -> new State1(this);
+            case 2 -> new State2(this);
+            case 3 -> new State3(this);
+            case 4 -> new State4(this);
+            case 5 -> new State5(this);
+            default -> null;
+        };
     }
 
     /*
@@ -204,6 +198,10 @@ public final class Resource implements Inventoriable {
      */
     public Resource digBlock() {
         return this;
+    }
+
+    public boolean isUsableAsFuel() {
+        return COMBUSTIBLE_RESOURCES.contains(name);
     }
 
     public void handleOnMap() {

@@ -182,9 +182,7 @@ public final class FurnaceController {
     @FXML
     private void cook() {
         // On crée la nouvelle ressource.
-        product = game.cook(resources[1], resources[0]);
-
-
+        product = game.cook(resources[0], resources[1]);
 
         if (product != null) {
             for(Rule rule : game.getFurnaceRuleParser().getRuleList()) {

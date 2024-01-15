@@ -208,7 +208,7 @@ public final class FlatcraftGame {
         IntegerProperty playerExperience = new SimpleIntegerProperty(1);
         ObservableMap<Inventoriable, Integer> playerInventory = FXCollections.observableHashMap();
         Sprite sprite = spriteStore.getSprite("player");
-        this.player = new Player(this, 0, worldMapEngine.getTableauActuel().getSoilHeight()*spriteStore.getSpriteSize()-spriteStore.getSpriteSize(), sprite, playerHealth, playerExperience, playerInventory);
+        this.player = new Player(this, 0, worldMapEngine.getTableauActuel().getSoilHeight()*spriteStore.getSpriteSize()-(spriteStore.getSpriteSize()), sprite, playerHealth, playerExperience, playerInventory);
         movableObjects.add(player);
         // Créer 1 mob pour la dimension normal, la gestion des dimensions n'est pas encore faite
         MobDim mobDim = new MNormal();
@@ -408,6 +408,8 @@ public final class FlatcraftGame {
         if (cellToDig.getResource() != null && player.getTool().getToolType().compareTo(cellToDig.getResource().getToolType()) >= 0){
             dig(cellToDig);
             move(player);
+        } else {
+            controller.displayError("Vous n'avez pas les capacités pour ça");
         }
     }
 
@@ -560,11 +562,15 @@ public final class FlatcraftGame {
      * @return La ressource produite.
      */
     public Inventoriable cook(Inventoriable fuel, Inventoriable resource) {
-            for (Rule rule : this.furnaceRuleParser.getRuleList()) {
-                if (rule.getRule().equals(resource.getName())) {
-                    Sprite sprite = spriteStore.getSprite(rule.getProduct().split(" ")[0]);
-                    return new Resource(rule.getProduct(), sprite, ToolType.NO_TOOL, 0);
+            if(fuel.isUsableAsFuel()) {
+                for (Rule rule : this.furnaceRuleParser.getRuleList()) {
+                    if (rule.getRule().equals(resource.getName())) {
+                        Sprite sprite = spriteStore.getSprite(rule.getProduct().split(" ")[0]);
+                        return new Resource(rule.getProduct(), sprite, ToolType.NO_TOOL, 0);
+                    }
                 }
+            } else {
+                controller.displayError("il n'y a pas de fuel");
             }
         return null;
     }

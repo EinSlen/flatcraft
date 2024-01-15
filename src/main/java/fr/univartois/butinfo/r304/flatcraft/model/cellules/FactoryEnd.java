@@ -34,12 +34,12 @@ public class FactoryEnd implements CellFactory {
 
     @Override
     public Cell createSoilSurface() {
-        return createRessouresCell("sandstone",2);
+        return createRessouresCell("sandstone",ToolType.MEDIUM_TOOL,2);
     }
 
     @Override
     public Cell createSubSoil() {
-        return createRessouresCell("sandstone",2);
+        return createRessouresCell("sandstone",ToolType.MEDIUM_TOOL,2);
     }
 
     @Override
@@ -49,17 +49,17 @@ public class FactoryEnd implements CellFactory {
 
     @Override
     public Cell createLeaves() {
-        return createRessouresCell("obsidian_brick",1);
+        return createRessouresCell("obsidian_brick",ToolType.MEDIUM_TOOL, 1);
     }
 
     @Override
     public Cell createJunglegrass() {
-        return createRessouresCell("sandstone",1);
+        return createRessouresCell("sandstone",ToolType.MEDIUM_TOOL, 1);
     }
 
     @Override
     public Cell createStone() {
-        return createRessouresCell("stone",2);
+        return createRessouresCell("stone",ToolType.MEDIUM_TOOL, 2);
     }
 
     public MyCell createCell(String name){
@@ -67,8 +67,8 @@ public class FactoryEnd implements CellFactory {
         return new MyCell(sprite);
     }
 
-    public Cell createRessouresCell(String name, int hardness){
+    public Cell createRessouresCell(String name, ToolType tool, int hardness){
         Sprite sprite = spriteStore.getSprite(name);
-        return new MyCell(new Resource(name, sprite, ToolType.NO_TOOL, hardness));
+        return new MyCell(new Resource(name, sprite, tool, hardness));
     }
 }

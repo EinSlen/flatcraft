@@ -15,7 +15,7 @@ public class MyCell extends AbstractCell {
 
     protected MyCell(Sprite sprite) {
         super(sprite);
-        this.state = new EmptyCellState();
+        this.state = new ResourceCellState();
     }
 
     protected MyCell(Resource resource) {

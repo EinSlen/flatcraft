@@ -57,4 +57,6 @@ public interface Inventoriable {
     Object getCurrentState();
 
     void handleInInventory();
+
+    boolean isUsableAsFuel();
 }

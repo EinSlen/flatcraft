@@ -43,7 +43,7 @@ public class Player extends AbstractMovable {
         this.pv = pv;
         this.xp = xp;
         this.inventaire = inventaire;
-        this.tool = new Resource("", null, ToolType.NO_TOOL, 0);
+        this.tool = new Resource("", null, ToolType.HARD_TOOL, 1);
     }
 
     /**
