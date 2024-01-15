@@ -1,5 +1,6 @@
 package fr.univartois.butinfo.r304.flatcraft.model.cellules;
 
+import fr.univartois.butinfo.r304.flatcraft.model.FlatcraftGame;
 import fr.univartois.butinfo.r304.flatcraft.model.movables.IMovable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Inventoriable;
 import fr.univartois.butinfo.r304.flatcraft.model.resources.Resource;
@@ -7,6 +8,7 @@ import fr.univartois.butinfo.r304.flatcraft.view.Sprite;
 
 public class MyCell extends AbstractCell {
     private CellState state;
+    private FlatcraftGame game = FlatcraftGame.getInstance();
 
     public MyCell(int row, int column) {
         super(row, column);
@@ -52,7 +54,10 @@ public class MyCell extends AbstractCell {
 
     @Override
     public void execute() {
-
+            Resource resource = getResource();
+            if (resource != null && resource.getName().equals("obsidian")) {
+                game.changeDimensionV1();
+            }
     }
 
 }

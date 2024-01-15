@@ -262,21 +262,21 @@ public final class FlatcraftGame {
 
     //Bouchons pour tester le changement de monde
     int i =0;
-    private void changeDimensionV1(){
+    public void changeDimensionV1(){
         Cell currentCell = getCellOf(player);
-        if(currentCell.getRow()==21 && currentCell.getColumn()==3 && i==0){
+        if(i==0){
             i++;
             map = worldMapEngine.changeMap(WorldMapEngine.MondeName.END);
             cellFactory = FactoryEnd.getInstance();
             controller.prepare(map);
         }
-        if(currentCell.getRow()==21 && currentCell.getColumn()==8 && i==1){
+        if(i==1){
             i++;
             map = worldMapEngine.changeMap(WorldMapEngine.MondeName.NETHER);
             cellFactory = FactoryNether.getInstance();
             controller.prepare(map);
         }
-        if(currentCell.getRow()==21 && currentCell.getColumn()==12 && i==2){
+        if(i==2){
             i++;
             map = worldMapEngine.changeMap(WorldMapEngine.MondeName.NORMAL);
             cellFactory = Factory.getInstance();
@@ -326,7 +326,6 @@ public final class FlatcraftGame {
             player.setHorizontalSpeed(-45);
             move(player);
         }
-        changeDimensionV1();
         // TODO Implémentez cette méthode.
         lastDirection = -1;
     }
@@ -341,7 +340,6 @@ public final class FlatcraftGame {
             player.setHorizontalSpeed(45);
             move(player);
         }
-        changeDimensionV1();
         // TODO Implémentez cette méthode.
         lastDirection = 1;
     }

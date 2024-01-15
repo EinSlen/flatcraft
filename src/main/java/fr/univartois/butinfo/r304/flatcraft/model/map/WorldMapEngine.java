@@ -16,7 +16,7 @@ public final class WorldMapEngine {
     private static WorldMapEngine instance;
     public enum MondeName {NORMAL,NETHER,END}
     private static final int ARBRES=500;
-    private static final int TERRIL=50;
+    private static final int TERRIL=5;
     private static final int HAUTEUR_TRONC =5;
     private final Map<MondeName, GameMap> mapList = new HashMap<>();
 
